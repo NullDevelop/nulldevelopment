@@ -86,10 +86,10 @@ export function FAQ() {
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
 					<BlurFade delay={0.3} inView>
 						<Accordion type="single" collapsible className="w-full space-y-4">
-							{leftCol.map((faq, index) => (
+							{leftCol.map((faq) => (
 								<AccordionItem
-									key={index}
-									value={`left-${index}`}
+									key={faq.question}
+									value={`left-${faq.question}`}
 									className="border border-white/10 bg-card backdrop-blur-md rounded-[2px] px-6 transition-colors hover:border-primary/30"
 								>
 									<AccordionTrigger className="text-base font-sentient py-6 hover:no-underline text-left leading-snug text-foreground">
@@ -105,10 +105,10 @@ export function FAQ() {
 
 					<BlurFade delay={0.4} inView>
 						<Accordion type="single" collapsible className="w-full space-y-4">
-							{rightCol.map((faq, index) => (
+							{rightCol.map((faq) => (
 								<AccordionItem
-									key={index}
-									value={`right-${index}`}
+									key={faq.question}
+									value={`right-${faq.question}`}
 									className="border border-white/10 bg-card backdrop-blur-md rounded-[2px] px-6 transition-colors hover:border-primary/30"
 								>
 									<AccordionTrigger className="text-base font-sentient py-6 hover:no-underline text-left leading-snug text-foreground">

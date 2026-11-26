@@ -1,6 +1,5 @@
 import {
 	Code2,
-	Cpu,
 	Layers,
 	ShieldCheck,
 	Sparkles,

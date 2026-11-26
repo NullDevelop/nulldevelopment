@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ExternalLink, ArrowUpRight } from 'lucide-react'
@@ -17,144 +16,145 @@ interface PortfolioSectionProps {
 
 export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 	const { t, locale } = useI18n()
-	const [activeCategory, setActiveCategory] = useState<string>('all')
 
 	const projectsToDisplay = (dbProjects.length > 0 ? dbProjects : curatedProjects)
 		.filter((project) => !hiddenProjectSlugs.has(project.slug))
 		.map((project) => localizeProject(project, locale, t))
 
-	const filteredProjects = projectsToDisplay.filter((item) => {
-		if (activeCategory === 'all') return true
-		if (activeCategory === 'saas') return item.category === 'saas'
-		if (activeCategory === 'governamental') return item.category === 'governamental'
-		if (activeCategory === 'landing') return item.category === 'landing'
-		return true
-	})
+	const projectGroups = [
+		{
+			id: 'public',
+			number: '01',
+			title: t.portfolio.public,
+			projects: projectsToDisplay.filter((project) => project.category === 'governamental'),
+		},
+		{
+			id: 'private',
+			number: '02',
+			title: t.portfolio.private,
+			projects: projectsToDisplay.filter((project) => project.category !== 'governamental'),
+		},
+	]
 
 	return (
 		<section className="min-h-screen flex flex-col justify-center py-24 lg:py-28 relative z-10 px-4 sm:px-6 scroll-mt-16 sm:scroll-mt-20" id="portfolio">
 			<div className="max-w-6xl mx-auto w-full">
 				{/* Section Header */}
-				<div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-white/10 pb-6">
-					<div>
+				<div className="mb-14 border-b border-white/10 pb-7">
+					<div className="max-w-2xl">
 						<span className="text-xs sm:text-sm uppercase tracking-widest text-primary font-semibold">
 							{t.portfolio.eyebrow}
 						</span>
-						<h2 className="text-3xl sm:text-5xl font-bold text-foreground mt-2">
+						<h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
 							{t.portfolio.title}
 						</h2>
 					</div>
-
-					{/* Category Filter Pills */}
-					<div className="flex items-center gap-2 flex-wrap">
-						{[
-							{ id: 'all', label: `${t.portfolio.all} (${projectsToDisplay.length})` },
-							{ id: 'saas', label: t.portfolio.saas },
-							{ id: 'governamental', label: t.portfolio.public },
-							{ id: 'landing', label: t.portfolio.landing },
-						].map((tab) => (
-							<button
-								key={tab.id}
-								onClick={() => setActiveCategory(tab.id)}
-								className={`text-xs sm:text-sm px-4 py-2 rounded-xl transition-all cursor-pointer font-medium ${
-									activeCategory === tab.id
-										? 'bg-white text-black font-semibold shadow-md'
-										: 'text-brand-steel hover:text-foreground hover:bg-white/10 border border-white/5'
-								}`}
-							>
-								{tab.label}
-							</button>
-						))}
-					</div>
 				</div>
 
-				{/* Clean Grid of 6 Projects */}
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-					{filteredProjects.map((project, index) => {
-						const isLive = !!project.link
-						const badge = project.statusBadge || (isLive ? t.portfolio.live : t.portfolio.caseBadge)
-
-						return (
-							<BlurFade key={project.id} delay={0.07 * (index + 1)} inView>
-								<div className="group rounded-[2px] border border-white/10 bg-card hover:bg-card/90 hover:border-primary/40 transition-colors duration-300 p-6 flex flex-col justify-between h-full backdrop-blur-xs">
-									<div>
-										{/* Preview Image with Link */}
-										<Link
-											href={`/projects/${project.slug}`}
-											className="block relative aspect-video rounded-xl overflow-hidden bg-background border border-white/10 mb-5 cursor-pointer"
-										>
-											<Image
-												src={project.image}
-												alt={project.title}
-												fill
-												sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-												className="object-cover group-hover:scale-105 transition-transform duration-500"
-											/>
-											<div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
-
-											<span className="absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-md border border-white/20 bg-black/85 backdrop-blur-md text-foreground">
-												{badge}
-											</span>
-										</Link>
-
-										{/* Title & One-Liner */}
-										<Link href={`/projects/${project.slug}`} className="block group/title">
-											<h3 className="text-xl sm:text-2xl font-bold text-foreground group-hover/title:text-primary transition-colors">
-												{project.title}
-											</h3>
-										</Link>
-										<p className="text-sm sm:text-base text-brand-steel leading-relaxed mt-2.5 line-clamp-2">
-											{project.shortDescription}
-										</p>
-
-										{/* Tech Stack Tags */}
-										<div className="flex flex-wrap items-center gap-2 mt-4">
-											{project.stack.slice(0, 4).map((tech) => (
-												<span
-													key={tech}
-													className="text-xs px-3 py-1 rounded-lg bg-white/[0.06] border border-white/15 text-foreground/90 font-medium"
-												>
-													{tech}
-												</span>
-											))}
-										</div>
-									</div>
-
-									{/* Dedicated Card Action Buttons */}
-									<div className="mt-6 pt-5 border-t border-white/10 flex items-center gap-3">
-										{project.link ? (
-											<>
-												<a
-													href={project.link}
-													target="_blank"
-													rel="noopener noreferrer"
-													className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 text-xs sm:text-sm font-semibold transition-all"
-												>
-													<span>{t.portfolio.live}</span>
-													<ExternalLink className="w-4 h-4" />
-												</a>
-												<Link
-													href={`/projects/${project.slug}`}
-													className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-[2px] border border-white/20 bg-white/10 hover:bg-primary/90 hover:text-primary-foreground hover:border-primary text-foreground text-xs sm:text-sm font-semibold transition-colors group/btn"
-												>
-													<span>{t.portfolio.viewCase}</span>
-													<ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-												</Link>
-											</>
-										) : (
-											<Link
-												href={`/projects/${project.slug}`}
-												className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-[2px] border border-white/20 bg-white/10 hover:bg-primary/90 hover:text-primary-foreground hover:border-primary text-foreground text-xs sm:text-sm font-semibold transition-colors group/btn"
-											>
-												<span>{t.portfolio.viewFullCase}</span>
-												<ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-											</Link>
-										)}
-									</div>
+				<div className="space-y-14">
+					{projectGroups.map((group) => (
+						<section key={group.id} aria-labelledby={`portfolio-${group.id}-heading`}>
+							<div className="mb-6 flex items-end justify-between border-b border-white/10 pb-4">
+								<div className="flex items-center gap-4">
+									<span className="font-mono text-xs tracking-widest text-primary">
+										{group.number}
+									</span>
+									<h3
+										id={`portfolio-${group.id}-heading`}
+										className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl"
+									>
+										{group.title}
+									</h3>
 								</div>
-							</BlurFade>
-						)
-					})}
+								<span className="border border-white/10 bg-card px-2.5 py-1 text-[10px] font-mono tracking-widest text-brand-steel">
+									{group.projects.length.toString().padStart(2, '0')}
+								</span>
+							</div>
+
+							{group.projects.length === 0 ? (
+								<p className="border-l-2 border-primary/50 bg-card px-5 py-4 text-sm text-brand-steel">
+									{t.portfolio.emptyCategory}
+								</p>
+							) : (
+								<div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+									{group.projects.map((project, index) => {
+										const isLive = !!project.link
+										const badge = project.statusBadge || (isLive ? t.portfolio.live : t.portfolio.caseBadge)
+
+										return (
+											<BlurFade key={project.id} delay={0.06 * (index + 1)} inView>
+												<article className="group/card flex h-full flex-col overflow-hidden rounded-[2px] border border-white/10 bg-gradient-to-b from-[#20252a] to-[#171a1e] shadow-lg shadow-black/20 transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl hover:shadow-black/30 motion-reduce:transition-none">
+													<div aria-hidden="true" className="h-0.5 w-full bg-linear-to-r from-primary via-primary/50 to-transparent" />
+													<Link
+														href={`/projects/${project.slug}`}
+														aria-label={`${project.title} — ${t.portfolio.viewFullCase}`}
+														className="group/image relative block aspect-[16/9] overflow-hidden bg-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+													>
+														<Image
+															src={project.image}
+															alt={project.title}
+															fill
+															loading={index === 0 ? 'eager' : 'lazy'}
+															sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+															className="object-cover transition-transform duration-700 group-hover/card:scale-[1.04] motion-reduce:transition-none"
+														/>
+														<div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/10 to-transparent" />
+														<span className="absolute left-3 top-3 border border-primary/50 bg-background/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-primary backdrop-blur">
+															{badge}
+														</span>
+														<span aria-hidden="true" className="absolute right-3 top-3 font-mono text-[10px] tracking-[0.2em] text-white/80">
+															{group.number}.{(index + 1).toString().padStart(2, '0')}
+														</span>
+														<h4 className="absolute bottom-0 left-0 right-0 line-clamp-2 px-4 pb-4 text-xl font-semibold tracking-tight text-pretty text-white sm:px-5 sm:pb-5 sm:text-2xl">
+															{project.title}
+														</h4>
+													</Link>
+
+													<div className="flex flex-1 flex-col p-4 sm:p-5">
+														<p className="line-clamp-2 text-sm leading-relaxed text-brand-steel">
+															{project.shortDescription}
+														</p>
+
+														<div className="mt-4 flex flex-wrap items-center gap-2">
+															{project.stack.slice(0, 4).map((tech) => (
+																<span
+																	key={tech}
+																	className="border border-primary/20 bg-primary/[0.06] px-2.5 py-1 text-[10px] font-medium text-foreground/90"
+																>
+																	{tech}
+																</span>
+															))}
+														</div>
+
+														<div className="mt-auto flex items-center gap-2 border-t border-white/10 pt-4">
+															{project.link && (
+																<a
+																	href={project.link}
+																	target="_blank"
+																	rel="noopener noreferrer"
+																	className="inline-flex h-10 flex-1 items-center justify-center gap-2 border border-white/20 px-3 text-[11px] font-medium text-brand-steel transition-colors hover:border-primary/50 hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+																>
+																	<span>{t.portfolio.live}</span>
+																	<ExternalLink aria-hidden="true" className="h-4 w-4" />
+																</a>
+															)}
+															<Link
+																href={`/projects/${project.slug}`}
+																className="group/btn inline-flex h-10 flex-1 items-center justify-center gap-2 bg-primary px-3 text-[11px] font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+															>
+																<span>{project.link ? t.portfolio.viewCase : t.portfolio.viewFullCase}</span>
+																<ArrowUpRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 motion-reduce:transition-none" />
+															</Link>
+														</div>
+													</div>
+												</article>
+											</BlurFade>
+										)
+									})}
+								</div>
+							)}
+						</section>
+					))}
 				</div>
 			</div>
 		</section>

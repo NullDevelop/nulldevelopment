@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowRight, Check, Code2, Cpu, Globe, LineChart, Sparkles } from 'lucide-react'
+import { ArrowRight, Check, Cpu, Globe, LineChart } from 'lucide-react'
 import Link from 'next/link'
 import { useI18n } from '@/i18n/provider'
 import { BlurFade } from './ui/blur-fade'

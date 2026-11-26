@@ -75,7 +75,7 @@ export function MultiFileUpload({
 				<div className="grid grid-cols-3 gap-2">
 					{value.map((url, index) => (
 						<div
-							key={url + index}
+							key={url}
 							className="relative h-24 group overflow-hidden rounded-lg border border-white/10"
 						>
 							<Image

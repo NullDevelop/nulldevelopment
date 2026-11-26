@@ -1,6 +1,5 @@
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
-import { Fragment } from 'react'
 import { Footer } from '@/components/footer'
 import { getDictionary } from '@/i18n/server'
 import { company, companyAddress } from '@/lib/company'
@@ -12,35 +11,37 @@ interface Section {
 }
 
 function Rich({ text, vars }: { text: string; vars: Record<string, string> }) {
-	const renderVars = (chunk: string) =>
-		chunk.split(/(\{\w+\})/g).map((part, i) => {
+	const renderVars = (chunk: string) => {
+		const occurrences = new Map<string, number>()
+		return chunk.split(/(\{\w+\})/g).map((part) => {
 			const match = part.match(/^\{(\w+)\}$/)
-			if (!match) return <Fragment key={i}>{part}</Fragment>
+			if (!match) return part
+			const occurrence = occurrences.get(part) ?? 0
+			occurrences.set(part, occurrence + 1)
+			const partKey = `${part}:${occurrence}`
 			const key = match[1]
 			if (key === 'email')
 				return (
-					<a key={i} href={`mailto:${company.email}`}>
+					<a key={partKey} href={`mailto:${company.email}`}>
 						{company.email}
 					</a>
 				)
 			if (key === 'privacyLink')
 				return (
-					<Link key={i} href="/privacidade">
+					<Link key={partKey} href="/privacidade">
 						{vars.privacyLinkText}
 					</Link>
 				)
-			return <Fragment key={i}>{vars[key] ?? part}</Fragment>
+			return vars[key] ?? part
 		})
+	}
 
 	return (
 		<>
-			{text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
-				part.startsWith('**') ? (
-					<strong key={i}>{renderVars(part.slice(2, -2))}</strong>
-				) : (
-					<Fragment key={i}>{renderVars(part)}</Fragment>
-				),
-			)}
+			{text.split(/(\*\*[^*]+\*\*)/g).map((part) => {
+				if (!part.startsWith('**')) return renderVars(part)
+				return <strong key={part}>{renderVars(part.slice(2, -2))}</strong>
+			})}
 		</>
 	)
 }

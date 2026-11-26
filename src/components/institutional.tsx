@@ -1,5 +1,4 @@
 import { Lock, Shield } from 'lucide-react'
-import Image from 'next/image'
 import { Pill } from './pill'
 import { BlurFade } from './ui/blur-fade'
 import { MagicCard } from './ui/magic-card'

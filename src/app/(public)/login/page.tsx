@@ -99,12 +99,6 @@ export default function LoginPage() {
 						</Button>
 					</form>
 
-					<p className="text-center font-mono text-xs text-brand-steel">
-						Ainda não tem uma conta?{' '}
-						<Link href="/register" className="text-primary hover:underline">
-							Cadastre-se
-						</Link>
-					</p>
 				</div>
 
 				<p className="font-mono text-xs text-foreground/20">

@@ -46,10 +46,9 @@ export const pt = {
 	portfolio: {
 		eyebrow: 'Cases Selecionados',
 		title: 'Projetos em Destaque',
-		all: 'Todos',
-		saas: 'SaaS & Web Apps',
 		public: 'Setor Público',
-		landing: 'Landing Pages',
+		private: 'Empresa Privada',
+		emptyCategory: 'Novos projetos desta categoria em breve.',
 		live: 'Ao Vivo',
 		viewCase: 'Ver Case',
 		viewFullCase: 'Ver Case Completo',

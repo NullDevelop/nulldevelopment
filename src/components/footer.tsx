@@ -39,9 +39,6 @@ export function Footer() {
 					<Link href="/privacidade" className="hover:text-foreground transition-colors">
 						Privacidade
 					</Link>
-					<Link href="/register" className="hover:text-foreground transition-colors">
-						Cadastro
-					</Link>
 				</nav>
 			</div>
 		</footer>

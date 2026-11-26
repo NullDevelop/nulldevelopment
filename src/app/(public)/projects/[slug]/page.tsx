@@ -1,14 +1,8 @@
 import {
 	ArrowLeft,
 	ArrowUpRight,
-	Calendar,
-	CheckCircle2,
 	ExternalLink,
-	Globe,
-	Layers,
 	MessageCircle,
-	ShieldCheck,
-	Sparkles,
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -80,6 +74,8 @@ export default async function ProjectPage({
 
 	const isLive = !!project.link
 	const badge = project.statusBadge || (isLive ? p.liveBadge : p.caseStudy)
+	const sectorLabel =
+		project.category === 'governamental' ? t.portfolio.public : t.portfolio.private
 
 	const whatsappHref = whatsappUrl(
 		company.whatsapp,
@@ -110,14 +106,19 @@ export default async function ProjectPage({
 
 				{/* Title & Quick Actions Header */}
 				<BlurFade delay={0.1}>
-					<div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
+					<div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
 						<div className="max-w-3xl">
-							<div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-[2px] border border-primary/30 bg-primary/10 text-primary text-xs sm:text-sm font-semibold uppercase mb-3">
-								<span className="w-2 h-2 rounded-full bg-primary" />
-								<span>{badge}</span>
+							<div className="mb-4 flex flex-wrap items-center gap-2">
+								<span className="inline-flex items-center border border-primary/30 bg-primary/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary">
+									{sectorLabel}
+								</span>
+								<span className="inline-flex items-center gap-2 border border-white/10 bg-card px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-brand-steel">
+									<span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+									{badge}
+								</span>
 							</div>
 
-							<h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.1]">
+							<h1 className="text-3xl font-bold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
 								{project.title}
 							</h1>
 							<p className="text-base sm:text-lg text-brand-steel mt-4 leading-relaxed max-w-2xl">
@@ -126,7 +127,7 @@ export default async function ProjectPage({
 						</div>
 
 						{/* Action Buttons */}
-						<div className="flex items-center gap-3 shrink-0">
+						<div className="flex shrink-0 flex-wrap items-center gap-3">
 							{project.link && (
 								<a
 									href={project.link}
@@ -154,7 +155,7 @@ export default async function ProjectPage({
 
 				{/* Big Hero Banner Image */}
 				<BlurFade delay={0.15}>
-					<div className="relative aspect-video w-full rounded-[2px] overflow-hidden border border-white/15 bg-background mb-10 group shadow-2xl">
+					<div className="group relative mb-10 aspect-video w-full overflow-hidden rounded-[2px] border border-white/15 bg-background shadow-2xl shadow-black/30">
 						<Image
 							src={project.image}
 							alt={project.title}
@@ -163,21 +164,21 @@ export default async function ProjectPage({
 							sizes="(max-width: 1200px) 100vw, 1200px"
 							className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
 						/>
-						<div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent opacity-40 pointer-events-none" />
+						<div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent opacity-40" />
 					</div>
 				</BlurFade>
 
 				{/* Meta Strip Bar */}
 				<BlurFade delay={0.2}>
-					<div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-6 rounded-[2px] border border-white/10 bg-card backdrop-blur-xs mb-10">
-						<div>
+					<div className="mb-10 grid grid-cols-2 gap-3 border border-white/10 bg-card p-4 backdrop-blur-xs sm:grid-cols-4 sm:gap-0 sm:p-5">
+						<div className="border-l-2 border-primary/40 pl-4">
 							<span className="text-brand-steel uppercase text-xs tracking-wider block mb-1 font-medium">
 								{p.myRole}
 							</span>
 							<span className="text-foreground font-semibold text-sm sm:text-base">{p.myRoleValue}</span>
 						</div>
 
-						<div>
+						<div className="border-l-2 border-primary/40 pl-4">
 							<span className="text-brand-steel uppercase text-xs tracking-wider block mb-1 font-medium">
 								{p.solutionType}
 							</span>
@@ -190,7 +191,7 @@ export default async function ProjectPage({
 							</span>
 						</div>
 
-						<div>
+						<div className="border-l-2 border-primary/40 pl-4">
 							<span className="text-brand-steel uppercase text-xs tracking-wider block mb-1 font-medium">
 								{p.status}
 							</span>
@@ -200,7 +201,7 @@ export default async function ProjectPage({
 							</span>
 						</div>
 
-						<div>
+						<div className="border-l-2 border-primary/40 pl-4">
 							<span className="text-brand-steel uppercase text-xs tracking-wider block mb-1 font-medium">
 								{p.access}
 							</span>

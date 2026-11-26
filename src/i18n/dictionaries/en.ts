@@ -48,10 +48,9 @@ export const en: Dictionary = {
 	portfolio: {
 		eyebrow: 'Selected Case Studies',
 		title: 'Featured Projects',
-		all: 'All',
-		saas: 'SaaS & Web Apps',
 		public: 'Public Sector',
-		landing: 'Landing Pages',
+		private: 'Private Company',
+		emptyCategory: 'More projects in this category coming soon.',
 		live: 'Live',
 		viewCase: 'View Case',
 		viewFullCase: 'View Full Case Study',

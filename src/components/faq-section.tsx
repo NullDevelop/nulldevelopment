@@ -1,6 +1,6 @@
 'use client'
 
-import { ChevronDown, HelpCircle, MessageCircle } from 'lucide-react'
+import { ChevronDown, MessageCircle } from 'lucide-react'
 import { useState } from 'react'
 import { whatsappUrl } from '@/i18n/format'
 import { useI18n } from '@/i18n/provider'

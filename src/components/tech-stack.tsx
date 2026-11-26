@@ -1,14 +1,10 @@
 'use client'
 
 import {
-	Code,
 	Database,
-	Globe,
 	Layout,
 	Server,
 	Settings,
-	Terminal,
-	Zap,
 } from 'lucide-react'
 import { Pill } from './pill'
 import { BlurFade } from './ui/blur-fade'

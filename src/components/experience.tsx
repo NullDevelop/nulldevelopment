@@ -1,6 +1,5 @@
 'use client'
 
-import { Calendar, CheckCircle2 } from 'lucide-react'
 import { useI18n } from '@/i18n/provider'
 import { BlurFade } from './ui/blur-fade'
 

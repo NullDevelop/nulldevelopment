@@ -3,17 +3,11 @@
 import {
 	ArrowRight,
 	Check,
-	Clock,
-	Code2,
-	Compass,
 	Cpu,
 	Globe,
-	Layers,
 	LineChart,
 	MessageCircle,
 	Rocket,
-	ShieldCheck,
-	Sparkles,
 } from 'lucide-react'
 import Link from 'next/link'
 import { Pill } from './pill'
@@ -217,7 +211,7 @@ export function Services() {
 					</div>
 
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-						{steps.map((st, i) => (
+						{steps.map((st) => (
 							<div
 								key={st.step}
 								className="relative p-6 rounded-[2px] border border-white/5 bg-card flex flex-col justify-between"
