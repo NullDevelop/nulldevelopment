@@ -2,9 +2,9 @@ import type { Dictionary } from './types'
 
 export const en: Dictionary = {
 	meta: {
-		title: 'Pedro Henrique | Full Stack Developer & Software Engineer',
+		title: 'Software Developer in Campina Grande do Sul | Null Development',
 		description:
-			'Portfolio and Full Stack development services by Pedro Henrique Andrade. Specialist in Next.js, React, Node.js, TypeScript and scalable software architecture. Available for projects and freelance work.',
+			'Software developer in Campina Grande do Sul and Quatro Barras, Brazil. Custom web systems, process automation, and integrations for local businesses.',
 	},
 	language: {
 		label: 'Language',

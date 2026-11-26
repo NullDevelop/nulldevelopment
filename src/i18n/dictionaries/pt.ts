@@ -1,8 +1,8 @@
 export const pt = {
 	meta: {
-		title: 'Pedro Henrique | Full Stack Developer & Software Engineer',
+		title: 'Desenvolvedor em Campina Grande do Sul | Null Development',
 		description:
-			'Portfólio e serviços de desenvolvimento Full Stack de Pedro Henrique Andrade. Especialista em Next.js, React, Node.js, TypeScript e arquitetura de software escalável. Disponível para projetos e freelance.',
+			'Desenvolvedor de software em Campina Grande do Sul e Quatro Barras. Criação de sistemas web sob medida, automações e integrações para empresas da região.',
 	},
 	language: {
 		label: 'Idioma',

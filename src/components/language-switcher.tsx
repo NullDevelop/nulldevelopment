@@ -33,7 +33,7 @@ export function LanguageSwitcher() {
 					type="button"
 					aria-label={t.language.label}
 					disabled={isPending}
-					className="inline-flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold px-3 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-zinc-200 transition-colors cursor-pointer disabled:opacity-60"
+					className="inline-flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold px-3 py-2 rounded-[2px] border border-white/15 bg-white/5 hover:bg-white/10 text-foreground/90 transition-colors cursor-pointer disabled:opacity-60"
 				>
 					<Globe className="w-4 h-4" />
 					<span>{localeMeta[locale].short}</span>
@@ -47,7 +47,7 @@ export function LanguageSwitcher() {
 						className="cursor-pointer justify-between gap-3"
 					>
 						<span>{localeMeta[code].name}</span>
-						{code === locale && <Check className="w-4 h-4 text-emerald-400" />}
+						{code === locale && <Check className="w-4 h-4 text-primary" />}
 					</DropdownMenuItem>
 				))}
 			</DropdownMenuContent>

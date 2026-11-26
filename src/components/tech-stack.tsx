@@ -103,13 +103,13 @@ export function TechStack() {
 					{categories.map((cat, index) => (
 						<BlurFade key={cat.title} delay={0.15 * (index + 1)} inView>
 							<MagicCard
-								className="p-6 sm:p-8 h-full rounded-3xl bg-zinc-950 border border-white/10 hover:border-yellow-500/30 transition-all duration-300"
+								className="p-6 sm:p-8 h-full rounded-[2px] bg-card border border-white/10 hover:border-primary/30 transition-colors duration-300"
 								gradientColor="#1a1a1a"
 							>
 								<div className="flex flex-col h-full justify-between gap-6">
 									<div>
 										<div className="flex items-center gap-3.5 mb-3">
-											<div className="w-11 h-11 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-400 border border-yellow-500/20">
+											<div className="w-11 h-11 rounded-[2px] bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
 												<cat.icon size={22} />
 											</div>
 											<h3 className="font-sentient text-xl font-medium text-foreground">
@@ -125,10 +125,10 @@ export function TechStack() {
 										{cat.skills.map((skill) => (
 											<div
 												key={skill.name}
-												className="flex items-center justify-between px-3 py-2 rounded-xl bg-zinc-900/60 border border-white/5 font-mono text-xs text-foreground/80 hover:border-yellow-500/20 transition-colors"
+												className="flex items-center justify-between px-3 py-2 rounded-[2px] bg-card border border-white/5 font-mono text-xs text-foreground/80 hover:border-primary/20 transition-colors"
 											>
 												<span className="truncate">{skill.name}</span>
-												<span className="text-[10px] text-yellow-500/80 font-mono shrink-0 ml-2">
+												<span className="text-[10px] text-primary/80 font-mono shrink-0 ml-2">
 													{skill.level}
 												</span>
 											</div>

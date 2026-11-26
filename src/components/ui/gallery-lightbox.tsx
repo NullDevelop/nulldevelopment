@@ -30,7 +30,7 @@ export function GalleryLightbox({ images, title }: GalleryLightboxProps) {
 							key={img}
 							type="button"
 							onClick={() => setSelected(i)}
-							className="relative aspect-video w-full rounded-2xl border border-white/5 overflow-hidden group cursor-zoom-in shrink-0"
+							className="relative aspect-video w-full rounded-[2px] border border-white/5 overflow-hidden group cursor-zoom-in shrink-0"
 						>
 							<Image
 								src={img}
@@ -64,7 +64,7 @@ export function GalleryLightbox({ images, title }: GalleryLightboxProps) {
 						<button
 							type="button"
 							onClick={() => setSelected(null)}
-							className="absolute top-3 right-3 p-1.5 rounded-full bg-black/60 hover:bg-black/80 text-white transition-colors z-10"
+							className="absolute top-3 right-3 p-1.5 rounded-full bg-black/60 hover:bg-black/80 text-foreground transition-colors z-10"
 						>
 							<X className="size-4" />
 						</button>
@@ -74,14 +74,14 @@ export function GalleryLightbox({ images, title }: GalleryLightboxProps) {
 								<button
 									type="button"
 									onClick={prev}
-									className="absolute left-3 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 hover:bg-black/80 text-white transition-colors z-10"
+									className="absolute left-3 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 hover:bg-black/80 text-foreground transition-colors z-10"
 								>
 									<ChevronLeft className="size-5" />
 								</button>
 								<button
 									type="button"
 									onClick={next}
-									className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 hover:bg-black/80 text-white transition-colors z-10"
+									className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 hover:bg-black/80 text-foreground transition-colors z-10"
 								>
 									<ChevronRight className="size-5" />
 								</button>
@@ -92,7 +92,7 @@ export function GalleryLightbox({ images, title }: GalleryLightboxProps) {
 											key={img}
 											type="button"
 											onClick={() => setSelected(i)}
-											className={`w-1.5 h-1.5 rounded-full transition-colors ${i === selected ? 'bg-yellow-400' : 'bg-white/30'}`}
+											className={`w-1.5 h-1.5 rounded-full transition-colors ${i === selected ? 'bg-primary' : 'bg-white/30'}`}
 										/>
 									))}
 								</div>

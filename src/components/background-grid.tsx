@@ -34,18 +34,18 @@ export function BackgroundGrid() {
 			<div
 				className="absolute inset-0 transition-opacity duration-300"
 				style={{
-					background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(235, 184, 0, 0.06), transparent 80%)`,
+					background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(196, 126, 90, 0.06), transparent 80%)`,
 				}}
 			/>
 
 			{/* Top Hero Ambient Glow */}
-			<div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[700px] sm:w-[1000px] h-[450px] rounded-full bg-linear-to-b from-yellow-500/12 to-amber-600/5 blur-[130px] opacity-75 animate-pulse duration-[6000ms]" />
+			<div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[700px] sm:w-[1000px] h-[450px] rounded-full bg-linear-to-b from-primary/12 to-primary/5 blur-[130px] opacity-75 animate-pulse duration-[6000ms]" />
 
 			{/* Middle Ambient Aura */}
-			<div className="absolute top-[40%] right-[-10%] w-[500px] h-[500px] rounded-full bg-amber-500/6 blur-[150px]" />
+			<div className="absolute top-[40%] right-[-10%] w-[500px] h-[500px] rounded-full bg-primary/6 blur-[150px]" />
 
 			{/* Bottom Ambient Aura (Contact section) */}
-			<div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] rounded-full bg-yellow-600/8 blur-[160px]" />
+			<div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] rounded-full bg-primary/8 blur-[160px]" />
 
 			{/* Vignette Overlay for smooth depth */}
 			<div className="absolute inset-0 bg-radial from-transparent via-black/40 to-black pointer-events-none" />

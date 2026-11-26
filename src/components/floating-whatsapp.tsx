@@ -32,7 +32,7 @@ export function FloatingWhatsApp() {
 				href={whatsappUrl(company.whatsapp, t.whatsapp.budget)}
 				target="_blank"
 				rel="noopener noreferrer"
-				className="group flex items-center gap-2.5 p-2 sm:px-4 sm:py-2.5 rounded-full border border-emerald-500/40 bg-zinc-950/90 hover:bg-emerald-950/40 text-emerald-400 backdrop-blur-md shadow-2xl transition-all duration-300 hover:scale-105 hover:border-emerald-400"
+				className="group flex items-center gap-2.5 p-2 sm:px-4 sm:py-2.5 rounded-full border border-emerald-500/40 bg-background/90 hover:bg-emerald-950/40 text-emerald-400 backdrop-blur-md shadow-2xl transition-all duration-300 hover:scale-105 hover:border-emerald-400"
 				title={t.floatingWhatsapp.title}
 			>
 				{/* Glowing Ping Status */}
@@ -44,7 +44,7 @@ export function FloatingWhatsApp() {
 				<MessageCircle className="w-5 h-5 shrink-0 text-emerald-400 group-hover:rotate-12 transition-transform" />
 
 				{/* Text visible on desktop / tablet */}
-				<span className="hidden sm:inline font-mono text-xs font-semibold tracking-wide text-zinc-100 group-hover:text-emerald-300">
+				<span className="hidden sm:inline font-mono text-xs font-semibold tracking-wide text-foreground group-hover:text-emerald-300">
 					{t.floatingWhatsapp.label}
 				</span>
 			</a>

@@ -147,15 +147,15 @@ export function Services() {
 					{services.map((service, index) => (
 						<BlurFade key={service.title} delay={0.15 * (index + 1)} inView>
 							<MagicCard
-								className="p-7 sm:p-9 h-full flex flex-col justify-between rounded-3xl bg-zinc-950 border border-white/10 hover:border-yellow-500/30 transition-all duration-300"
+								className="p-7 sm:p-9 h-full flex flex-col justify-between rounded-[2px] bg-card border border-white/10 hover:border-primary/30 transition-colors duration-300"
 								gradientColor="#1a1a1a"
 							>
 								<div>
 									<div className="flex items-center justify-between gap-3 mb-5">
-										<div className="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-400 border border-yellow-500/20">
+										<div className="w-12 h-12 rounded-[2px] bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
 											<service.icon size={24} />
 										</div>
-										<span className="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full border border-yellow-500/30 bg-yellow-500/10 text-yellow-300 font-medium">
+										<span className="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-[2px] border border-primary/30 bg-primary/10 text-primary font-medium">
 											{service.badge}
 										</span>
 									</div>
@@ -185,13 +185,13 @@ export function Services() {
 
 								<div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 									<div className="font-mono text-[11px] text-foreground/50">
-										<span className="text-yellow-400 font-semibold">Ideal para: </span>
+										<span className="text-primary font-semibold">Ideal para: </span>
 										{service.idealFor}
 									</div>
 
 									<Link
 										href="#contato"
-										className="shrink-0 inline-flex items-center gap-1.5 font-mono text-xs uppercase text-yellow-400 hover:text-yellow-300 font-medium group"
+										className="shrink-0 inline-flex items-center gap-1.5 font-mono text-xs uppercase text-primary hover:text-primary/90 font-medium group"
 									>
 										<span>Contratar</span>
 										<ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -203,9 +203,9 @@ export function Services() {
 				</div>
 
 				{/* 4-Step Process Section */}
-				<div className="rounded-3xl border border-white/10 bg-zinc-950/80 p-8 sm:p-12 backdrop-blur-md relative overflow-hidden">
+				<div className="rounded-[2px] border border-white/10 bg-card p-8 sm:p-12 backdrop-blur-md relative overflow-hidden">
 					<div className="text-center max-w-2xl mx-auto mb-14">
-						<span className="font-mono text-xs uppercase tracking-widest text-yellow-400 font-semibold">
+						<span className="font-mono text-xs uppercase tracking-widest text-primary font-semibold">
 							Metodologia Transparente
 						</span>
 						<h3 className="font-sentient text-2xl sm:text-4xl text-foreground mt-2">
@@ -220,10 +220,10 @@ export function Services() {
 						{steps.map((st, i) => (
 							<div
 								key={st.step}
-								className="relative p-6 rounded-2xl border border-white/5 bg-zinc-900/50 flex flex-col justify-between"
+								className="relative p-6 rounded-[2px] border border-white/5 bg-card flex flex-col justify-between"
 							>
 								<div>
-									<span className="font-sentient text-4xl font-bold text-yellow-500/30 block mb-4">
+									<span className="font-sentient text-4xl font-bold text-primary/30 block mb-4">
 										{st.step}
 									</span>
 									<h4 className="font-sentient text-lg text-foreground font-semibold mb-2">
@@ -238,7 +238,7 @@ export function Services() {
 					</div>
 
 					{/* Banner CTA inside Services */}
-					<div className="mt-12 p-6 sm:p-8 rounded-2xl border border-yellow-500/20 bg-linear-to-r from-yellow-500/10 via-amber-500/5 to-transparent flex flex-col sm:flex-row items-center justify-between gap-6">
+					<div className="mt-12 p-6 sm:p-8 rounded-[2px] border border-primary/20 bg-linear-to-r from-primary/10 via-primary/5 to-transparent flex flex-col sm:flex-row items-center justify-between gap-6">
 						<div>
 							<h4 className="font-sentient text-xl sm:text-2xl text-foreground font-semibold">
 								Tem uma ideia ou projeto em mente?
@@ -252,7 +252,7 @@ export function Services() {
 							<Link href="#contato" className="w-full sm:w-auto">
 								<ShimmerButton
 									className="w-full sm:w-auto font-mono uppercase text-xs sm:text-sm h-11 px-6"
-									shimmerColor="#EBB800"
+									shimmerColor="#C97855"
 								>
 									Solicitar Orçamento
 								</ShimmerButton>

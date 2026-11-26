@@ -50,7 +50,7 @@ const projects: InstitutionalProject[] = [
 
 const statusColor = {
 	'Em uso': 'text-green-400 bg-green-400/10 border-green-400/20',
-	'Concluído': 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20',
+	'Concluído': 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20',
 	'Em desenvolvimento': 'text-blue-400 bg-blue-400/10 border-blue-400/20',
 }
 
@@ -85,8 +85,8 @@ export function Institutional() {
 				</BlurFade>
 
 				<BlurFade delay={0.45} inView>
-					<div className="inline-flex items-start gap-2.5 mt-8 px-4 py-3 rounded-xl border border-yellow-500/20 bg-yellow-500/5 max-w-xl mx-auto text-left">
-						<Shield className="size-4 text-yellow-500/70 mt-0.5 shrink-0" />
+					<div className="inline-flex items-start gap-2.5 mt-8 px-4 py-3 rounded-[2px] border border-primary/20 bg-primary/5 max-w-xl mx-auto text-left">
+						<Shield className="size-4 text-primary/70 mt-0.5 shrink-0" />
 						<p className="font-mono text-xs text-foreground/50 leading-relaxed">
 							Os sistemas listados foram desenvolvidos no exercício do cargo público
 							e são de{' '}
@@ -109,7 +109,7 @@ export function Institutional() {
 							inView
 						>
 							<MagicCard
-								className="p-8 h-full flex flex-col justify-between rounded-3xl bg-zinc-950 border border-foreground/15 hover:border-foreground/25 transition-colors"
+								className="p-8 h-full flex flex-col justify-between rounded-[2px] bg-card border border-white/10 hover:border-primary/30 transition-colors"
 								gradientColor="#1a1a1a"
 							>
 								<div className="flex flex-col gap-6">
@@ -129,7 +129,7 @@ export function Institutional() {
 										<h4 className="font-sentient text-2xl text-foreground/90 mb-1 leading-snug">
 											{project.name}
 										</h4>
-										<p className="font-mono text-xs text-yellow-500/70 mb-3">
+										<p className="font-mono text-xs text-primary/70 mb-3">
 											{project.institution}
 										</p>
 										<p className="font-mono text-sm text-foreground/60 leading-relaxed">

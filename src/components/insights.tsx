@@ -74,7 +74,7 @@ function InsightsClient({
 						{clients.map((client) => (
 							<div
 								key={client.name}
-								className="group flex items-center justify-center h-28 w-56 bg-zinc-950/60 backdrop-blur-md rounded-2xl border border-white/10 p-5 hover:border-yellow-500/40 hover:bg-zinc-900/60 transition-all duration-300"
+								className="group flex items-center justify-center h-28 w-56 bg-card backdrop-blur-md rounded-[2px] border border-white/10 p-5 hover:border-primary/40 hover:bg-card/60 transition-colors duration-300"
 							>
 								<Image
 									src={client.logo}

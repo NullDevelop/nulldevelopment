@@ -20,11 +20,11 @@ export function ProjectCard({ title, shortDescription, image, slug, link, stack 
 			className="group flex flex-col flex-1"
 		>
 			<MagicCard
-				className="p-8 h-full flex flex-col justify-between rounded-3xl bg-zinc-950 border border-foreground/15 hover:border-foreground/25 transition-colors"
+				className="p-8 h-full flex flex-col justify-between rounded-[2px] bg-card border border-white/10 hover:border-primary/30 transition-colors"
 				gradientColor="#1a1a1a"
 			>
 				<div className="flex flex-col gap-5">
-					<div className="relative rounded-2xl overflow-hidden">
+					<div className="relative rounded-[2px] overflow-hidden">
 						<Image
 							src={image}
 							alt={title}
@@ -68,7 +68,7 @@ export function ProjectCard({ title, shortDescription, image, slug, link, stack 
 				</div>
 
 				<div className="mt-6 pt-5 border-t border-foreground/10 flex items-center justify-end">
-					<span className="font-mono text-xs text-yellow-500 group-hover:text-yellow-400 transition-colors">
+					<span className="font-mono text-xs text-primary group-hover:text-primary/90 transition-colors">
 						Ver projeto →
 					</span>
 				</div>

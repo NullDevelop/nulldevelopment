@@ -13,7 +13,7 @@ export default async function CompaniesPage() {
 		<div className="flex flex-col gap-6">
 			<div className="flex items-center justify-between">
 				<div>
-					<h1 className="font-sentient text-3xl font-bold text-white">Empresas</h1>
+					<h1 className="font-sentient text-3xl font-bold text-foreground">Empresas</h1>
 					<p className="font-mono text-sm text-foreground/40 mt-1">
 						{companies.length} cliente{companies.length !== 1 ? 's' : ''} cadastrado{companies.length !== 1 ? 's' : ''}
 					</p>
@@ -21,7 +21,7 @@ export default async function CompaniesPage() {
 				<CompanyDialog />
 			</div>
 
-			<div className="rounded-2xl border border-white/10 bg-zinc-900/80 overflow-hidden">
+			<div className="rounded-[2px] border border-white/10 bg-card overflow-hidden">
 				{companies.length === 0 ? (
 					<div className="flex flex-col items-center justify-center py-16 gap-3">
 						<p className="font-mono text-sm text-foreground/30">Nenhuma empresa cadastrada.</p>
@@ -52,7 +52,7 @@ export default async function CompaniesPage() {
 										<span className="font-medium text-foreground">{company.name}</span>
 									</td>
 									<td className="px-6 py-4">
-										<span className="font-mono text-xs px-2 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">
+										<span className="font-mono text-xs px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
 											{company._count.projects} projeto{company._count.projects !== 1 ? 's' : ''}
 										</span>
 									</td>

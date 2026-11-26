@@ -15,8 +15,8 @@ export default async function AuthLayout({
 	return (
 		<SidebarProvider>
 			<AppSidebar />
-			<main className="w-full min-h-screen bg-muted/5">
-				<div className="flex items-center h-16 px-4 border-b border-white/5 bg-black/20 backdrop-blur-md sticky top-0 z-50">
+			<main className="w-full min-h-screen bg-background">
+				<div className="flex items-center h-16 px-4 border-b border-white/[0.06] bg-background/90 backdrop-blur-md sticky top-0 z-50">
 					<SidebarTrigger className="hover:bg-white/5" />
 					<div className="ml-4 h-4 w-px bg-white/10" />
 					<h1 className="ml-4 font-sentient text-lg tracking-tight">

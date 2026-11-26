@@ -9,6 +9,8 @@ import { localizeProject } from '@/i18n/projects'
 import { useI18n } from '@/i18n/provider'
 import { curatedProjects, type ProjectData } from '@/lib/projects-data'
 
+const hiddenProjectSlugs = new Set(['footeasy', 'sira'])
+
 interface PortfolioSectionProps {
 	dbProjects: ProjectData[]
 }
@@ -17,9 +19,9 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 	const { t, locale } = useI18n()
 	const [activeCategory, setActiveCategory] = useState<string>('all')
 
-	const projectsToDisplay = (dbProjects.length > 0 ? dbProjects : curatedProjects).map((p) =>
-		localizeProject(p, locale, t),
-	)
+	const projectsToDisplay = (dbProjects.length > 0 ? dbProjects : curatedProjects)
+		.filter((project) => !hiddenProjectSlugs.has(project.slug))
+		.map((project) => localizeProject(project, locale, t))
 
 	const filteredProjects = projectsToDisplay.filter((item) => {
 		if (activeCategory === 'all') return true
@@ -35,10 +37,10 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 				{/* Section Header */}
 				<div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-white/10 pb-6">
 					<div>
-						<span className="text-xs sm:text-sm uppercase tracking-widest text-yellow-400 font-semibold">
+						<span className="text-xs sm:text-sm uppercase tracking-widest text-primary font-semibold">
 							{t.portfolio.eyebrow}
 						</span>
-						<h2 className="text-3xl sm:text-5xl font-bold text-white mt-2">
+						<h2 className="text-3xl sm:text-5xl font-bold text-foreground mt-2">
 							{t.portfolio.title}
 						</h2>
 					</div>
@@ -57,7 +59,7 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 								className={`text-xs sm:text-sm px-4 py-2 rounded-xl transition-all cursor-pointer font-medium ${
 									activeCategory === tab.id
 										? 'bg-white text-black font-semibold shadow-md'
-										: 'text-zinc-300 hover:text-white hover:bg-white/10 border border-white/5'
+										: 'text-brand-steel hover:text-foreground hover:bg-white/10 border border-white/5'
 								}`}
 							>
 								{tab.label}
@@ -74,12 +76,12 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 
 						return (
 							<BlurFade key={project.id} delay={0.07 * (index + 1)} inView>
-								<div className="group rounded-2xl border border-white/10 bg-zinc-900/50 hover:bg-zinc-900/90 hover:border-yellow-500/40 transition-all duration-300 p-6 flex flex-col justify-between h-full backdrop-blur-xs">
+								<div className="group rounded-[2px] border border-white/10 bg-card hover:bg-card/90 hover:border-primary/40 transition-colors duration-300 p-6 flex flex-col justify-between h-full backdrop-blur-xs">
 									<div>
 										{/* Preview Image with Link */}
 										<Link
 											href={`/projects/${project.slug}`}
-											className="block relative aspect-video rounded-xl overflow-hidden bg-zinc-950 border border-white/10 mb-5 cursor-pointer"
+											className="block relative aspect-video rounded-xl overflow-hidden bg-background border border-white/10 mb-5 cursor-pointer"
 										>
 											<Image
 												src={project.image}
@@ -90,18 +92,18 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 											/>
 											<div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
 
-											<span className="absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-md border border-white/20 bg-black/85 backdrop-blur-md text-zinc-100">
+											<span className="absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-md border border-white/20 bg-black/85 backdrop-blur-md text-foreground">
 												{badge}
 											</span>
 										</Link>
 
 										{/* Title & One-Liner */}
 										<Link href={`/projects/${project.slug}`} className="block group/title">
-											<h3 className="text-xl sm:text-2xl font-bold text-white group-hover/title:text-yellow-400 transition-colors">
+											<h3 className="text-xl sm:text-2xl font-bold text-foreground group-hover/title:text-primary transition-colors">
 												{project.title}
 											</h3>
 										</Link>
-										<p className="text-sm sm:text-base text-zinc-300 leading-relaxed mt-2.5 line-clamp-2">
+										<p className="text-sm sm:text-base text-brand-steel leading-relaxed mt-2.5 line-clamp-2">
 											{project.shortDescription}
 										</p>
 
@@ -110,7 +112,7 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 											{project.stack.slice(0, 4).map((tech) => (
 												<span
 													key={tech}
-													className="text-xs px-3 py-1 rounded-lg bg-white/[0.06] border border-white/15 text-zinc-200 font-medium"
+													className="text-xs px-3 py-1 rounded-lg bg-white/[0.06] border border-white/15 text-foreground/90 font-medium"
 												>
 													{tech}
 												</span>
@@ -133,7 +135,7 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 												</a>
 												<Link
 													href={`/projects/${project.slug}`}
-													className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-white/20 bg-white/10 hover:bg-yellow-400 hover:text-black hover:border-yellow-400 text-white text-xs sm:text-sm font-semibold transition-all group/btn"
+													className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-[2px] border border-white/20 bg-white/10 hover:bg-primary/90 hover:text-primary-foreground hover:border-primary text-foreground text-xs sm:text-sm font-semibold transition-colors group/btn"
 												>
 													<span>{t.portfolio.viewCase}</span>
 													<ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
@@ -142,7 +144,7 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 										) : (
 											<Link
 												href={`/projects/${project.slug}`}
-												className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-white/20 bg-white/10 hover:bg-yellow-400 hover:text-black hover:border-yellow-400 text-white text-xs sm:text-sm font-semibold transition-all group/btn"
+												className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-[2px] border border-white/20 bg-white/10 hover:bg-primary/90 hover:text-primary-foreground hover:border-primary text-foreground text-xs sm:text-sm font-semibold transition-colors group/btn"
 											>
 												<span>{t.portfolio.viewFullCase}</span>
 												<ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />

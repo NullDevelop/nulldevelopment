@@ -200,7 +200,7 @@ export function ProjectDialog({
 									<FormControl>
 										<div
 											data-color-mode="dark"
-											className="[&_.w-md-editor]:!bg-transparent [&_.w-md-editor]:!border [&_.w-md-editor]:!border-input [&_.w-md-editor]:!rounded-md [&_.w-md-editor]:!text-sm [&_.w-md-editor-toolbar]:!bg-black/30 [&_.w-md-editor-toolbar]:!border-b [&_.w-md-editor-toolbar]:!border-white/10 [&_.w-md-editor-toolbar_li_button]:!text-white/60 [&_.w-md-editor-toolbar_li_button:hover]:!text-white [&_.w-md-editor-content]:!bg-transparent [&_.w-md-editor-text-pre_>_code]:!bg-transparent [&_.w-md-editor-text]:!text-sm [&_.w-md-editor-text-pre]:!text-sm [&_::-webkit-scrollbar]:!w-1.5 [&_::-webkit-scrollbar-track]:!bg-transparent [&_::-webkit-scrollbar-thumb]:!rounded-full [&_::-webkit-scrollbar-thumb]:!bg-white/10 [&_::-webkit-scrollbar-thumb:hover]:!bg-white/20"
+											className="[&_.w-md-editor]:!bg-transparent [&_.w-md-editor]:!border [&_.w-md-editor]:!border-input [&_.w-md-editor]:!rounded-md [&_.w-md-editor]:!text-sm [&_.w-md-editor-toolbar]:!bg-black/30 [&_.w-md-editor-toolbar]:!border-b [&_.w-md-editor-toolbar]:!border-white/10 [&_.w-md-editor-toolbar_li_button]:!text-foreground/60 [&_.w-md-editor-toolbar_li_button:hover]:!text-foreground [&_.w-md-editor-content]:!bg-transparent [&_.w-md-editor-text-pre_>_code]:!bg-transparent [&_.w-md-editor-text]:!text-sm [&_.w-md-editor-text-pre]:!text-sm [&_::-webkit-scrollbar]:!w-1.5 [&_::-webkit-scrollbar-track]:!bg-transparent [&_::-webkit-scrollbar-thumb]:!rounded-full [&_::-webkit-scrollbar-thumb]:!bg-white/10 [&_::-webkit-scrollbar-thumb:hover]:!bg-white/20"
 										>
 											<MDEditor
 												value={field.value}

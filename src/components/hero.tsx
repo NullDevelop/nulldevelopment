@@ -1,101 +1,82 @@
-'use client'
-
-import { ArrowDown, Github, Linkedin, Mail, MessageCircle, Sparkles } from 'lucide-react'
+import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
-import { whatsappUrl } from '@/i18n/format'
-import { useI18n } from '@/i18n/provider'
-import { company } from '@/lib/company'
-import { BlurFade } from './ui/blur-fade'
+import { NullLogoMark } from './null-logo'
 
 export function Hero() {
-	const { t } = useI18n()
-
 	return (
-		<section className="flex flex-col justify-center min-h-svh lg:min-h-screen relative z-10 pt-28 pb-16 sm:py-24 lg:py-28 px-4 sm:px-6">
-			<div className="max-w-3xl mx-auto w-full text-center">
-				{/* Availability Badge */}
-				<BlurFade delay={0.05} inView>
-					<div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-xs sm:text-sm font-medium mb-8 backdrop-blur-sm">
-						<span className="relative flex h-2.5 w-2.5">
-							<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-							<span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
-						</span>
-						<span>{t.hero.available}</span>
+		<section className="relative overflow-hidden bg-background border-b border-white/[0.06] pt-28 sm:pt-32">
+			{/* Subtle bottom-right architectural diagonal glow & copper accent */}
+			<div
+				aria-hidden="true"
+				className="pointer-events-none absolute inset-0 overflow-hidden"
+			>
+				<div className="absolute -bottom-24 -right-24 w-[420px] h-[420px] rounded-full bg-primary/[0.07] blur-[110px]" />
+				<div
+					className="hidden sm:block absolute bottom-0 right-0 w-[340px] h-[220px] bg-gradient-to-tl from-[#C97855]/[0.09] via-white/[0.02] to-transparent"
+					style={{ clipPath: 'polygon(100% 0, 100% 100%, 0 100%)' }}
+				/>
+				<div className="hidden sm:block absolute bottom-6 -right-8 w-36 h-px bg-primary/60 -rotate-45" />
+			</div>
+
+			<div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 pt-10 sm:pt-16 pb-12 sm:pb-16">
+				<div className="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-10 items-center">
+					{/* Left Content */}
+					<div className="lg:col-span-7">
+						<p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.22em] text-[#C97855]">
+							Desenvolvimento sob medida
+						</p>
+
+						<h1 className="mt-5 text-4xl sm:text-5xl lg:text-[56px] font-bold tracking-[-0.03em] leading-[1.06] text-foreground">
+							Tecnologia para
+							<br />o trabalho real.
+						</h1>
+
+						<p className="mt-6 text-sm sm:text-base text-brand-steel leading-relaxed max-w-md">
+							Software que simplifica processos e conecta o que faz seu negócio acontecer.
+						</p>
+
+						<div className="mt-9 flex flex-wrap items-center gap-6">
+							<Link
+								href="/#contato"
+								className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-xs sm:text-[13px] font-semibold bg-primary hover:bg-primary/90 text-primary-foreground rounded-[2px] transition-colors"
+							>
+								<span>Vamos conversar</span>
+								<ArrowUpRight className="w-3.5 h-3.5 stroke-[2.25]" />
+							</Link>
+
+							<Link
+								href="/#solucoes"
+								className="inline-flex items-center gap-2 text-xs sm:text-[13px] font-medium text-brand-steel hover:text-foreground transition-colors"
+							>
+								<span>Conheça as soluções</span>
+								<ArrowDown className="w-3.5 h-3.5 text-brand-steel" />
+							</Link>
+						</div>
 					</div>
-				</BlurFade>
 
-				{/* Name & Title */}
-				<BlurFade delay={0.1} inView>
-					<h1 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white tracking-tight leading-[1.1]">
-						Pedro Henrique Andrade
-					</h1>
-					<p className="text-base sm:text-xl text-yellow-400 font-semibold mt-4 tracking-normal">
-						{t.hero.role}
-					</p>
-				</BlurFade>
-
-				{/* Value Statement */}
-				<BlurFade delay={0.2} inView>
-					<p className="text-base sm:text-lg text-zinc-300 text-balance mt-6 max-w-2xl mx-auto leading-relaxed">
-						{t.hero.value}
-					</p>
-				</BlurFade>
-
-				{/* Primary CTAs */}
-				<BlurFade delay={0.3} inView>
-					<div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-9">
-						<a
-							href={whatsappUrl(company.whatsapp, t.whatsapp.budget)}
-							target="_blank"
-							rel="noopener noreferrer"
-							className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 text-sm sm:text-base px-7 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold transition-all duration-200 shadow-lg shadow-emerald-500/25 hover:scale-[1.02]"
-						>
-							<MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-							<span>{t.hero.cta}</span>
-						</a>
-
-						<Link
-							href="#portfolio"
-							className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm sm:text-base px-7 py-3.5 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/40 text-white font-medium transition-all duration-200"
-						>
-							<span>{t.hero.projects}</span>
-							<ArrowDown className="w-4 h-4 text-zinc-300" />
-						</Link>
+					{/* Right Brand Mark Feature */}
+					<div className="lg:col-span-5 flex flex-col items-center justify-center py-4 lg:py-8">
+						<NullLogoMark className="w-44 sm:w-52 lg:w-56 h-auto" />
+						<p className="mt-7 text-[10px] font-medium uppercase tracking-[0.26em] text-brand-steel text-center">
+							Do seu desafio à solução.
+						</p>
 					</div>
-				</BlurFade>
+				</div>
 
-				{/* Quick Social & Contact Row */}
-				<BlurFade delay={0.35} inView>
-					<div className="flex flex-wrap items-center justify-center gap-6 mt-10 text-zinc-400 text-sm">
-						<a
-							href="https://github.com/nulldevelop"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="flex items-center gap-1.5 hover:text-white transition-colors"
-						>
-							<Github className="w-4 h-4" />
-							<span>GitHub</span>
-						</a>
-						<span className="text-zinc-600">•</span>
-						<a
-							href="https://www.linkedin.com/in/pedrodevfull/"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="flex items-center gap-1.5 hover:text-white transition-colors"
-						>
-							<Linkedin className="w-4 h-4" />
-							<span>LinkedIn</span>
-						</a>
-						<span className="text-zinc-600">•</span>
-						<a
-							href={`mailto:${company.email}`}
-							className="flex items-center gap-1.5 hover:text-white transition-colors"
-						>
-							<Mail className="w-4 h-4" />
-							<span>{company.email}</span>
-						</a>
-					</div>
-				</BlurFade>
+				{/* Hero Bottom Bar */}
+				<div className="mt-16 sm:mt-20 pt-6 border-t border-white/[0.05] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+					<span className="text-[10px] font-medium uppercase tracking-[0.2em] text-brand-graphite">
+						01 · Ideias que funcionam na prática
+					</span>
+
+					<Link
+						href="/#solucoes"
+						className="inline-flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.2em] text-brand-steel hover:text-foreground transition-colors"
+					>
+						<span>Explore a Null</span>
+						<ArrowDown className="w-3 h-3" />
+					</Link>
+				</div>
 			</div>
 		</section>
 	)

@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BlurFade } from '@/components/ui/blur-fade'
+import { NullBrandLogo } from '@/components/null-logo'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
@@ -48,12 +49,15 @@ export default function RegisterPage() {
 	}
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-background px-4 py-20">
+		<div className="min-h-screen flex flex-col items-center justify-center gap-8 bg-background px-4 py-20">
+			<Link href="/" className="focus:outline-none">
+				<NullBrandLogo size="sm" />
+			</Link>
 			<BlurFade delay={0.1}>
-				<Card className="w-full max-w-md border-border/50 bg-card/50 backdrop-blur-xl">
+				<Card className="w-full max-w-md rounded-[2px] border-border bg-card backdrop-blur-xl">
 					<CardHeader className="space-y-1 text-center">
-						<CardTitle className="text-3xl font-sentient">Criar Conta</CardTitle>
-						<CardDescription className="font-mono">
+						<CardTitle className="text-3xl font-sentient text-foreground">Criar Conta</CardTitle>
+						<CardDescription className="font-mono text-muted-foreground">
 							Preencha os dados abaixo para se registrar.
 						</CardDescription>
 					</CardHeader>
@@ -120,7 +124,7 @@ export default function RegisterPage() {
 								)}
 							</Button>
 							<div className="text-center mt-4">
-								<p className="text-sm text-foreground/60 font-mono">
+								<p className="text-sm text-muted-foreground font-mono">
 									Já tem uma conta?{' '}
 									<Link href="/login" className="text-primary hover:underline">
 										Faça login

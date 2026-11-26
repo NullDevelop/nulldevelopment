@@ -6,7 +6,7 @@ import { BlurFade } from './ui/blur-fade'
 
 const meta = [
 	{
-		badgeColor: 'border-yellow-500/30 text-yellow-400 bg-yellow-500/10',
+		badgeColor: 'border-primary/30 text-primary bg-primary/10',
 		stack: ['Next.js 16', 'TypeScript', 'Prisma ORM', 'MySQL', 'Azure AD', 'Tailwind CSS'],
 	},
 	{
@@ -24,10 +24,10 @@ export function Experience() {
 			<div className="max-w-4xl mx-auto w-full">
 				{/* Section Header */}
 				<div className="mb-12 border-b border-white/10 pb-6">
-					<span className="text-xs sm:text-sm uppercase tracking-widest text-yellow-400 font-semibold">
+					<span className="text-xs sm:text-sm uppercase tracking-widest text-primary font-semibold">
 						{t.experience.eyebrow}
 					</span>
-					<h2 className="text-3xl sm:text-5xl font-bold text-white mt-2">
+					<h2 className="text-3xl sm:text-5xl font-bold text-foreground mt-2">
 						{t.experience.title}
 					</h2>
 				</div>
@@ -38,36 +38,36 @@ export function Experience() {
 						<BlurFade key={exp.company} delay={0.1 * (index + 1)} inView>
 							<div className="relative pl-9 sm:pl-12 group">
 								{/* Timeline Dot */}
-								<div className="absolute left-1.5 sm:left-2.5 top-2 w-3.5 h-3.5 rounded-full border-2 border-yellow-400 bg-black group-hover:scale-125 transition-transform" />
+								<div className="absolute left-1.5 sm:left-2.5 top-2 w-3.5 h-3.5 rounded-full border-2 border-primary bg-black group-hover:scale-125 transition-transform" />
 
 								{/* Header Info */}
 								<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-2">
 									<div className="flex items-center gap-3 flex-wrap">
-										<h3 className="text-xl sm:text-2xl font-bold text-white">
+										<h3 className="text-xl sm:text-2xl font-bold text-foreground">
 											{exp.role}
 										</h3>
 										<span className={`text-xs px-2.5 py-1 rounded-md border font-medium ${exp.badgeColor}`}>
 											{exp.badge}
 										</span>
 									</div>
-									<span className="text-sm text-zinc-400 font-medium shrink-0">
+									<span className="text-sm text-brand-steel font-medium shrink-0">
 										{exp.period}
 									</span>
 								</div>
 
-								<p className="text-sm sm:text-base text-yellow-400 font-semibold mb-3">
+								<p className="text-sm sm:text-base text-primary font-semibold mb-3">
 									{exp.company}
 								</p>
 
-								<p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-4">
+								<p className="text-sm sm:text-base text-brand-steel leading-relaxed mb-4">
 									{exp.description}
 								</p>
 
 								{/* Highlights List */}
 								<ul className="space-y-2.5 mb-5">
 									{exp.highlights.map((h) => (
-										<li key={h} className="flex items-start gap-2.5 text-sm sm:text-base text-zinc-200 leading-relaxed">
-											<span className="text-yellow-400 font-bold mt-0.5">•</span>
+										<li key={h} className="flex items-start gap-2.5 text-sm sm:text-base text-foreground/90 leading-relaxed">
+											<span className="text-primary font-bold mt-0.5">•</span>
 											<span>{h}</span>
 										</li>
 									))}
@@ -78,7 +78,7 @@ export function Experience() {
 									{exp.stack.map((t) => (
 										<span
 											key={t}
-											className="text-xs px-3 py-1 rounded-lg bg-white/[0.06] border border-white/15 text-zinc-200 font-medium"
+											className="text-xs px-3 py-1 rounded-lg bg-white/[0.06] border border-white/15 text-foreground/90 font-medium"
 										>
 											{t}
 										</span>

@@ -88,12 +88,12 @@ export function About() {
 
 				{/* Bio & Story Card */}
 				<BlurFade delay={0.3} inView>
-					<div className="rounded-3xl border border-white/10 bg-zinc-950/80 backdrop-blur-md p-6 sm:p-10 md:p-12 mb-12 relative overflow-hidden">
-						<div className="absolute top-0 right-0 w-80 h-80 bg-yellow-500/5 rounded-full blur-3xl pointer-events-none" />
+					<div className="rounded-[2px] border border-white/10 bg-card backdrop-blur-md p-6 sm:p-10 md:p-12 mb-12 relative overflow-hidden">
+						<div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
 						<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 							<div className="lg:col-span-7 flex flex-col gap-5">
-								<div className="inline-flex items-center gap-2 text-yellow-400 font-mono text-xs uppercase tracking-widest">
+								<div className="inline-flex items-center gap-2 text-primary font-mono text-xs uppercase tracking-widest">
 									<Code2 className="w-4 h-4" />
 									<span>Desenvolvedor Full Stack & Arquiteto</span>
 								</div>
@@ -112,33 +112,33 @@ export function About() {
 
 								<div className="pt-2 flex flex-wrap gap-4 text-xs font-mono text-foreground/60">
 									<div className="flex items-center gap-1.5">
-										<Clock className="w-4 h-4 text-yellow-400" />
+										<Clock className="w-4 h-4 text-primary" />
 										<span>Entregas ágeis & pontuais</span>
 									</div>
 									<div className="flex items-center gap-1.5">
-										<ShieldCheck className="w-4 h-4 text-yellow-400" />
+										<ShieldCheck className="w-4 h-4 text-primary" />
 										<span>Garantia pós-lançamento</span>
 									</div>
 									<div className="flex items-center gap-1.5">
-										<CheckCircle2 className="w-4 h-4 text-yellow-400" />
+										<CheckCircle2 className="w-4 h-4 text-primary" />
 										<span>Contrato & Nota Fiscal</span>
 									</div>
 								</div>
 							</div>
 
-							<div className="lg:col-span-5 bg-black/40 border border-white/10 rounded-2xl p-6 flex flex-col gap-4">
+							<div className="lg:col-span-5 bg-card border border-white/10 rounded-[2px] p-6 flex flex-col gap-4">
 								<h4 className="font-sentient text-sm uppercase tracking-widest text-foreground/50 flex items-center justify-between">
 									<span>Stack em Destaque</span>
-									<Sparkles className="w-4 h-4 text-yellow-400" />
+									<Sparkles className="w-4 h-4 text-primary" />
 								</h4>
 
 								<div className="space-y-2.5">
 									{stackHighlights.map((tech) => (
 										<div
 											key={tech}
-											className="flex items-center gap-2.5 font-mono text-xs text-foreground/80 bg-zinc-900/60 border border-white/5 rounded-xl px-3 py-2"
+											className="flex items-center gap-2.5 font-mono text-xs text-foreground/80 bg-card/60 border border-white/5 rounded-xl px-3 py-2"
 										>
-											<div className="w-1.5 h-1.5 rounded-full bg-yellow-400 shrink-0" />
+											<div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
 											<span>{tech}</span>
 										</div>
 									))}
@@ -153,12 +153,12 @@ export function About() {
 					{differentiators.map((item, index) => (
 						<BlurFade key={item.title} delay={0.1 * (index + 1)} inView>
 							<MagicCard
-								className="p-6 h-full flex flex-col justify-between rounded-3xl bg-zinc-950 border border-foreground/15 hover:border-yellow-500/30 transition-all duration-300"
+								className="p-6 h-full flex flex-col justify-between rounded-[2px] bg-card border border-white/10 hover:border-primary/30 transition-colors duration-300"
 								gradientColor="#1a1a1a"
 							>
 								<div className="flex flex-col gap-4">
 									<div className="flex items-center justify-between">
-										<div className="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-500 border border-yellow-500/20">
+										<div className="w-12 h-12 rounded-[2px] bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
 											<item.icon size={22} />
 										</div>
 										<span className="font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/10 bg-white/5 text-foreground/40">

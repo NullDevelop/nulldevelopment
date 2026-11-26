@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { NullBrandLogo } from '@/components/null-logo'
 import { authClient } from '@/lib/auth-client'
 
 export default function LoginPage() {
@@ -38,22 +39,19 @@ export default function LoginPage() {
 		<div className="relative flex min-h-screen items-center justify-center bg-background px-4 overflow-hidden">
 			{/* Glow de fundo */}
 			<div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-				<div className="h-125 w-125 rounded-full bg-yellow-500/5 blur-[120px]" />
+				<div className="h-125 w-125 rounded-full bg-primary/5 blur-[120px]" />
 			</div>
 
 			<div className="relative z-10 w-full max-w-sm flex flex-col items-center gap-8">
 				{/* Logo texto */}
-				<Link href="/" className="flex flex-col items-center leading-none">
-					<span className="font-sentient font-bold text-3xl text-white tracking-tight">
-						null<span className="text-yellow-500">.</span>dev
-					</span>
-					<div className="h-0.5 w-full bg-linear-to-r from-yellow-700 via-yellow-400 to-yellow-700 rounded-full mt-1" />
+				<Link href="/" className="focus:outline-none">
+					<NullBrandLogo size="md" />
 				</Link>
 
 				{/* Card */}
-				<div className="w-full rounded-3xl border border-white/10 bg-zinc-900/80 backdrop-blur-xl p-8 flex flex-col gap-6">
+				<div className="w-full rounded-[2px] border border-white/10 bg-card backdrop-blur-xl p-8 flex flex-col gap-6">
 					<div className="text-center space-y-1">
-						<h1 className="font-sentient text-2xl font-bold text-white">
+						<h1 className="font-sentient text-2xl font-bold text-foreground">
 							Acesso ao Painel
 						</h1>
 						<p className="font-mono text-xs text-foreground/40">
@@ -73,7 +71,7 @@ export default function LoginPage() {
 								value={username}
 								onChange={(e) => setUsername(e.target.value)}
 								required
-								className="border-white/10 bg-white/5 text-white placeholder:text-white/20 focus-visible:ring-yellow-500 focus-visible:border-yellow-500/50 h-11 rounded-xl"
+								className="border-white/10 bg-white/5 text-foreground placeholder:text-foreground/20 focus-visible:ring-primary focus-visible:border-primary/50 h-11 rounded-[2px]"
 							/>
 						</div>
 
@@ -88,18 +86,25 @@ export default function LoginPage() {
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								required
-								className="border-white/10 bg-white/5 text-white placeholder:text-white/20 focus-visible:ring-yellow-500 focus-visible:border-yellow-500/50 h-11 rounded-xl"
+								className="border-white/10 bg-white/5 text-foreground placeholder:text-foreground/20 focus-visible:ring-primary focus-visible:border-primary/50 h-11 rounded-[2px]"
 							/>
 						</div>
 
 						<Button
 							type="submit"
-							className="w-full h-11 mt-2 rounded-xl bg-yellow-500 font-mono font-bold text-black hover:bg-yellow-400 transition-all duration-200 hover:scale-[1.02]"
+							className="w-full h-11 mt-2 rounded-[2px] bg-primary font-mono font-bold text-primary-foreground hover:bg-primary/90 transition-colors"
 							disabled={loading}
 						>
 							{loading ? 'Entrando...' : 'Entrar →'}
 						</Button>
 					</form>
+
+					<p className="text-center font-mono text-xs text-brand-steel">
+						Ainda não tem uma conta?{' '}
+						<Link href="/register" className="text-primary hover:underline">
+							Cadastre-se
+						</Link>
+					</p>
 				</div>
 
 				<p className="font-mono text-xs text-foreground/20">

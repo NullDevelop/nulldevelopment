@@ -18,7 +18,7 @@ export default async function ProjectsPage() {
 		<div className="flex flex-col gap-6">
 			<div className="flex items-center justify-between">
 				<div>
-					<h1 className="font-sentient text-3xl font-bold text-white">Projetos</h1>
+					<h1 className="font-sentient text-3xl font-bold text-foreground">Projetos</h1>
 					<p className="font-mono text-sm text-foreground/40 mt-1">
 						{projects.length} projeto{projects.length !== 1 ? 's' : ''} no portfólio
 					</p>
@@ -26,7 +26,7 @@ export default async function ProjectsPage() {
 				<ProjectDialog companies={companies} />
 			</div>
 
-			<div className="rounded-2xl border border-white/10 bg-zinc-900/80 overflow-hidden">
+			<div className="rounded-[2px] border border-white/10 bg-card overflow-hidden">
 				{projects.length === 0 ? (
 					<div className="flex flex-col items-center justify-center py-16 gap-3">
 						<p className="font-mono text-sm text-foreground/30">Nenhum projeto cadastrado.</p>
@@ -53,7 +53,7 @@ export default async function ProjectsPage() {
 									</td>
 									<td className="px-6 py-4">
 										{project.company ? (
-											<span className="font-mono text-xs px-2 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+											<span className="font-mono text-xs px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
 												{project.company.name}
 											</span>
 										) : (

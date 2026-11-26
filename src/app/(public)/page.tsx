@@ -1,26 +1,56 @@
 import { Contact } from '@/components/contact'
-import { Experience } from '@/components/experience'
-import { FAQSection } from '@/components/faq-section'
-import { FloatingWhatsApp } from '@/components/floating-whatsapp'
 import { Footer } from '@/components/footer'
 import { Hero } from '@/components/hero'
-import { HomeClient } from '@/components/home-client'
+import { HowWeWork } from '@/components/how-we-work'
 import { Portfolio } from '@/components/portfolio'
-import { ServicesSkills } from '@/components/services-skills'
-import { StatsStrip } from '@/components/stats-strip'
+import { Solutions } from '@/components/solutions'
+import { company } from '@/lib/company'
+import { siteUrl } from '@/lib/site'
 
 export default function Home() {
-	return (
-		<HomeClient>
-			<Hero />
-			<StatsStrip />
-			<Portfolio />
-			<Experience />
-			<ServicesSkills />
-			<FAQSection />
-			<Contact />
-			<Footer />
-			<FloatingWhatsApp />
-		</HomeClient>
-	)
+  const localBusinessSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: 'Null Development',
+    url: siteUrl.toString(),
+    image: new URL('/N3.svg', siteUrl).toString(),
+    email: company.email,
+    telephone: '+5541991798306',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: company.address.city,
+      addressRegion: company.address.state,
+      addressCountry: 'BR',
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Campina Grande do Sul' },
+      { '@type': 'City', name: 'Quatro Barras' },
+      { '@type': 'City', name: 'Colombo' },
+      { '@type': 'City', name: 'Pinhais' },
+      { '@type': 'City', name: 'Curitiba' },
+    ],
+    knowsAbout: [
+      'Desenvolvimento de software',
+      'Sistemas web sob medida',
+      'Automação de processos',
+      'Integração de sistemas',
+    ],
+  }
+
+  return (
+    <main className="min-h-screen bg-background text-foreground">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessSchema).replace(/</g, '\\u003c'),
+        }}
+      />
+      <Hero />
+      <Solutions />
+      <HowWeWork />
+      <Portfolio />
+      <Contact />
+      <Footer />
+    </main>
+  )
 }

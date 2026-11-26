@@ -22,10 +22,10 @@ export function FAQSection() {
 				{/* Section Header */}
 				<div className="mb-12 border-b border-white/10 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
 					<div>
-						<span className="text-xs sm:text-sm uppercase tracking-widest text-yellow-400 font-semibold">
+						<span className="text-xs sm:text-sm uppercase tracking-widest text-primary font-semibold">
 							{t.faq.eyebrow}
 						</span>
-						<h2 className="text-3xl sm:text-5xl font-bold text-white mt-2">
+						<h2 className="text-3xl sm:text-5xl font-bold text-foreground mt-2">
 							{t.faq.title}
 						</h2>
 					</div>
@@ -47,10 +47,10 @@ export function FAQSection() {
 						return (
 							<BlurFade key={faq.question} delay={0.05 * (idx + 1)} inView>
 								<div
-									className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
+									className={`rounded-[2px] border transition-all duration-200 overflow-hidden ${
 										isOpen
-											? 'border-yellow-400/40 bg-zinc-900/80 shadow-lg'
-											: 'border-white/10 bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-white/20'
+											? 'border-primary/40 bg-card/80 shadow-lg'
+											: 'border-white/10 bg-card/40 hover:bg-card/60 hover:border-white/20'
 									}`}
 								>
 									<button
@@ -59,14 +59,14 @@ export function FAQSection() {
 										className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 cursor-pointer"
 										aria-expanded={isOpen}
 									>
-										<span className="text-base sm:text-lg font-semibold text-white">
+										<span className="text-base sm:text-lg font-semibold text-foreground">
 											{faq.question}
 										</span>
 										<div
 											className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-transform duration-200 ${
 												isOpen
-													? 'bg-yellow-400/20 text-yellow-400 rotate-180'
-													: 'bg-white/5 text-zinc-300'
+													? 'bg-primary/20 text-primary rotate-180'
+													: 'bg-white/5 text-brand-steel'
 											}`}
 										>
 											<ChevronDown className="w-4 h-4" />
@@ -75,7 +75,7 @@ export function FAQSection() {
 
 									{isOpen && (
 										<div className="px-5 sm:px-6 pb-6 pt-1">
-											<p className="text-sm sm:text-base text-zinc-200 leading-relaxed border-t border-white/10 pt-4">
+											<p className="text-sm sm:text-base text-foreground/90 leading-relaxed border-t border-white/10 pt-4">
 												{faq.answer}
 											</p>
 										</div>

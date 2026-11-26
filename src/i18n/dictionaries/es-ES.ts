@@ -2,9 +2,9 @@ import type { Dictionary } from './types'
 
 export const esES: Dictionary = {
 	meta: {
-		title: 'Pedro Henrique | Full Stack Developer & Software Engineer',
+		title: 'Desarrollador de software en Campina Grande do Sul | Null Development',
 		description:
-			'Portfolio y servicios de desarrollo Full Stack de Pedro Henrique Andrade. Especialista en Next.js, React, Node.js, TypeScript y arquitectura de software escalable. Disponible para proyectos y trabajo freelance.',
+			'Desarrollador de software en Campina Grande do Sul y Quatro Barras, Brasil. Sistemas web a medida, automatización de procesos e integraciones para empresas locales.',
 	},
 	language: {
 		label: 'Idioma',

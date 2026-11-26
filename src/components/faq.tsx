@@ -90,7 +90,7 @@ export function FAQ() {
 								<AccordionItem
 									key={index}
 									value={`left-${index}`}
-									className="border border-white/10 bg-zinc-950/80 backdrop-blur-md rounded-2xl px-6 transition-all hover:border-yellow-500/30"
+									className="border border-white/10 bg-card backdrop-blur-md rounded-[2px] px-6 transition-colors hover:border-primary/30"
 								>
 									<AccordionTrigger className="text-base font-sentient py-6 hover:no-underline text-left leading-snug text-foreground">
 										{faq.question}
@@ -109,7 +109,7 @@ export function FAQ() {
 								<AccordionItem
 									key={index}
 									value={`right-${index}`}
-									className="border border-white/10 bg-zinc-950/80 backdrop-blur-md rounded-2xl px-6 transition-all hover:border-yellow-500/30"
+									className="border border-white/10 bg-card backdrop-blur-md rounded-[2px] px-6 transition-colors hover:border-primary/30"
 								>
 									<AccordionTrigger className="text-base font-sentient py-6 hover:no-underline text-left leading-snug text-foreground">
 										{faq.question}

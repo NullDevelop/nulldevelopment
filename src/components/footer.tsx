@@ -1,78 +1,46 @@
 'use client'
 
-import { ArrowUp, Github, Linkedin, Mail, MessageCircle } from 'lucide-react'
+import { ArrowUp } from 'lucide-react'
 import Link from 'next/link'
-import { useI18n } from '@/i18n/provider'
-import { company, companyAddress } from '@/lib/company'
+import { NullBrandLogo } from './null-logo'
 
 export function Footer() {
-	const { t } = useI18n()
-
 	return (
-		<footer className="border-t border-white/10 py-10 px-4 relative z-10 bg-black">
-			<div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-zinc-400">
-				<div>
-					<span className="text-white font-semibold">{company.ownerName}</span> • {t.footer.role}
-				</div>
-
-				<div className="flex items-center gap-5">
-					<a
-						href={company.whatsapp}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="hover:text-emerald-400 transition-colors flex items-center gap-1.5"
-					>
-						<MessageCircle className="w-3.5 h-3.5" />
-						<span>WhatsApp</span>
-					</a>
-					<a
-						href="https://github.com/nulldevelop"
-						target="_blank"
-						rel="noopener noreferrer"
-						className="hover:text-white transition-colors flex items-center gap-1.5"
-					>
-						<Github className="w-3.5 h-3.5" />
-						<span>GitHub</span>
-					</a>
-					<a
-						href="https://www.linkedin.com/in/pedrodevfull/"
-						target="_blank"
-						rel="noopener noreferrer"
-						className="hover:text-white transition-colors flex items-center gap-1.5"
-					>
-						<Linkedin className="w-3.5 h-3.5" />
-						<span>LinkedIn</span>
-					</a>
-					<a
-						href={`mailto:${company.email}`}
-						className="hover:text-white transition-colors flex items-center gap-1.5"
-					>
-						<Mail className="w-3.5 h-3.5" />
-						<span>Email</span>
-					</a>
-				</div>
-
-				<Link
-					href="#"
-					className="hover:text-white transition-colors flex items-center gap-1"
-				>
-					<span>{t.footer.top}</span>
-					<ArrowUp className="w-3 h-3" />
-				</Link>
-			</div>
-
-			<div className="max-w-6xl mx-auto mt-8 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-500 text-center sm:text-left">
-				<p>
-					© {new Date().getFullYear()} {company.legalName} • CNPJ {company.cnpj}
-					<br />
-					{companyAddress}
-				</p>
-				<nav className="flex items-center gap-4 shrink-0">
-					<Link href="/privacidade" className="hover:text-white transition-colors">
-						{t.footer.privacy}
+		<footer className="bg-background py-10">
+			<div className="max-w-6xl mx-auto px-5 sm:px-8 flex flex-col gap-6">
+				<div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+					<Link href="/" className="shrink-0 focus:outline-none">
+						<NullBrandLogo size="sm" />
 					</Link>
-					<Link href="/termos" className="hover:text-white transition-colors">
-						{t.footer.terms}
+
+					<p className="text-[10px] font-medium uppercase tracking-[0.22em] text-brand-graphite text-center">
+						Tecnologia para o trabalho real
+					</p>
+
+					<Link
+						href="#"
+						className="inline-flex items-center gap-1.5 text-xs font-medium text-brand-steel hover:text-foreground transition-colors"
+					>
+						<span>Voltar ao topo</span>
+						<ArrowUp className="w-3 h-3" />
+					</Link>
+				</div>
+
+				<nav
+					aria-label="Links institucionais"
+					className="flex flex-wrap justify-center gap-x-6 gap-y-2 border-t border-white/10 pt-5 text-xs text-brand-steel"
+				>
+					<Link href="/#portfolio" className="hover:text-foreground transition-colors">
+						Projetos
+					</Link>
+					<Link href="/termos" className="hover:text-foreground transition-colors">
+						Termos
+					</Link>
+					<Link href="/privacidade" className="hover:text-foreground transition-colors">
+						Privacidade
+					</Link>
+					<Link href="/register" className="hover:text-foreground transition-colors">
+						Cadastro
 					</Link>
 				</nav>
 			</div>

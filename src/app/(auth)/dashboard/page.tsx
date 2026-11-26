@@ -14,24 +14,24 @@ export default async function DashboardPage() {
 			value: projectsCount,
 			icon: Briefcase,
 			description: 'no portfólio',
-			color: 'text-yellow-400',
-			bg: 'bg-yellow-500/10',
+			color: 'text-primary',
+			bg: 'bg-primary/10',
 		},
 		{
 			title: 'Empresas',
 			value: companiesCount,
 			icon: Building2,
 			description: 'parceiras / clientes',
-			color: 'text-blue-400',
-			bg: 'bg-blue-500/10',
+			color: 'text-primary',
+			bg: 'bg-primary/10',
 		},
 		{
 			title: 'Mensagens',
 			value: messagesCount,
 			icon: MessageSquare,
 			description: 'recebidas',
-			color: 'text-green-400',
-			bg: 'bg-green-500/10',
+			color: 'text-primary',
+			bg: 'bg-primary/10',
 		},
 	]
 
@@ -40,7 +40,7 @@ export default async function DashboardPage() {
 			{/* Header */}
 			<div className="flex items-center justify-between">
 				<div>
-					<h1 className="font-sentient text-3xl font-bold text-white">
+					<h1 className="font-sentient text-3xl font-bold text-foreground">
 						Visão Geral
 					</h1>
 					<p className="font-mono text-sm text-foreground/40 mt-1">
@@ -58,7 +58,7 @@ export default async function DashboardPage() {
 				{stats.map((stat) => (
 					<div
 						key={stat.title}
-						className="rounded-2xl border border-white/10 bg-zinc-900/80 p-6 flex flex-col gap-4"
+						className="rounded-[2px] border border-white/10 bg-card p-6 flex flex-col gap-4"
 					>
 						<div className="flex items-center justify-between">
 							<span className="font-mono text-xs text-foreground/40 uppercase tracking-widest">
@@ -81,9 +81,9 @@ export default async function DashboardPage() {
 			</div>
 
 			{/* Quick info */}
-			<div className="rounded-2xl border border-white/10 bg-zinc-900/80 p-6 flex items-center gap-4">
-				<div className="p-3 rounded-xl bg-yellow-500/10">
-					<TrendingUp className="size-5 text-yellow-400" />
+			<div className="rounded-[2px] border border-white/10 bg-card p-6 flex items-center gap-4">
+				<div className="p-3 rounded-xl bg-primary/10">
+					<TrendingUp className="size-5 text-primary" />
 				</div>
 				<div>
 					<p className="font-mono text-sm text-foreground/80">

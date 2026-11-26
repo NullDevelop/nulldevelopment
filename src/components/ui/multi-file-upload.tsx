@@ -88,13 +88,13 @@ export function MultiFileUpload({
 							<div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
 								<button
 									type="button"
-									className="h-7 w-7 rounded-md bg-red-600 hover:bg-red-700 text-white flex items-center justify-center transition-colors"
+									className="h-7 w-7 rounded-md bg-red-600 hover:bg-red-700 text-foreground flex items-center justify-center transition-colors"
 									onClick={() => removeImage(index)}
 								>
 									<X className="h-3 w-3" />
 								</button>
 							</div>
-							<span className="absolute bottom-1 left-1 text-[10px] text-white/70 bg-black/50 px-1 rounded">
+							<span className="absolute bottom-1 left-1 text-[10px] text-foreground/70 bg-black/50 px-1 rounded">
 								{index + 1}
 							</span>
 						</div>
