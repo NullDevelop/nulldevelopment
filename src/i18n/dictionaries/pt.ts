@@ -50,6 +50,23 @@ export const pt = {
 			'Uma seleção de sistemas construídos para desafios reais, tanto no setor público quanto na iniciativa privada.',
 		public: 'Setor Público',
 		private: 'Empresa Privada',
+		publicProducts: [
+			{
+				name: 'FootEasy',
+				description:
+					'Gestão de campeonatos esportivos municipais com tabelas, súmulas digitais e relatórios oficiais.',
+			},
+			{
+				name: 'SIRA',
+				description:
+					'Fiscalização de contratos públicos com relatórios em PDF assinados digitalmente e QR Code de verificação.',
+			},
+			{
+				name: 'BookEase',
+				description:
+					'Gestão de bibliotecas municipais com acervo, empréstimos e classificação DDC.',
+			},
+		],
 		emptyCategory: 'Novos projetos desta categoria em breve.',
 		comingSoon: 'Em breve',
 		projectsLabel: 'Projetos',

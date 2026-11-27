@@ -52,6 +52,23 @@ export const en: Dictionary = {
 			'A selection of systems built around real challenges, in both the public sector and private business.',
 		public: 'Public Sector',
 		private: 'Private Company',
+		publicProducts: [
+			{
+				name: 'FootEasy',
+				description:
+					'Management of municipal sports championships with standings, digital match sheets and official reports.',
+			},
+			{
+				name: 'SIRA',
+				description:
+					'Public contract oversight with digitally signed PDF reports and verification QR codes.',
+			},
+			{
+				name: 'BookEase',
+				description:
+					'Municipal library management with catalog, loans and DDC classification.',
+			},
+		],
 		emptyCategory: 'More projects in this category coming soon.',
 		comingSoon: 'Coming soon',
 		projectsLabel: 'Projects',

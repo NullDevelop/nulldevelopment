@@ -5,6 +5,7 @@ import { localizeProject } from '@/i18n/projects'
 import { useI18n } from '@/i18n/provider'
 import { curatedProjects, type ProjectData } from '@/lib/projects-data'
 import { PortfolioProjectCard } from './portfolio-project-card'
+import { PublicSectorCard } from './public-sector-card'
 import { BlurFade } from './ui/blur-fade'
 
 // Institutional/restricted cases and the seed demo stay out of the showcase.
@@ -23,26 +24,37 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 		.filter((project) => !hiddenProjectSlugs.has(project.slug))
 		.map((project) => localizeProject(project, locale, t))
 
+	const publicProducts = [
+		...t.portfolio.publicProducts.map((product) => ({
+			name: product.name,
+			description: product.description,
+		})),
+		...projectsToDisplay
+			.filter((project) => project.category === 'governamental')
+			.map((project) => ({
+				name: project.title,
+				description: project.shortDescription,
+			})),
+	]
+
+	const privateProjects = projectsToDisplay.filter(
+		(project) => project.category !== 'governamental',
+	)
+
 	const projectGroups = [
 		{
 			id: 'public',
 			number: '01',
 			title: t.portfolio.public,
 			icon: Landmark,
-			projects: projectsToDisplay.filter(
-				(project) => project.category === 'governamental',
-			),
 		},
 		{
 			id: 'private',
 			number: '02',
 			title: t.portfolio.private,
 			icon: Building2,
-			projects: projectsToDisplay.filter(
-				(project) => project.category !== 'governamental',
-			),
 		},
-	]
+	] as const
 
 	return (
 		<section
@@ -71,7 +83,11 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 				<div className="space-y-14 sm:space-y-16">
 					{projectGroups.map((group) => {
 						const CategoryIcon = group.icon
-						const isEmpty = group.projects.length === 0
+						const isPublic = group.id === 'public'
+						const itemCount = isPublic
+							? publicProducts.length
+							: privateProjects.length
+						const isEmpty = itemCount === 0
 
 						return (
 							<section
@@ -108,7 +124,7 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 										) : (
 											<>
 												<span className="text-primary">
-													{group.projects.length.toString().padStart(2, '0')}
+													{itemCount.toString().padStart(2, '0')}
 												</span>
 												<span aria-hidden="true" className="text-white/15">
 													/
@@ -152,21 +168,35 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 									</BlurFade>
 								) : (
 									<div className="grid grid-cols-1 gap-5 pt-6 md:grid-cols-2 lg:grid-cols-3">
-										{group.projects.map((project, index) => (
-											<BlurFade
-												key={project.id}
-												delay={0.05 * (index + 1)}
-												inView
-												className="h-full"
-											>
-												<PortfolioProjectCard
-													project={project}
-													groupNumber={group.number}
-													index={index}
-													t={t}
-												/>
-											</BlurFade>
-										))}
+										{isPublic
+											? publicProducts.map((product, index) => (
+													<BlurFade
+														key={`${product.name}-${index}`}
+														delay={0.05 * (index + 1)}
+														inView
+														className="h-full"
+													>
+														<PublicSectorCard
+															name={product.name}
+															description={product.description}
+														/>
+													</BlurFade>
+												))
+											: privateProjects.map((project, index) => (
+													<BlurFade
+														key={project.id}
+														delay={0.05 * (index + 1)}
+														inView
+														className="h-full"
+													>
+														<PortfolioProjectCard
+															project={project}
+															groupNumber={group.number}
+															index={index}
+															t={t}
+														/>
+													</BlurFade>
+												))}
 									</div>
 								)}
 							</section>

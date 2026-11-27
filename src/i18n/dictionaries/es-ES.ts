@@ -52,6 +52,23 @@ export const esES: Dictionary = {
 			'Una selección de sistemas creados para desafíos reales, tanto en el sector público como en la empresa privada.',
 		public: 'Sector público',
 		private: 'Empresa privada',
+		publicProducts: [
+			{
+				name: 'FootEasy',
+				description:
+					'Gestión de campeonatos deportivos municipales con tablas, actas digitales e informes oficiales.',
+			},
+			{
+				name: 'SIRA',
+				description:
+					'Fiscalización de contratos públicos con informes PDF firmados digitalmente y código QR de verificación.',
+			},
+			{
+				name: 'BookEase',
+				description:
+					'Gestión de bibliotecas municipales con acervo, préstamos y clasificación DDC.',
+			},
+		],
 		emptyCategory: 'Próximamente habrá más proyectos en esta categoría.',
 		comingSoon: 'Próximamente',
 		projectsLabel: 'Proyectos',
