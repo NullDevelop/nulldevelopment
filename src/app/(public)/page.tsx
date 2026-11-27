@@ -13,7 +13,7 @@ export default function Home() {
     '@type': 'ProfessionalService',
     name: 'Null Development',
     url: siteUrl.toString(),
-    image: new URL('/N3.svg', siteUrl).toString(),
+    image: new URL('/Perfil circular.png', siteUrl).toString(),
     email: company.email,
     telephone: '+5541991798306',
     address: {
