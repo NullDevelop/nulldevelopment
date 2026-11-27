@@ -62,9 +62,9 @@ export async function generateMetadata(): Promise<Metadata> {
 			},
 		},
 		icons: {
-			icon: [{ url: '/N3.svg', type: 'image/svg+xml', sizes: 'any' }],
-			apple: '/N3.svg',
-			shortcut: '/N3.svg',
+			icon: [{ url: '/circular.png', type: 'image/svg+xml', sizes: 'any' }],
+			apple: '/circular.png',
+			shortcut: '/circular.png',
 		},
 	}
 }
