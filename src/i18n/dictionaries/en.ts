@@ -2,7 +2,7 @@ import type { Dictionary } from './types'
 
 export const en: Dictionary = {
 	meta: {
-		title: 'Software Developer in Campina Grande do Sul | Null Development',
+		title: 'Null Development - Desenvolvimento de Sistemas',
 		description:
 			'Software developer in Campina Grande do Sul and Quatro Barras, Brazil. Custom web systems, process automation, and integrations for local businesses.',
 	},

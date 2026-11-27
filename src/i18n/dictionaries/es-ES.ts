@@ -2,7 +2,7 @@ import type { Dictionary } from './types'
 
 export const esES: Dictionary = {
 	meta: {
-		title: 'Desarrollador de software en Campina Grande do Sul | Null Development',
+		title: 'Null Development - Desenvolvimento de Sistemas',
 		description:
 			'Desarrollador de software en Campina Grande do Sul y Quatro Barras, Brasil. Sistemas web a medida, automatización de procesos e integraciones para empresas locales.',
 	},

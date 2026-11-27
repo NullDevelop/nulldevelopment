@@ -1,6 +1,6 @@
 export const pt = {
 	meta: {
-		title: 'Desenvolvedor em Campina Grande do Sul | Null Development',
+		title: 'Null Development - Desenvolvimento de Sistemas',
 		description:
 			'Desenvolvedor de software em Campina Grande do Sul e Quatro Barras. Criação de sistemas web sob medida, automações e integrações para empresas da região.',
 	},
