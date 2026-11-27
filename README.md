@@ -40,13 +40,14 @@ pnpm dev
 
 ### Upload de imagens
 
-Em desenvolvimento os arquivos são salvos em `public/uploads`. Na Vercel o sistema de arquivos é somente leitura, então é obrigatório configurar um [Blob store](https://vercel.com/docs/storage/vercel-blob/quickstart):
+Em desenvolvimento os arquivos são salvos em `public/uploads`. Na Vercel o sistema de arquivos é somente leitura, então é obrigatório configurar um [Blob store](https://vercel.com/docs/vercel-blob/server-upload):
 
-1. No painel da Vercel, crie um store em **Storage → Blob**.
-2. Conecte-o ao projeto (isso adiciona automaticamente `BLOB_READ_WRITE_TOKEN`).
-3. Faça um novo deploy.
+1. No painel da Vercel, crie um store em **Storage → Create Storage → Blob**.
+2. Escolha **Public** como modo de acesso (as imagens precisam ser servidas publicamente; o modo não pode ser alterado depois).
+3. Conecte o store ao projeto em **Projects → Connect to Project** (isso adiciona `BLOB_STORE_ID` e `VERCEL_OIDC_TOKEN`). Se quiser usar `BLOB_READ_WRITE_TOKEN`, marque **Add a read-write token env var to this connection**.
+4. Faça um novo deploy.
 
-A rota `/api/upload` usa o Blob automaticamente quando `BLOB_READ_WRITE_TOKEN` está disponível. Limite por imagem: 10 MB.
+A rota `/api/upload` usa o Blob automaticamente quando as variáveis acima estão disponíveis. Limite por imagem: **4,5 MB** (limite de corpo das Vercel Functions).
 
 ## Autor
 

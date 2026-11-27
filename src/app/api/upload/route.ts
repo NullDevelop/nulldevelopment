@@ -13,7 +13,8 @@ const ALLOWED_MIME_TYPES = new Set([
 	'image/gif',
 	'image/avif',
 ])
-const MAX_FILE_SIZE = 10 * 1024 * 1024
+// Vercel Functions limitam o corpo da requisição a 4,5 MB (server upload).
+const MAX_FILE_SIZE = 4.5 * 1024 * 1024
 
 export async function POST(request: NextRequest) {
 	// Proteção por autenticação
@@ -50,7 +51,7 @@ export async function POST(request: NextRequest) {
 
 		if (file.size > MAX_FILE_SIZE) {
 			return NextResponse.json(
-				{ error: 'A imagem deve ter no máximo 10 MB' },
+				{ error: 'A imagem deve ter no máximo 4,5 MB' },
 				{ status: 400 },
 			)
 		}
@@ -82,7 +83,7 @@ export async function POST(request: NextRequest) {
 			return NextResponse.json(
 				{
 					error:
-						'Upload não configurado: crie um Blob store na Vercel e configure BLOB_READ_WRITE_TOKEN.',
+						'Upload não configurado: crie um Blob store público e conecte-o ao projeto na Vercel.',
 				},
 				{ status: 500 },
 			)
