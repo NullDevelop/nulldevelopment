@@ -146,6 +146,7 @@ export const ProjectScalarFieldEnum = {
   images: 'images',
   stack: 'stack',
   link: 'link',
+  category: 'category',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   companyId: 'companyId'

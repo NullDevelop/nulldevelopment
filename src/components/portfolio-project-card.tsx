@@ -25,6 +25,7 @@ export function PortfolioProjectCard({
 		saas: t.projectPage.saas,
 		governamental: t.projectPage.public,
 		landing: t.projectPage.landing,
+		privado: t.projectPage.private,
 	}[project.category]
 	const visibleStack = project.stack.slice(0, 4)
 	const hiddenStackCount = project.stack.length - visibleStack.length

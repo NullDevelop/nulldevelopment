@@ -3,6 +3,7 @@
 import { Check, ChevronDown, ChevronUp, Copy, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
+import { type ProjectCategory, parseProjectCategory } from '@/lib/projects-data'
 
 const PROMPT_TEMPLATE = `Você é um assistente que extrai informações de projetos de desenvolvimento de software.
 
@@ -14,15 +15,15 @@ Descrição do projeto:
 """
 
 Retorne o JSON em uma ÚNICA LINHA (sem quebras de linha dentro das strings - use \\n para quebras):
-{"title":"Nome do projeto","slug":"nome-do-projeto","shortDescription":"Descrição curta","content":"Descrição completa em Markdown (use **negrito**, listas, \\n para quebras)","stack":"Tech1, Tech2, Tech3","link":"https://..."}
+{"title":"Nome do projeto","slug":"nome-do-projeto","shortDescription":"Descrição curta","content":"Descrição completa em Markdown (use **negrito**, listas, \\n para quebras)","stack":"Tech1, Tech2, Tech3","link":"https://...","category":"governamental"}
 
 Regras importantes:
 1. O JSON deve ser retornado em uma única linha
 2. Dentro das strings, use \\n para indicar quebras de linha
 3. NÃO use Markdown para envolver o JSON (não use \`\`\`json ... \`\`\`)
 4. O campo "content" DEVE conter Markdown (negrito, listas, etc)
-5. Responda APENAS com o JSON, nenhuma explicação
-6. Retorne um arquivo por favor`
+5. Use "category" = "governamental" para setor público (prefeitura, órgão público, autarquia), "privado" para empresa privada, "saas" para plataforma SaaS ou "landing" para landing page
+6. Responda APENAS com o JSON, nenhuma explicação`
 
 interface AiPromptHelperProps {
 	onApply: (data: {
@@ -32,6 +33,7 @@ interface AiPromptHelperProps {
 		content: string
 		stack: string
 		link: string
+		category: ProjectCategory
 	}) => void
 }
 
@@ -82,6 +84,7 @@ export function AiPromptHelper({ onApply }: AiPromptHelperProps) {
 				content: parsed.content || '',
 				stack: parsed.stack || '',
 				link: parsed.link || '',
+				category: parseProjectCategory(parsed.category),
 			})
 			setJsonInput('')
 			setOpen(false)
@@ -148,7 +151,8 @@ export function AiPromptHelper({ onApply }: AiPromptHelperProps) {
 							Passo 2 — Cole o JSON retornado pela LLM aqui
 						</p>
 						<p className="text-xs text-muted-foreground/70">
-							O retorno pode vir com Markdown (```json ... ```) — o sistema já trata automaticamente.
+							O retorno pode vir com Markdown (```json ... ```) — o sistema já
+							trata automaticamente.
 						</p>
 						<textarea
 							value={jsonInput}

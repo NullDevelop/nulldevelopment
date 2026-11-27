@@ -1,10 +1,16 @@
 'use server'
 
-import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
+import { headers } from 'next/headers'
 import { z } from 'zod'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { type ProjectCategory, projectCategories } from '@/lib/projects-data'
+
+const categoryValues = projectCategories.map((category) => category.value) as [
+	ProjectCategory,
+	...ProjectCategory[],
+]
 
 const ProjectSchema = z.object({
 	title: z.string().min(1),
@@ -15,47 +21,64 @@ const ProjectSchema = z.object({
 	images: z.array(z.string()),
 	stack: z.array(z.string()),
 	link: z.string().optional().nullable(),
+	category: z.enum(categoryValues),
 	companyId: z.string().optional().nullable(),
 })
+
+type ProjectInput = z.infer<typeof ProjectSchema>
 
 async function requireAuth() {
 	const session = await auth.api.getSession({ headers: await headers() })
 	if (!session) throw new Error('Unauthorized')
 }
 
-export async function createProject(data: z.infer<typeof ProjectSchema>) {
-	await requireAuth()
-	const project = await prisma.project.create({
-		data: {
-			...data,
-			link: data.link || null,
-			companyId: data.companyId || null,
-		},
-	})
-	revalidatePath('/dashboard/projects')
-	revalidatePath('/')
-	return project
+function normalizeProjectData(data: ProjectInput) {
+	const parsed = ProjectSchema.parse(data)
+	return {
+		...parsed,
+		link: parsed.link?.trim() || null,
+		// The form uses "none" for the empty option; the database expects null.
+		companyId:
+			parsed.companyId && parsed.companyId !== 'none' ? parsed.companyId : null,
+	}
 }
 
-export async function updateProject(id: string, data: z.infer<typeof ProjectSchema>) {
+export async function createProject(data: ProjectInput) {
 	await requireAuth()
-	const project = await prisma.project.update({
-		where: { id },
-		data: {
-			...data,
-			link: data.link || null,
-			companyId: data.companyId || null,
-		},
-	})
+	const projectData = normalizeProjectData(data)
+	const project = await prisma.project.create({ data: projectData })
 	revalidatePath('/dashboard/projects')
 	revalidatePath('/')
 	revalidatePath(`/projects/${project.slug}`)
 	return project
 }
 
+export async function updateProject(id: string, data: ProjectInput) {
+	await requireAuth()
+	const projectData = normalizeProjectData(data)
+	const existing = await prisma.project.findUnique({
+		where: { id },
+		select: { slug: true },
+	})
+	const project = await prisma.project.update({
+		where: { id },
+		data: projectData,
+	})
+	revalidatePath('/dashboard/projects')
+	revalidatePath('/')
+	revalidatePath(`/projects/${project.slug}`)
+	if (existing?.slug && existing.slug !== project.slug) {
+		revalidatePath(`/projects/${existing.slug}`)
+	}
+	return project
+}
+
 export async function deleteProject(id: string) {
 	await requireAuth()
-	const existing = await prisma.project.findUnique({ where: { id }, select: { slug: true } })
+	const existing = await prisma.project.findUnique({
+		where: { id },
+		select: { slug: true },
+	})
 	await prisma.project.delete({ where: { id } })
 	revalidatePath('/dashboard/projects')
 	revalidatePath('/')

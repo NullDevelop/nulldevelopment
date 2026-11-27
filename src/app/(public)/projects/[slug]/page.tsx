@@ -16,7 +16,7 @@ import { whatsappUrl } from '@/i18n/format'
 import { localizeProject } from '@/i18n/projects'
 import { getDictionary, getLocale } from '@/i18n/server'
 import { company } from '@/lib/company'
-import { getProjectBySlug, curatedProjects } from '@/lib/get-projetos'
+import { getAllProjectSlugs, getProjectBySlug } from '@/lib/get-projetos'
 import { siteUrl } from '@/lib/site'
 
 export async function generateMetadata({
@@ -50,9 +50,8 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-	return curatedProjects.map((p) => ({
-		slug: p.slug,
-	}))
+	const slugs = await getAllProjectSlugs()
+	return slugs.map((slug) => ({ slug }))
 }
 
 export default async function ProjectPage({
@@ -76,6 +75,12 @@ export default async function ProjectPage({
 	const badge = project.statusBadge || (isLive ? p.liveBadge : p.caseStudy)
 	const sectorLabel =
 		project.category === 'governamental' ? t.portfolio.public : t.portfolio.private
+	const solutionTypeLabels = {
+		saas: p.saas,
+		governamental: p.public,
+		landing: p.landing,
+		privado: p.private,
+	}
 
 	const whatsappHref = whatsappUrl(
 		company.whatsapp,
@@ -183,11 +188,7 @@ export default async function ProjectPage({
 								{p.solutionType}
 							</span>
 							<span className="text-foreground font-semibold text-sm sm:text-base">
-								{project.category === 'saas'
-									? p.saas
-									: project.category === 'governamental'
-									? p.public
-									: p.landing}
+								{solutionTypeLabels[project.category]}
 							</span>
 						</div>
 

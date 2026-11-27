@@ -25,6 +25,7 @@ O desenvolvimento durou cerca de 4 meses e envolveu uma equipe de 3 especialista
 			images: ['/rci.png', '/sira.png'],
 			stack: ['Next.js', 'Prisma', 'Tailwind CSS', 'PostgreSQL'],
 			link: 'https://example.com',
+			category: 'saas',
 		},
 	})
 

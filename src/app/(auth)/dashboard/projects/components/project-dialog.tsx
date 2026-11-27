@@ -38,8 +38,14 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+import { type ProjectCategory, projectCategories } from '@/lib/projects-data'
 import { createProject, updateProject } from '../actions'
 import { AiPromptHelper } from './ai-prompt-helper'
+
+const categoryValues = projectCategories.map((category) => category.value) as [
+	ProjectCategory,
+	...ProjectCategory[],
+]
 
 const ProjectSchema = z.object({
 	title: z.string().min(1, 'Título é obrigatório'),
@@ -55,10 +61,9 @@ const ProjectSchema = z.object({
 			.filter(Boolean),
 	),
 	link: z.string().optional(),
+	category: z.enum(categoryValues),
 	companyId: z.string().optional().nullable(),
 })
-
-type FormData = z.infer<typeof ProjectSchema>
 
 interface ProjectDialogProps {
 	project?: any
@@ -85,6 +90,7 @@ export function ProjectDialog({
 			images: project?.images || [],
 			stack: project?.stack?.join(', ') || '',
 			link: project?.link || '',
+			category: project?.category || 'privado',
 			companyId: project?.companyId || '',
 		},
 	})
@@ -145,6 +151,7 @@ export function ProjectDialog({
 									form.setValue('content', data.content)
 									form.setValue('stack', data.stack)
 									form.setValue('link', data.link)
+									form.setValue('category', data.category)
 								}}
 							/>
 						)}
@@ -243,6 +250,36 @@ export function ProjectDialog({
 											<FormControl>
 												<Input placeholder="https://..." {...field} />
 											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="category"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Setor / Categoria</FormLabel>
+											<Select
+												onValueChange={field.onChange}
+												value={field.value}
+											>
+												<FormControl>
+													<SelectTrigger>
+														<SelectValue placeholder="Selecione o setor" />
+													</SelectTrigger>
+												</FormControl>
+												<SelectContent>
+													{projectCategories.map((category) => (
+														<SelectItem
+															key={category.value}
+															value={category.value}
+														>
+															{category.label}
+														</SelectItem>
+													))}
+												</SelectContent>
+											</Select>
 											<FormMessage />
 										</FormItem>
 									)}

@@ -2,6 +2,7 @@ import { ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { prisma } from '@/lib/prisma'
+import { projectCategoryLabel } from '@/lib/projects-data'
 import { DeleteProjectButton } from './components/delete-project-button'
 import { ProjectDialog } from './components/project-dialog'
 
@@ -38,6 +39,7 @@ export default async function ProjectsPage() {
 							<tr className="border-b border-white/5">
 								<th className="font-mono text-xs text-foreground/40 uppercase tracking-widest text-left px-6 py-4">Título</th>
 								<th className="font-mono text-xs text-foreground/40 uppercase tracking-widest text-left px-6 py-4">Empresa</th>
+								<th className="font-mono text-xs text-foreground/40 uppercase tracking-widest text-left px-6 py-4">Setor</th>
 								<th className="font-mono text-xs text-foreground/40 uppercase tracking-widest text-left px-6 py-4">Stack</th>
 								<th className="font-mono text-xs text-foreground/40 uppercase tracking-widest text-right px-6 py-4">Ações</th>
 							</tr>
@@ -59,6 +61,11 @@ export default async function ProjectsPage() {
 										) : (
 											<span className="font-mono text-xs text-foreground/30">—</span>
 										)}
+									</td>
+									<td className="px-6 py-4">
+										<span className="font-mono text-xs px-2 py-1 rounded-full bg-white/5 border border-white/10 text-foreground/60">
+											{projectCategoryLabel(project.category)}
+										</span>
 									</td>
 									<td className="px-6 py-4">
 										<div className="flex flex-wrap gap-1">

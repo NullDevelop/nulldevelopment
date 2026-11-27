@@ -16,6 +16,7 @@ export async function GET(request: NextRequest) {
 			images: true,
 			stack: true,
 			link: true,
+			category: true,
 		}
 
 		if (slug) {
