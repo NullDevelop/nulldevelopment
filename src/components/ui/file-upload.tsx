@@ -40,7 +40,8 @@ export function FileUpload({
 			})
 
 			if (!res || !res.ok) {
-				toast.error('Erro ao enviar o arquivo.')
+				const data = res ? await res.json().catch(() => null) : null
+				toast.error(data?.error ?? 'Erro ao enviar o arquivo.')
 				return
 			}
 

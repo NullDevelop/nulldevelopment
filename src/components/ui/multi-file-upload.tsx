@@ -43,7 +43,8 @@ export function MultiFileUpload({
 				})
 
 				if (!res || !res.ok) {
-					failed.push(file.name)
+					const data = res ? await res.json().catch(() => null) : null
+					failed.push(`${file.name}${data?.error ? ` (${data.error})` : ''}`)
 					continue
 				}
 
