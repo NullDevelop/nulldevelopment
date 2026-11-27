@@ -65,28 +65,15 @@ export async function POST(request: NextRequest) {
 		const fileName = `${timestamp}-${safeFileName}`
 		const buffer = Buffer.from(await file.arrayBuffer())
 
-		const usesBlob =
-			!!process.env.BLOB_READ_WRITE_TOKEN ||
-			!!(process.env.VERCEL_OIDC_TOKEN && process.env.BLOB_STORE_ID)
-
-		// Na Vercel o sistema de arquivos é somente leitura: usa o Blob store.
-		if (usesBlob) {
+		// Na Vercel o sistema de arquivos é somente leitura: o SDK resolve
+		// sozinho as credenciais (OIDC ou BLOB_READ_WRITE_TOKEN).
+		if (process.env.VERCEL) {
 			const blob = await put(`${rawFolder}/${fileName}`, buffer, {
 				access: 'public',
 				contentType: file.type,
 			})
 
 			return NextResponse.json({ url: blob.url, name: fileName })
-		}
-
-		if (process.env.VERCEL) {
-			return NextResponse.json(
-				{
-					error:
-						'Upload não configurado: crie um Blob store público e conecte-o ao projeto na Vercel.',
-				},
-				{ status: 500 },
-			)
 		}
 
 		// Desenvolvimento local: grava em public/uploads.
@@ -108,7 +95,11 @@ export async function POST(request: NextRequest) {
 	} catch (error) {
 		console.error('Erro no upload:', error)
 		return NextResponse.json(
-			{ error: 'Falha ao processar upload' },
+			{
+				error: process.env.VERCEL
+					? 'Falha no Blob: confirme que o store público está conectado ao projeto.'
+					: 'Falha ao processar upload',
+			},
 			{ status: 500 },
 		)
 	}

@@ -47,7 +47,7 @@ Em desenvolvimento os arquivos são salvos em `public/uploads`. Na Vercel o sist
 3. Conecte o store ao projeto em **Projects → Connect to Project** (isso adiciona `BLOB_STORE_ID` e `VERCEL_OIDC_TOKEN`). Se quiser usar `BLOB_READ_WRITE_TOKEN`, marque **Add a read-write token env var to this connection**.
 4. Faça um novo deploy.
 
-A rota `/api/upload` usa o Blob automaticamente quando as variáveis acima estão disponíveis. Limite por imagem: **4,5 MB** (limite de corpo das Vercel Functions).
+A rota `/api/upload` usa o Blob automaticamente quando roda na Vercel; localmente continua gravando em `public/uploads`. Limite por imagem: **4,5 MB** (limite de corpo das Vercel Functions).
 
 ## Autor
 
