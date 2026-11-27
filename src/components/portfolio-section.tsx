@@ -7,7 +7,8 @@ import { curatedProjects, type ProjectData } from '@/lib/projects-data'
 import { PortfolioProjectCard } from './portfolio-project-card'
 import { BlurFade } from './ui/blur-fade'
 
-const hiddenProjectSlugs = new Set(['footeasy', 'sira'])
+// Institutional/restricted cases and the seed demo stay out of the showcase.
+const hiddenProjectSlugs = new Set(['footeasy', 'sira', 'project-alpha'])
 
 interface PortfolioSectionProps {
 	dbProjects: ProjectData[]
