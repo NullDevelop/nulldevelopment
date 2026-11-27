@@ -48,9 +48,13 @@ export const esES: Dictionary = {
 	portfolio: {
 		eyebrow: 'Casos seleccionados',
 		title: 'Proyectos destacados',
+		intro:
+			'Una selección de sistemas creados para desafíos reales, tanto en el sector público como en la empresa privada.',
 		public: 'Sector público',
 		private: 'Empresa privada',
 		emptyCategory: 'Próximamente habrá más proyectos en esta categoría.',
+		comingSoon: 'Próximamente',
+		projectsLabel: 'Proyectos',
 		live: 'En vivo',
 		viewCase: 'Ver caso',
 		viewFullCase: 'Ver caso completo',

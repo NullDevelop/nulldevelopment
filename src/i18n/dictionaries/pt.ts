@@ -46,9 +46,13 @@ export const pt = {
 	portfolio: {
 		eyebrow: 'Cases Selecionados',
 		title: 'Projetos em Destaque',
+		intro:
+			'Uma seleção de sistemas construídos para desafios reais, tanto no setor público quanto na iniciativa privada.',
 		public: 'Setor Público',
 		private: 'Empresa Privada',
 		emptyCategory: 'Novos projetos desta categoria em breve.',
+		comingSoon: 'Em breve',
+		projectsLabel: 'Projetos',
 		live: 'Ao Vivo',
 		viewCase: 'Ver Case',
 		viewFullCase: 'Ver Case Completo',
