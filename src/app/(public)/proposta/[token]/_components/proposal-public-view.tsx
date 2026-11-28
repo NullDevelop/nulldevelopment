@@ -12,6 +12,7 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
+	describePayment,
 	formatCurrency,
 	formatDate,
 	quoteStatusLabels,
@@ -62,6 +63,12 @@ export function ProposalPublicView({
 	const [approved, setApproved] = useState(quote.status === 'aprovada')
 	const [isPending, startTransition] = useTransition()
 	const canApprove = quote.status === 'enviada' && !approved
+	const payment = describePayment(
+		quote.totalValue,
+		quote.entryAmount,
+		quote.installments,
+		quote.monthlyTotal,
+	)
 
 	function handleApprove() {
 		startTransition(async () => {
@@ -190,13 +197,13 @@ export function ProposalPublicView({
 						<p className="font-sentient text-3xl font-bold text-primary">
 							{formatCurrency(quote.totalValue)}
 						</p>
-						<p className="text-xs text-foreground/50">
-							Entrada {formatCurrency(quote.entryAmount)} · {quote.installments}
-							x
-							{quote.monthlyTotal > 0
-								? ` · mensalidade ${formatCurrency(quote.monthlyTotal)}`
-								: ''}
-						</p>
+						<div className="mt-2 flex flex-col gap-0.5">
+							{payment.lines.map((line) => (
+								<p key={line} className="text-xs text-foreground/50">
+									{line}
+								</p>
+							))}
+						</div>
 					</div>
 				</div>
 

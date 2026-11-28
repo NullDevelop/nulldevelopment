@@ -36,6 +36,36 @@ export function calcItemValue(hours: number, hourlyRate: number) {
 	return hours * hourlyRate
 }
 
+/** Detalha entrada, saldo e parcelas de forma legível em PDF, painel e proposta pública. */
+export function describePayment(
+	totalValue: number,
+	entryAmount: number,
+	installments: number,
+	monthlyTotal = 0,
+) {
+	const entry = Math.max(0, entryAmount || 0)
+	const count = Math.max(1, Math.floor(installments || 1))
+	const remaining = Math.max(0, totalValue - entry)
+	const installmentValue = remaining / count
+
+	const lines: string[] = []
+	if (entry <= 0) {
+		lines.push(`Pagamento em ${count}x de ${formatCurrency(installmentValue)}.`)
+	} else if (remaining <= 0) {
+		lines.push(`Pagamento à vista: ${formatCurrency(entry)}.`)
+	} else {
+		lines.push(`Entrada de ${formatCurrency(entry)}.`)
+		lines.push(
+			`Saldo de ${formatCurrency(remaining)} em ${count}x de ${formatCurrency(installmentValue)}.`,
+		)
+	}
+	if (monthlyTotal > 0) {
+		lines.push(`Mensalidade de ${formatCurrency(monthlyTotal)} por mês.`)
+	}
+
+	return { entry, installments: count, remaining, installmentValue, lines }
+}
+
 export function formatCurrency(value: number) {
 	return new Intl.NumberFormat('pt-BR', {
 		style: 'currency',

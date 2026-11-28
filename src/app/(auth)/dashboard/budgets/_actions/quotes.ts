@@ -84,6 +84,12 @@ function totals(
 	)
 }
 
+function assertEntryWithinTotal(entryAmount: number, totalValue: number) {
+	if (entryAmount > totalValue) {
+		throw new Error('A entrada não pode ser maior que o total da proposta.')
+	}
+}
+
 async function nextNumber() {
 	const prefix = `ORC-${new Date().getFullYear()}-`
 	const quotes = await prisma.quote.findMany({
@@ -107,6 +113,7 @@ export async function createQuote(input: QuoteInput) {
 	await requirePermission('billing:write')
 	const data = normalize(input)
 	const sum = totals(data.items, data)
+	assertEntryWithinTotal(data.entryAmount, sum.totalValue)
 
 	const quote = await prisma.quote.create({
 		data: {
@@ -147,6 +154,7 @@ export async function updateQuote(id: string, input: QuoteInput) {
 	await requirePermission('billing:write')
 	const data = normalize(input)
 	const sum = totals(data.items, data)
+	assertEntryWithinTotal(data.entryAmount, sum.totalValue)
 
 	const quote = await prisma.quote.update({
 		where: { id },

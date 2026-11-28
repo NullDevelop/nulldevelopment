@@ -6,7 +6,11 @@ import {
 	Text,
 	View,
 } from '@react-pdf/renderer'
-import { formatCurrency, formatDate } from '@/lib/billing-format'
+import {
+	describePayment,
+	formatCurrency,
+	formatDate,
+} from '@/lib/billing-format'
 import { company, companyAddress } from '@/lib/company'
 import { N3_MARK_DATA_URI } from './brand-mark'
 
@@ -293,6 +297,13 @@ function Footer({ label }: { label: string }) {
 }
 
 export function QuotePdf({ quote }: { quote: PdfQuote }) {
+	const payment = describePayment(
+		quote.totalValue,
+		quote.entryAmount,
+		quote.installments,
+		quote.monthlyTotal,
+	)
+
 	return (
 		<Document>
 			<Page size="A4" style={styles.page}>
@@ -393,11 +404,11 @@ export function QuotePdf({ quote }: { quote: PdfQuote }) {
 
 				<View style={styles.box}>
 					<Text style={styles.label}>Condições comerciais</Text>
-					<Text style={styles.description}>
-						Entrada de {formatCurrency(quote.entryAmount)} ·{' '}
-						{quote.installments}x · Mensalidade de{' '}
-						{formatCurrency(quote.monthlyTotal)} quando aplicável.
-					</Text>
+					{payment.lines.map((line) => (
+						<Text key={line} style={styles.description}>
+							{line}
+						</Text>
+					))}
 				</View>
 
 				<View style={styles.signatures}>

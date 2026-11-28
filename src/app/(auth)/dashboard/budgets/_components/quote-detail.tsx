@@ -25,6 +25,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 import {
+	describePayment,
 	formatCurrency,
 	formatDate,
 	quoteStatusLabels,
@@ -161,10 +162,18 @@ export function QuoteDetail({ quote }: { quote: QuoteDetailData }) {
 						<p className="mt-1 font-medium text-foreground">
 							{formatDate(quote.expirationDate)}
 						</p>
-						<p className="font-mono text-xs text-foreground/50">
-							{quote.installments} parcela{quote.installments !== 1 ? 's' : ''}{' '}
-							· entrada de {formatCurrency(quote.entryAmount)}
-						</p>
+						<div className="flex flex-col gap-0.5">
+							{describePayment(
+								quote.totalValue,
+								quote.entryAmount,
+								quote.installments,
+								quote.monthlyTotal,
+							).lines.map((line) => (
+								<p key={line} className="font-mono text-xs text-foreground/50">
+									{line}
+								</p>
+							))}
+						</div>
 					</div>
 				</div>
 				{quote.description && (

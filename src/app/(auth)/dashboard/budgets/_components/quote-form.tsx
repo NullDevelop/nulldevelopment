@@ -35,6 +35,7 @@ import { Textarea } from '@/components/ui/textarea'
 import {
 	calcItemValue,
 	calcQuoteTotals,
+	describePayment,
 	formatCurrency,
 	formatDate,
 } from '@/lib/billing-format'
@@ -337,10 +338,12 @@ export function QuoteForm({
 		Number(values.urgencyFee) || 0,
 	)
 
-	const entryAmount = Number(values.entryAmount) || 0
-	const installments = Math.max(1, Number(values.installments) || 1)
-	const remaining = Math.max(0, totals.totalValue - entryAmount)
-	const installmentValue = remaining / installments
+	const payment = describePayment(
+		totals.totalValue,
+		Number(values.entryAmount) || 0,
+		Number(values.installments) || 1,
+		totals.monthlyTotal,
+	)
 
 	return (
 		<div className="flex flex-col gap-6">
@@ -548,6 +551,9 @@ export function QuoteForm({
 												setField('entryAmount', event.target.value)
 											}
 										/>
+										<p className="font-mono text-[10px] text-foreground/35">
+											Informe o valor em reais, não a porcentagem.
+										</p>
 									</div>
 									<div className="flex flex-col gap-2">
 										<Label htmlFor="quote-installments">Parcelas</Label>
@@ -563,11 +569,16 @@ export function QuoteForm({
 										/>
 									</div>
 								</div>
-								<p className="mt-3 font-mono text-[10px] text-foreground/35">
-									{formatCurrency(entryAmount)} na entrada · restante de{' '}
-									{formatCurrency(remaining)} em {installments}x{' '}
-									{formatCurrency(installmentValue)}
-								</p>
+								<div className="mt-3 flex flex-col gap-0.5">
+									{payment.lines.map((line) => (
+										<p
+											key={line}
+											className="font-mono text-[10px] text-foreground/35"
+										>
+											{line}
+										</p>
+									))}
+								</div>
 							</div>
 						</div>
 					</section>
@@ -864,10 +875,16 @@ export function QuoteForm({
 							<p className="mt-1 font-sentient text-3xl font-bold text-primary">
 								{formatCurrency(totals.totalValue)}
 							</p>
-							<p className="mt-1 font-mono text-[10px] leading-relaxed text-foreground/35">
-								{formatCurrency(entryAmount)} na entrada · {installments}x{' '}
-								{formatCurrency(installmentValue)}
-							</p>
+							<div className="mt-1 flex flex-col gap-0.5">
+								{payment.lines.map((line) => (
+									<p
+										key={line}
+										className="font-mono text-[10px] leading-relaxed text-foreground/35"
+									>
+										{line}
+									</p>
+								))}
+							</div>
 						</div>
 
 						<div className="mt-4 flex items-start gap-2 rounded-[2px] border border-white/8 bg-background/40 p-3">
