@@ -28,34 +28,8 @@ import {
 	deleteContract,
 	setContractStatus,
 	signContractAsProvider,
-} from '../actions'
-
-interface ContractDetailData {
-	id: string
-	number: string
-	title: string
-	status: string
-	clientName: string
-	clientEmail: string | null
-	totalValue: number
-	objectClause: string | null
-	timelineClause: string | null
-	paymentClause: string | null
-	ipClause: string | null
-	startDate: string | null
-	endDate: string | null
-	createdAt: string
-	providerSigned: boolean
-	providerSignedAt: string | null
-	providerSignerName: string | null
-	providerSignatureHash: string | null
-	clientSigned: boolean
-	clientSignedAt: string | null
-	clientSignerName: string | null
-	clientSignatureHash: string | null
-	publicToken: string
-	quote: { id: string; number: string; title: string } | null
-}
+} from '../_actions/contracts'
+import type { ContractDetailData } from '../_data-access/get-contracts'
 
 export function ContractDetail({ contract }: { contract: ContractDetailData }) {
 	const router = useRouter()

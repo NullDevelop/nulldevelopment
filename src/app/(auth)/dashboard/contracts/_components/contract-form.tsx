@@ -16,38 +16,15 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { type ContractInput, createContract, updateContract } from './actions'
-
-export interface ContractClientOption {
-	id: string
-	name: string
-	email: string | null
-}
-
-export interface ContractQuoteOption {
-	id: string
-	number: string
-	title: string
-	clientName: string
-	clientEmail: string | null
-	totalValue: number
-}
-
-export interface ContractFormData {
-	id: string
-	title: string
-	clientId: string | null
-	clientName: string
-	clientEmail: string | null
-	quoteId: string | null
-	objectClause: string | null
-	timelineClause: string | null
-	paymentClause: string | null
-	ipClause: string | null
-	totalValue: number
-	startDate: string | null
-	endDate: string | null
-}
+import {
+	type ContractInput,
+	createContract,
+	updateContract,
+} from '../_actions/contracts'
+import type {
+	ContractFormData,
+	ContractFormOptions,
+} from '../_data-access/get-contracts'
 
 const clauses = [
 	{
@@ -77,12 +54,13 @@ export function ContractForm({
 	quotes,
 	contract,
 }: {
-	clients: ContractClientOption[]
-	quotes: ContractQuoteOption[]
+	clients: ContractFormOptions['clients']
+	quotes: ContractFormOptions['quotes']
 	contract?: ContractFormData
 }) {
 	const router = useRouter()
 	const [isPending, startTransition] = useTransition()
+	const editingId = contract?.id
 	const linkedClient = clients.find(
 		(client) => client.id === contract?.clientId,
 	)
@@ -160,11 +138,11 @@ export function ContractForm({
 
 		startTransition(async () => {
 			try {
-				const saved = contract
-					? await updateContract(contract.id, input)
+				const saved = editingId
+					? await updateContract(editingId, input)
 					: await createContract(input)
 				toast.success(
-					contract
+					editingId
 						? 'Contrato atualizado com sucesso!'
 						: 'Contrato criado com sucesso!',
 				)
@@ -187,7 +165,7 @@ export function ContractForm({
 					</Link>
 				</Button>
 				<h1 className="font-sentient text-3xl font-bold text-foreground">
-					{contract ? 'Editar contrato' : 'Novo contrato'}
+					{editingId ? 'Editar contrato' : 'Novo contrato'}
 				</h1>
 				<p className="font-mono text-sm text-foreground/40 mt-1">
 					Configure as cláusulas e as partes do instrumento.
@@ -339,7 +317,7 @@ export function ContractForm({
 					</Button>
 					<Button type="submit" disabled={isPending} className="min-w-44">
 						{isPending && <Loader2 className="size-4 animate-spin" />}
-						{contract ? 'Salvar alterações' : 'Criar contrato'}
+						{editingId ? 'Salvar alterações' : 'Criar contrato'}
 					</Button>
 				</div>
 			</form>

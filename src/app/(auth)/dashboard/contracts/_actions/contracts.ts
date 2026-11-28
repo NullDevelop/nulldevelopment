@@ -2,8 +2,8 @@
 
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
+import { requirePermission } from '@/lib/permissions'
 import { prisma } from '@/lib/prisma'
-import { requireAuth } from '@/lib/require-auth'
 import { signatureHash } from '@/lib/signature'
 
 const ContractSchema = z.object({
@@ -69,7 +69,7 @@ async function refresh(id?: string) {
 }
 
 export async function createContract(input: ContractInput) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	const data = normalize(input)
 
 	const contract = await prisma.contract.create({
@@ -84,7 +84,7 @@ export async function createContract(input: ContractInput) {
 }
 
 export async function updateContract(id: string, input: ContractInput) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	const data = normalize(input)
 
 	const contract = await prisma.contract.update({
@@ -97,13 +97,13 @@ export async function updateContract(id: string, input: ContractInput) {
 }
 
 export async function deleteContract(id: string) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	await prisma.contract.delete({ where: { id } })
 	await refresh()
 }
 
 export async function setContractStatus(id: string, status: string) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	if (!allowedStatuses.has(status)) throw new Error('Status inválido')
 
 	const contract = await prisma.contract.update({
@@ -116,7 +116,7 @@ export async function setContractStatus(id: string, status: string) {
 }
 
 export async function signContractAsProvider(id: string, signerName: string) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	if (!signerName.trim()) throw new Error('Informe o nome de quem assina')
 
 	const now = new Date()

@@ -13,10 +13,20 @@ export const auth = betterAuth({
 	usernameAndPassword: {
 		enabled: true,
 	},
+	user: {
+		additionalFields: {
+			role: {
+				type: 'string',
+				defaultValue: 'owner',
+				input: false,
+				returned: true,
+			},
+		},
+	},
 	plugins: [username()],
 	rateLimit: {
-		window: 20,       // janela de 20 segundos
-		max: 5,           // máximo 5 tentativas por janela
+		window: 20, // janela de 20 segundos
+		max: 5, // máximo 5 tentativas por janela
 		storage: 'memory',
 		customRules: {
 			'/sign-in/username': {

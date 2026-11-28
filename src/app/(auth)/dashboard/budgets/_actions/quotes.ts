@@ -3,8 +3,8 @@
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { calcQuoteTotals } from '@/lib/billing-format'
+import { requirePermission } from '@/lib/permissions'
 import { prisma } from '@/lib/prisma'
-import { requireAuth } from '@/lib/require-auth'
 import { signatureHash } from '@/lib/signature'
 
 const QuoteItemSchema = z.object({
@@ -104,7 +104,7 @@ async function refresh(id?: string) {
 }
 
 export async function createQuote(input: QuoteInput) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	const data = normalize(input)
 	const sum = totals(data.items, data)
 
@@ -144,7 +144,7 @@ export async function createQuote(input: QuoteInput) {
 }
 
 export async function updateQuote(id: string, input: QuoteInput) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	const data = normalize(input)
 	const sum = totals(data.items, data)
 
@@ -185,13 +185,13 @@ export async function updateQuote(id: string, input: QuoteInput) {
 }
 
 export async function deleteQuote(id: string) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	await prisma.quote.delete({ where: { id } })
 	await refresh()
 }
 
 export async function setQuoteStatus(id: string, status: string) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	if (!allowedStatuses.has(status)) throw new Error('Status inválido')
 
 	const now = new Date()
@@ -209,7 +209,7 @@ export async function setQuoteStatus(id: string, status: string) {
 }
 
 export async function signQuoteAsProvider(id: string, signerName: string) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	if (!signerName.trim()) throw new Error('Informe o nome de quem assina')
 
 	const now = new Date()

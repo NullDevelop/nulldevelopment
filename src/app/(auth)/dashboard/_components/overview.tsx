@@ -1,0 +1,141 @@
+import {
+	Briefcase,
+	Building2,
+	FileSignature,
+	Library,
+	MessageSquare,
+	Receipt,
+	TrendingUp,
+} from 'lucide-react'
+import type { Overview as OverviewData } from '../_data-access/get-overview'
+
+export function Overview({ data }: { data: OverviewData }) {
+	const {
+		projectsCount,
+		companiesCount,
+		messagesCount,
+		quotesCount,
+		contractsCount,
+		catalogItemsCount,
+	} = data
+
+	const stats = [
+		{
+			title: 'Projetos',
+			value: projectsCount,
+			icon: Briefcase,
+			description: 'no portfólio',
+			color: 'text-primary',
+			bg: 'bg-primary/10',
+		},
+		{
+			title: 'Empresas',
+			value: companiesCount,
+			icon: Building2,
+			description: 'parceiras / clientes',
+			color: 'text-primary',
+			bg: 'bg-primary/10',
+		},
+		{
+			title: 'Mensagens',
+			value: messagesCount,
+			icon: MessageSquare,
+			description: 'recebidas',
+			color: 'text-primary',
+			bg: 'bg-primary/10',
+		},
+		{
+			title: 'Orçamentos',
+			value: quotesCount,
+			icon: Receipt,
+			description: 'propostas comerciais',
+			color: 'text-primary',
+			bg: 'bg-primary/10',
+		},
+		{
+			title: 'Contratos',
+			value: contractsCount,
+			icon: FileSignature,
+			description: 'instrumentos firmados',
+			color: 'text-primary',
+			bg: 'bg-primary/10',
+		},
+		{
+			title: 'Catálogo',
+			value: catalogItemsCount,
+			icon: Library,
+			description: 'itens reutilizáveis',
+			color: 'text-primary',
+			bg: 'bg-primary/10',
+		},
+	]
+
+	return (
+		<div className="flex flex-col gap-8">
+			<div className="flex items-center justify-between">
+				<div>
+					<h1 className="font-sentient text-3xl font-bold text-foreground">
+						Visão Geral
+					</h1>
+					<p className="font-mono text-sm text-foreground/40 mt-1">
+						Bem-vindo ao painel de controle
+					</p>
+				</div>
+				<div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-green-500/20 bg-green-500/5">
+					<span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+					<span className="font-mono text-xs text-green-400">online</span>
+				</div>
+			</div>
+
+			<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+				{stats.map((stat) => (
+					<div
+						key={stat.title}
+						className="rounded-[2px] border border-white/10 bg-card p-6 flex flex-col gap-4"
+					>
+						<div className="flex items-center justify-between">
+							<span className="font-mono text-xs text-foreground/40 uppercase tracking-widest">
+								{stat.title}
+							</span>
+							<div className={`p-2 rounded-lg ${stat.bg}`}>
+								<stat.icon className={`size-4 ${stat.color}`} />
+							</div>
+						</div>
+						<div>
+							<p className={`font-sentient text-4xl font-bold ${stat.color}`}>
+								{stat.value}
+							</p>
+							<p className="font-mono text-xs text-foreground/40 mt-1">
+								{stat.description}
+							</p>
+						</div>
+					</div>
+				))}
+			</div>
+
+			<div className="rounded-[2px] border border-white/10 bg-card p-6 flex items-center gap-4">
+				<div className="p-3 rounded-xl bg-primary/10">
+					<TrendingUp className="size-5 text-primary" />
+				</div>
+				<div>
+					<p className="font-mono text-sm text-foreground/80">
+						{projectsCount} projeto{projectsCount !== 1 ? 's' : ''} publicado
+						{projectsCount !== 1 ? 's' : ''} • {companiesCount} cliente
+						{companiesCount !== 1 ? 's' : ''} • {messagesCount} mensagem
+						{messagesCount !== 1 ? 's' : ''} pendente
+						{messagesCount !== 1 ? 's' : ''}
+					</p>
+					<p className="font-mono text-xs text-foreground/50 mt-1">
+						{quotesCount} orçamento{quotesCount !== 1 ? 's' : ''} ·{' '}
+						{contractsCount} contrato{contractsCount !== 1 ? 's' : ''} ·{' '}
+						{catalogItemsCount} item{catalogItemsCount !== 1 ? 's' : ''} no
+						catálogo
+					</p>
+					<p className="font-mono text-xs text-foreground/30 mt-0.5">
+						Última atualização: agora
+					</p>
+				</div>
+			</div>
+		</div>
+	)
+}

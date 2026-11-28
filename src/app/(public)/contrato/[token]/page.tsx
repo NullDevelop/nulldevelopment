@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
-import { ContractPublicView } from '@/components/billing/contract-public-view'
-import { prisma } from '@/lib/prisma'
+import { ContractPublicView } from './_components/contract-public-view'
+import { getPublicContract } from './_data-access/get-contract'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,36 +10,11 @@ export default async function PublicContractPage({
 	params: Promise<{ token: string }>
 }) {
 	const { token } = await params
-	const contract = await prisma.contract.findUnique({
-		where: { publicToken: token },
-	})
+	const proposal = await getPublicContract(token)
 
-	if (!contract) notFound()
+	if (!proposal) notFound()
 
 	return (
-		<ContractPublicView
-			token={token}
-			contract={{
-				number: contract.number,
-				title: contract.title,
-				status: contract.status,
-				clientName: contract.clientName,
-				clientEmail: contract.clientEmail,
-				objectClause: contract.objectClause,
-				timelineClause: contract.timelineClause,
-				paymentClause: contract.paymentClause,
-				ipClause: contract.ipClause,
-				totalValue: contract.totalValue,
-				startDate: contract.startDate?.toISOString() ?? null,
-				endDate: contract.endDate?.toISOString() ?? null,
-				providerSigned: contract.providerSigned,
-				providerSignerName: contract.providerSignerName,
-				providerSignatureHash: contract.providerSignatureHash,
-				clientSigned: contract.clientSigned,
-				clientSignedAt: contract.clientSignedAt?.toISOString() ?? null,
-				clientSignerName: contract.clientSignerName,
-				clientSignatureHash: contract.clientSignatureHash,
-			}}
-		/>
+		<ContractPublicView token={proposal.token} contract={proposal.contract} />
 	)
 }

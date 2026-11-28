@@ -7,21 +7,8 @@ import { DeleteBillingButton } from '@/components/billing/delete-billing-button'
 import { StatusBadge } from '@/components/billing/status-badge'
 import { Button } from '@/components/ui/button'
 import { formatCurrency, formatDate } from '@/lib/billing-format'
-import { deleteContract } from './actions'
-
-export interface ContractRow {
-	id: string
-	number: string
-	title: string
-	status: string
-	clientName: string
-	totalValue: number
-	providerSigned: boolean
-	clientSigned: boolean
-	quote: { number: string; title: string } | null
-	startDate: string | null
-	createdAt: string
-}
+import { deleteContract } from '../_actions/contracts'
+import type { ContractRow } from '../_data-access/get-contracts'
 
 export function ContractsManager({ contracts }: { contracts: ContractRow[] }) {
 	const router = useRouter()

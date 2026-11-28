@@ -9,7 +9,6 @@ import {
 import Link from 'next/link'
 import { useState, useTransition } from 'react'
 import { toast } from 'sonner'
-import { signContractByToken } from '@/app/actions/public-billing'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -18,6 +17,7 @@ import {
 	formatDate,
 } from '@/lib/billing-format'
 import { company } from '@/lib/company'
+import { signContractByToken } from '../../../_actions/public-billing'
 
 interface ContractData {
 	number: string

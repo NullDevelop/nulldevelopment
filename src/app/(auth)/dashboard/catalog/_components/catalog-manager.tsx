@@ -34,27 +34,11 @@ import {
 	deleteItem,
 	updateCategory,
 	updateItem,
-} from './actions'
-
-export interface CatalogItemRow {
-	id: string
-	name: string
-	description: string
-	baseHours: number
-	complexity: string
-	monthlyFee: number
-	monthlyDuration: number
-	categoryId: string | null
-	categoryName: string
-}
-
-export interface CatalogCategoryRow {
-	id: string
-	name: string
-	description: string | null
-	order: number
-	items: CatalogItemRow[]
-}
+} from '../_actions'
+import type {
+	CatalogCategoryRow,
+	CatalogItemRow,
+} from '../_data-access/get-catalog'
 
 const complexityLabels: Record<string, string> = {
 	baixa: 'Baixa',

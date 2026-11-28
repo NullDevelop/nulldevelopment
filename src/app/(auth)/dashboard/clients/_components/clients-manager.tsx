@@ -17,18 +17,13 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { formatDate } from '@/lib/billing-format'
-import type { ClientInput } from './actions'
-import { createClient, deleteClient, updateClient } from './actions'
-
-export interface ClientRow {
-	id: string
-	name: string
-	email: string | null
-	document: string | null
-	phone: string | null
-	address: string | null
-	createdAt: string
-}
+import {
+	type ClientInput,
+	createClient,
+	deleteClient,
+	updateClient,
+} from '../_actions'
+import type { ClientRow } from '../_data-access/get-clients'
 
 interface ClientFormValues {
 	name: string

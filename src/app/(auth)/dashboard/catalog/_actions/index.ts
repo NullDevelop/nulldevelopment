@@ -2,8 +2,8 @@
 
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
+import { requirePermission } from '@/lib/permissions'
 import { prisma } from '@/lib/prisma'
-import { requireAuth } from '@/lib/require-auth'
 
 const CategorySchema = z.object({
 	name: z.string().min(1, 'Informe o nome da categoria'),
@@ -31,7 +31,7 @@ async function refresh() {
 }
 
 export async function createCategory(input: CatalogCategoryInput) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	const data = CategorySchema.parse(input)
 	const category = await prisma.catalogCategory.create({
 		data: {
@@ -45,7 +45,7 @@ export async function createCategory(input: CatalogCategoryInput) {
 }
 
 export async function updateCategory(id: string, input: CatalogCategoryInput) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	const data = CategorySchema.parse(input)
 	const category = await prisma.catalogCategory.update({
 		where: { id },
@@ -60,13 +60,13 @@ export async function updateCategory(id: string, input: CatalogCategoryInput) {
 }
 
 export async function deleteCategory(id: string) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	await prisma.catalogCategory.delete({ where: { id } })
 	await refresh()
 }
 
 export async function createItem(input: CatalogItemInput) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	const data = ItemSchema.parse(input)
 	const item = await prisma.catalogItem.create({
 		data: {
@@ -84,7 +84,7 @@ export async function createItem(input: CatalogItemInput) {
 }
 
 export async function updateItem(id: string, input: CatalogItemInput) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	const data = ItemSchema.parse(input)
 	const item = await prisma.catalogItem.update({
 		where: { id },
@@ -103,7 +103,7 @@ export async function updateItem(id: string, input: CatalogItemInput) {
 }
 
 export async function deleteItem(id: string) {
-	await requireAuth()
+	await requirePermission('billing:write')
 	await prisma.catalogItem.delete({ where: { id } })
 	await refresh()
 }

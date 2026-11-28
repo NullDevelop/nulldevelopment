@@ -23,39 +23,12 @@ import {
 	calcQuoteTotals,
 	formatCurrency,
 } from '@/lib/billing-format'
-import type { CatalogOption } from '@/lib/catalog'
-import { createQuote, type QuoteInput, updateQuote } from './actions'
-
-export interface ClientOption {
-	id: string
-	name: string
-	email: string | null
-}
-
-export interface QuoteItemFormData {
-	id: string
-	name: string
-	description: string | null
-	hours: number
-	monthlyFee: number
-	monthlyDuration: number
-}
-
-export interface QuoteFormData {
-	id: string
-	title: string
-	description: string | null
-	clientId: string | null
-	clientName: string
-	clientEmail: string | null
-	hourlyRate: number
-	discount: number
-	urgencyFee: number
-	entryAmount: number
-	installments: number
-	expirationDate: string | null
-	items: QuoteItemFormData[]
-}
+import { createQuote, type QuoteInput, updateQuote } from '../_actions/quotes'
+import type {
+	CatalogOption,
+	ClientOption,
+} from '../_data-access/get-budget-options'
+import type { QuoteFormData } from '../_data-access/get-quotes'
 
 interface ItemValues {
 	key: string

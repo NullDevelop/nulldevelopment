@@ -30,40 +30,12 @@ import {
 	quoteStatusLabels,
 } from '@/lib/billing-format'
 import { company } from '@/lib/company'
-import { deleteQuote, setQuoteStatus, signQuoteAsProvider } from '../actions'
-
-interface QuoteDetailData {
-	id: string
-	number: string
-	title: string
-	description: string | null
-	status: string
-	clientName: string
-	clientEmail: string | null
-	hourlyRate: number
-	discount: number
-	urgencyFee: number
-	entryAmount: number
-	installments: number
-	totalHours: number
-	totalValue: number
-	monthlyTotal: number
-	expirationDate: string | null
-	createdAt: string
-	signerName: string | null
-	signatureHash: string | null
-	signedAt: string | null
-	publicToken: string
-	items: Array<{
-		id: string
-		name: string
-		description: string | null
-		hours: number
-		unitValue: number
-		monthlyFee: number
-		monthlyDuration: number
-	}>
-}
+import {
+	deleteQuote,
+	setQuoteStatus,
+	signQuoteAsProvider,
+} from '../_actions/quotes'
+import type { QuoteDetailData } from '../_data-access/get-quotes'
 
 export function QuoteDetail({ quote }: { quote: QuoteDetailData }) {
 	const router = useRouter()

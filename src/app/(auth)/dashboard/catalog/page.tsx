@@ -1,35 +1,12 @@
-import { prisma } from '@/lib/prisma'
-import { CatalogManager } from './catalog-manager'
+import { requirePermission } from '@/lib/permissions'
+import { CatalogManager } from './_components/catalog-manager'
+import { getCatalog } from './_data-access/get-catalog'
 
 export const dynamic = 'force-dynamic'
 
 export default async function CatalogPage() {
-	const categories = await prisma.catalogCategory.findMany({
-		include: {
-			items: { orderBy: { name: 'asc' } },
-		},
-		orderBy: [{ order: 'asc' }, { name: 'asc' }],
-	})
+	await requirePermission('billing:read')
+	const categories = await getCatalog()
 
-	return (
-		<CatalogManager
-			categories={categories.map((category) => ({
-				id: category.id,
-				name: category.name,
-				description: category.description,
-				order: category.order,
-				items: category.items.map((item) => ({
-					id: item.id,
-					name: item.name,
-					description: item.description,
-					baseHours: item.baseHours,
-					complexity: item.complexity,
-					monthlyFee: item.monthlyFee,
-					monthlyDuration: item.monthlyDuration,
-					categoryId: item.categoryId,
-					categoryName: category.name,
-				})),
-			}))}
-		/>
-	)
+	return <CatalogManager categories={categories} />
 }

@@ -11,6 +11,7 @@ model User {
   id              String    @id @default(uuid())
   name            String
   email           String
+  role            String    @default("owner")
   username        String?
   displayUsername String?
   emailVerified   Boolean   @default(false)

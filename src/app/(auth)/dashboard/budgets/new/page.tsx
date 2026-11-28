@@ -1,26 +1,14 @@
-import { getCatalogOptions } from '@/lib/catalog'
-import { prisma } from '@/lib/prisma'
-import { QuoteForm } from '../quote-form'
+import { requirePermission } from '@/lib/permissions'
+import { QuoteForm } from '../_components/quote-form'
+import { getBudgetFormOptions } from '../_data-access/get-budget-options'
 
 export const dynamic = 'force-dynamic'
 
 export default async function NewBudgetPage() {
-	const [clients, catalogItems] = await Promise.all([
-		prisma.client.findMany({
-			select: { id: true, name: true, email: true },
-			orderBy: { name: 'asc' },
-		}),
-		getCatalogOptions(),
-	])
+	await requirePermission('billing:read')
+	const options = await getBudgetFormOptions()
 
 	return (
-		<QuoteForm
-			clients={clients.map((client) => ({
-				id: client.id,
-				name: client.name,
-				email: client.email,
-			}))}
-			catalogItems={catalogItems}
-		/>
+		<QuoteForm clients={options.clients} catalogItems={options.catalogItems} />
 	)
 }

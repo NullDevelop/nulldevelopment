@@ -1,24 +1,12 @@
-import { prisma } from '@/lib/prisma'
-import { ClientsManager } from './clients-manager'
+import { requirePermission } from '@/lib/permissions'
+import { ClientsManager } from './_components/clients-manager'
+import { getClients } from './_data-access/get-clients'
 
 export const dynamic = 'force-dynamic'
 
 export default async function ClientsPage() {
-	const clients = await prisma.client.findMany({
-		orderBy: { createdAt: 'desc' },
-	})
+	await requirePermission('billing:read')
+	const clients = await getClients()
 
-	return (
-		<ClientsManager
-			clients={clients.map((client) => ({
-				id: client.id,
-				name: client.name,
-				email: client.email,
-				document: client.document,
-				phone: client.phone,
-				address: client.address,
-				createdAt: client.createdAt.toISOString(),
-			}))}
-		/>
-	)
+	return <ClientsManager clients={clients} />
 }
