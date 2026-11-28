@@ -70,6 +70,10 @@ const complexityLabels: Record<string, string> = {
 	alta: 'Alta',
 }
 
+function isPlaceholderItem(item: ItemValues) {
+	return !item.name.trim() && !item.description.trim() && !item.source
+}
+
 const newItem = (key: string): ItemValues => ({
 	key,
 	name: '',
@@ -210,6 +214,12 @@ export function QuoteForm({
 	}
 
 	function addBlankItem() {
+		if (items.length === 1 && isPlaceholderItem(items[0])) {
+			const key = items[0].key
+			setExpandedItems((current) => ({ ...current, [key]: true }))
+			return
+		}
+
 		itemCounter.current += 1
 		const key = `novo-${itemCounter.current}`
 		setItems((current) => [...current, newItem(key)])
@@ -248,9 +258,12 @@ export function QuoteForm({
 	function handleCatalogSelect(selected: CatalogOption) {
 		itemCounter.current += 1
 		const key = `catalogo-${itemCounter.current}`
-		setItems((current) => [
-			...current,
-			{
+		const replacesPlaceholder =
+			items.length === 1 && isPlaceholderItem(items[0])
+
+		setItems((current) => {
+			const next = replacesPlaceholder ? [] : [...current]
+			next.push({
 				key,
 				name: selected.name,
 				description: selected.description,
@@ -258,9 +271,14 @@ export function QuoteForm({
 				monthlyFee: String(selected.monthlyFee),
 				monthlyDuration: String(selected.monthlyDuration),
 				source: selected.categoryName ?? 'Catálogo',
-			},
-		])
-		setExpandedItems((current) => ({ ...current, [key]: false }))
+			})
+			return next
+		})
+		setExpandedItems((current) => {
+			const next = replacesPlaceholder ? {} : { ...current }
+			next[key] = false
+			return next
+		})
 		toast.success(`Item "${selected.name}" adicionado à proposta.`)
 	}
 
