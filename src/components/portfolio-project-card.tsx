@@ -22,10 +22,9 @@ export function PortfolioProjectCard({
 		project.statusBadge || (isLive ? t.portfolio.live : t.portfolio.caseBadge)
 	const caseNumber = `${groupNumber}.${(index + 1).toString().padStart(2, '0')}`
 	const categoryLabel = {
-		saas: t.projectPage.saas,
 		governamental: t.projectPage.public,
-		landing: t.projectPage.landing,
 		privado: t.projectPage.private,
+		pessoal: t.projectPage.personal,
 	}[project.category]
 	const visibleStack = project.stack.slice(0, 4)
 	const hiddenStackCount = project.stack.length - visibleStack.length

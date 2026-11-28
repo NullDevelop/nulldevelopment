@@ -1,4 +1,4 @@
-export type ProjectCategory = 'governamental' | 'privado' | 'saas' | 'landing'
+export type ProjectCategory = 'governamental' | 'privado' | 'pessoal'
 
 /** Values accepted by the admin form and by the public portfolio. */
 export const projectCategories: Array<{
@@ -6,9 +6,8 @@ export const projectCategories: Array<{
 	label: string
 }> = [
 	{ value: 'governamental', label: 'Setor Público' },
-	{ value: 'privado', label: 'Privado / Corporativo' },
-	{ value: 'saas', label: 'Plataforma SaaS' },
-	{ value: 'landing', label: 'Landing Page' },
+	{ value: 'privado', label: 'Empresa Privada' },
+	{ value: 'pessoal', label: 'Projetos Pessoais' },
 ]
 
 export function isProjectCategory(value: unknown): value is ProjectCategory {
@@ -26,7 +25,7 @@ export function projectCategoryLabel(value: unknown): string {
 	const category = parseProjectCategory(value)
 	return (
 		projectCategories.find((item) => item.value === category)?.label ??
-		'Privado / Corporativo'
+		'Empresa Privada'
 	)
 }
 

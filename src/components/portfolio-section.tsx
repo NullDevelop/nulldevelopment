@@ -1,6 +1,6 @@
 'use client'
 
-import { Building2, Landmark } from 'lucide-react'
+import { Building2, Landmark, Sparkles } from 'lucide-react'
 import { format, whatsappUrl } from '@/i18n/format'
 import { localizeProject } from '@/i18n/projects'
 import { useI18n } from '@/i18n/provider'
@@ -23,26 +23,27 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 		.filter((project) => !hiddenProjectSlugs.has(project.slug))
 		.map((project) => localizeProject(project, locale, t))
 
-	const publicProjects = projectsToDisplay.filter(
-		(project) => project.category === 'governamental',
-	)
-
-	const privateProjects = projectsToDisplay.filter(
-		(project) => project.category !== 'governamental',
-	)
-
 	const projectGroups = [
 		{
 			id: 'public',
 			number: '01',
 			title: t.portfolio.public,
 			icon: Landmark,
+			category: 'governamental',
 		},
 		{
 			id: 'private',
 			number: '02',
 			title: t.portfolio.private,
 			icon: Building2,
+			category: 'privado',
+		},
+		{
+			id: 'personal',
+			number: '03',
+			title: t.portfolio.personal,
+			icon: Sparkles,
+			category: 'pessoal',
 		},
 	] as const
 
@@ -74,9 +75,10 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 					{projectGroups.map((group) => {
 						const CategoryIcon = group.icon
 						const isPublic = group.id === 'public'
-						const itemCount = isPublic
-							? publicProjects.length
-							: privateProjects.length
+						const groupProjects = projectsToDisplay.filter(
+							(project) => project.category === group.category,
+						)
+						const itemCount = groupProjects.length
 						const isEmpty = itemCount === 0
 
 						return (
@@ -158,7 +160,7 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 									</BlurFade>
 								) : (
 									<div className="grid grid-cols-1 gap-5 pt-6 md:grid-cols-2 lg:grid-cols-3">
-										{(isPublic ? publicProjects : privateProjects).map(
+										{groupProjects.map(
 											(project, index) => (
 												<BlurFade
 													key={project.id}

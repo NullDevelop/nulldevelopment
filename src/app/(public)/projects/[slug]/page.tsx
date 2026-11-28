@@ -73,13 +73,15 @@ export default async function ProjectPage({
 
 	const isLive = !!project.link
 	const badge = project.statusBadge || (isLive ? p.liveBadge : p.caseStudy)
-	const sectorLabel =
-		project.category === 'governamental' ? t.portfolio.public : t.portfolio.private
+	const sectorLabel = {
+		governamental: t.portfolio.public,
+		privado: t.portfolio.private,
+		pessoal: t.portfolio.personal,
+	}[project.category]
 	const solutionTypeLabels = {
-		saas: p.saas,
 		governamental: p.public,
-		landing: p.landing,
 		privado: p.private,
+		pessoal: p.personal,
 	}
 
 	const whatsappHref = whatsappUrl(

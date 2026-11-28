@@ -15,14 +15,14 @@ Descrição do projeto:
 """
 
 Retorne o JSON em uma ÚNICA LINHA (sem quebras de linha dentro das strings - use \\n para quebras):
-{"title":"Nome do projeto","slug":"nome-do-projeto","shortDescription":"Descrição curta","content":"Descrição completa em Markdown (use **negrito**, listas, \\n para quebras)","stack":"Tech1, Tech2, Tech3","link":"https://...","category":"governamental"}
+{"title":"Nome do projeto","slug":"nome-do-projeto","shortDescription":"Descrição curta","content":"Descrição completa em Markdown (use **negrito**, listas, \\n para quebras)","stack":"Tech1, Tech2, Tech3","link":"https://...","category":"pessoal"}
 
 Regras importantes:
 1. O JSON deve ser retornado em uma única linha
 2. Dentro das strings, use \\n para indicar quebras de linha
 3. NÃO use Markdown para envolver o JSON (não use \`\`\`json ... \`\`\`)
 4. O campo "content" DEVE conter Markdown (negrito, listas, etc)
-5. Use "category" = "governamental" para setor público (prefeitura, órgão público, autarquia), "privado" para empresa privada, "saas" para plataforma SaaS ou "landing" para landing page
+5. Use "category" = "governamental" para setor público (prefeitura, órgão público, autarquia), "privado" para empresa privada ou "pessoal" para projetos próprios (SaaS, PDV, blogs e projetos pessoais)
 6. Responda APENAS com o JSON, nenhuma explicação`
 
 interface AiPromptHelperProps {
