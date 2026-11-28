@@ -169,6 +169,7 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 													<CompactProjectCard
 														project={project}
 														showCaseLink={!isPublic}
+														fullDescription={isPublic}
 														whatsapp={
 															isPublic
 																? {

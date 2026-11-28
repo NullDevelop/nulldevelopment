@@ -11,6 +11,7 @@ import type { ProjectData } from '@/lib/projects-data'
 interface CompactProjectCardProps {
 	project: ProjectData
 	showCaseLink?: boolean
+	fullDescription?: boolean
 	whatsapp?: {
 		href: string
 		label: string
@@ -20,6 +21,7 @@ interface CompactProjectCardProps {
 export function CompactProjectCard({
 	project,
 	showCaseLink = false,
+	fullDescription = false,
 	whatsapp,
 }: CompactProjectCardProps) {
 	const isLive = !!project.link
@@ -56,7 +58,9 @@ export function CompactProjectCard({
 				<h4 className="font-sentient text-xl font-medium leading-tight tracking-tight text-pretty text-foreground sm:text-2xl">
 					{project.title}
 				</h4>
-				<p className="mt-2 line-clamp-2 text-[13px] leading-relaxed text-pretty text-brand-steel">
+				<p
+					className={`mt-2 text-[13px] leading-relaxed text-pretty text-brand-steel ${fullDescription ? '' : 'line-clamp-2'}`}
+				>
 					{project.shortDescription}
 				</p>
 				{whatsapp && (
