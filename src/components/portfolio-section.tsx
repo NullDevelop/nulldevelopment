@@ -24,18 +24,9 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 		.filter((project) => !hiddenProjectSlugs.has(project.slug))
 		.map((project) => localizeProject(project, locale, t))
 
-	const publicProducts = [
-		...t.portfolio.publicProducts.map((product) => ({
-			name: product.name,
-			description: product.description,
-		})),
-		...projectsToDisplay
-			.filter((project) => project.category === 'governamental')
-			.map((project) => ({
-				name: project.title,
-				description: project.shortDescription,
-			})),
-	]
+	const publicProjects = projectsToDisplay.filter(
+		(project) => project.category === 'governamental',
+	)
 
 	const privateProjects = projectsToDisplay.filter(
 		(project) => project.category !== 'governamental',
@@ -85,7 +76,7 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 						const CategoryIcon = group.icon
 						const isPublic = group.id === 'public'
 						const itemCount = isPublic
-							? publicProducts.length
+							? publicProjects.length
 							: privateProjects.length
 						const isEmpty = itemCount === 0
 
@@ -169,17 +160,14 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 								) : (
 									<div className="grid grid-cols-1 gap-5 pt-6 md:grid-cols-2 lg:grid-cols-3">
 										{isPublic
-											? publicProducts.map((product, index) => (
+											? publicProjects.map((project, index) => (
 													<BlurFade
-														key={`${product.name}-${index}`}
+														key={project.id}
 														delay={0.05 * (index + 1)}
 														inView
 														className="h-full"
 													>
-														<PublicSectorCard
-															name={product.name}
-															description={product.description}
-														/>
+														<PublicSectorCard project={project} />
 													</BlurFade>
 												))
 											: privateProjects.map((project, index) => (
