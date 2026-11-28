@@ -3,9 +3,8 @@
 import { Building2, Landmark } from 'lucide-react'
 import { localizeProject } from '@/i18n/projects'
 import { useI18n } from '@/i18n/provider'
-import { curatedProjects, type ProjectData } from '@/lib/projects-data'
-import { PortfolioProjectCard } from './portfolio-project-card'
-import { PublicSectorCard } from './public-sector-card'
+import type { ProjectData } from '@/lib/projects-data'
+import { CompactProjectCard } from './compact-project-card'
 import { BlurFade } from './ui/blur-fade'
 
 // Institutional/restricted cases and the seed demo stay out of the showcase.
@@ -18,9 +17,7 @@ interface PortfolioSectionProps {
 export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 	const { t, locale } = useI18n()
 
-	const projectsToDisplay = (
-		dbProjects.length > 0 ? dbProjects : curatedProjects
-	)
+	const projectsToDisplay = dbProjects
 		.filter((project) => !hiddenProjectSlugs.has(project.slug))
 		.map((project) => localizeProject(project, locale, t))
 
@@ -159,32 +156,21 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 									</BlurFade>
 								) : (
 									<div className="grid grid-cols-1 gap-5 pt-6 md:grid-cols-2 lg:grid-cols-3">
-										{isPublic
-											? publicProjects.map((project, index) => (
-													<BlurFade
-														key={project.id}
-														delay={0.05 * (index + 1)}
-														inView
-														className="h-full"
-													>
-														<PublicSectorCard project={project} />
-													</BlurFade>
-												))
-											: privateProjects.map((project, index) => (
-													<BlurFade
-														key={project.id}
-														delay={0.05 * (index + 1)}
-														inView
-														className="h-full"
-													>
-														<PortfolioProjectCard
-															project={project}
-															groupNumber={group.number}
-															index={index}
-															t={t}
-														/>
-													</BlurFade>
-												))}
+										{(isPublic ? publicProjects : privateProjects).map(
+											(project, index) => (
+												<BlurFade
+													key={project.id}
+													delay={0.05 * (index + 1)}
+													inView
+													className="h-full"
+												>
+													<CompactProjectCard
+														project={project}
+														showCaseLink={!isPublic}
+													/>
+												</BlurFade>
+											),
+										)}
 									</div>
 								)}
 							</section>
