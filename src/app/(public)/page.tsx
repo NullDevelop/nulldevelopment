@@ -15,7 +15,7 @@ export default function Home() {
     url: siteUrl.toString(),
     image: new URL('/Perfil circular.png', siteUrl).toString(),
     email: company.email,
-    telephone: '+5541991798306',
+    telephone: '+554185267950',
     address: {
       '@type': 'PostalAddress',
       addressLocality: company.address.city,

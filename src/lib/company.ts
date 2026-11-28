@@ -13,8 +13,8 @@ export const company = {
 		zip: '83433-540',
 	},
 	email: 'contato@nulldev.com.br',
-	phone: '(41) 99179-8306',
-	whatsapp: 'https://wa.me/5541991798306',
+	phone: '(41) 8526-7950',
+	whatsapp: 'https://wa.me/554185267950',
 } as const
 
 export const companyAddress = `${company.address.street}, ${company.address.district}, ${company.address.city}/${company.address.state} - CEP ${company.address.zip}`

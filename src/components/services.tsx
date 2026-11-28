@@ -252,7 +252,7 @@ export function Services() {
 								</ShimmerButton>
 							</Link>
 							<a
-								href="https://wa.me/5541991798306?text=Ol%C3%A1%20Pedro!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20um%20projeto."
+								href="https://wa.me/554185267950?text=Ol%C3%A1%20Pedro!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20um%20projeto."
 								target="_blank"
 								rel="noopener noreferrer"
 								className="p-2.5 rounded-xl border border-emerald-500/30 bg-emerald-950/40 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-900/50 transition-colors"
