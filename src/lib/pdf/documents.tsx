@@ -107,35 +107,34 @@ const styles = StyleSheet.create({
 	value: { fontSize: 10, fontWeight: 700 },
 	subValue: { fontSize: 8, color: MUTED, marginTop: 2 },
 	description: { fontSize: 9, color: '#4B5563' },
-	tableHeader: {
+	scopeNote: { fontSize: 8, color: MUTED, marginBottom: 10 },
+	itemBlock: {
+		backgroundColor: SOFT,
+		borderLeftWidth: 2,
+		borderLeftColor: COPPER,
+		borderRadius: 3,
+		padding: 10,
+		marginBottom: 10,
+		wrap: 'nowrap',
+	},
+	itemHeading: {
 		flexDirection: 'row',
-		backgroundColor: CHARCOAL,
-		borderTopLeftRadius: 3,
-		borderTopRightRadius: 3,
-		paddingVertical: 7,
-		paddingHorizontal: 10,
+		justifyContent: 'space-between',
+		gap: 12,
+		marginBottom: 5,
 	},
-	tableHeaderCell: {
-		color: IVORY,
-		fontSize: 7,
-		fontWeight: 700,
-		letterSpacing: 0.8,
-		textTransform: 'uppercase',
+	itemTitle: { flex: 1, fontSize: 9, fontWeight: 700, paddingRight: 4 },
+	itemMeta: { fontSize: 8, color: MUTED, textAlign: 'right' },
+	itemDescription: {
+		fontSize: 8.5,
+		lineHeight: 1.55,
+		color: '#4B5563',
 	},
-	tableRow: {
-		flexDirection: 'row',
-		borderBottomWidth: 1,
-		borderBottomColor: LINE,
-		paddingVertical: 7,
-		paddingHorizontal: 10,
+	itemMonthly: {
+		fontSize: 8,
+		color: COPPER,
+		marginTop: 5,
 	},
-	tableAlt: { backgroundColor: SOFT },
-	cell: { fontSize: 8 },
-	cellRight: { fontSize: 8, textAlign: 'right' },
-	colName: { flex: 3 },
-	colDesc: { flex: 3 },
-	colHours: { flex: 1, textAlign: 'right' },
-	colValue: { flex: 1.5, textAlign: 'right' },
 	summary: {
 		marginLeft: 'auto',
 		width: 220,
@@ -337,29 +336,31 @@ export function QuotePdf({ quote }: { quote: PdfQuote }) {
 				) : null}
 
 				<Text style={styles.sectionTitle}>Escopo e investimento</Text>
-				<View style={styles.tableHeader}>
-					<Text style={[styles.tableHeaderCell, styles.colName]}>Item</Text>
-					<Text style={[styles.tableHeaderCell, styles.colDesc]}>Detalhes</Text>
-					<Text style={[styles.tableHeaderCell, styles.colHours]}>Horas</Text>
-					<Text style={[styles.tableHeaderCell, styles.colValue]}>Valor</Text>
-				</View>
+				<Text style={styles.scopeNote}>
+					Cada entrega abaixo é descrita em detalhes para servir como base do
+					trabalho contratado.
+				</Text>
 				{quote.items.map((item, index) => (
-					<View
-						key={`${item.name}-${index}`}
-						style={
-							index % 2 ? [styles.tableRow, styles.tableAlt] : styles.tableRow
-						}
-					>
-						<Text style={[styles.cell, styles.colName]}>{item.name}</Text>
-						<Text style={[styles.cell, styles.colDesc]}>
-							{item.description ?? '—'}
+					<View key={`${item.name}-${index}`} style={styles.itemBlock}>
+						<View style={styles.itemHeading}>
+							<Text style={styles.itemTitle}>
+								{String(index + 1).padStart(2, '0')} · {item.name}
+							</Text>
+							<Text style={styles.itemMeta}>
+								{item.hours}h · {formatCurrency(item.unitValue)}
+							</Text>
+						</View>
+						<Text style={styles.itemDescription}>
+							{item.description || 'Escopo detalhado a definir em conjunto.'}
 						</Text>
-						<Text style={[styles.cellRight, styles.colHours]}>
-							{item.hours}
-						</Text>
-						<Text style={[styles.cellRight, styles.colValue]}>
-							{formatCurrency(item.unitValue)}
-						</Text>
+						{item.monthlyFee > 0 ? (
+							<Text style={styles.itemMonthly}>
+								Mensalidade de {formatCurrency(item.monthlyFee)} por mês
+								{item.monthlyDuration > 0
+									? ` · validade de ${item.monthlyDuration} meses`
+									: ''}
+							</Text>
+						) : null}
 					</View>
 				))}
 
