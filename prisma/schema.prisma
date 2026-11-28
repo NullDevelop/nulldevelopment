@@ -165,6 +165,35 @@ model Quote {
   @@map("quotes")
 }
 
+model CatalogCategory {
+  id          String        @id @default(uuid())
+  name        String        @unique
+  description String?
+  order       Int           @default(0)
+  items       CatalogItem[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@map("catalog_categories")
+}
+
+model CatalogItem {
+  id              String           @id @default(uuid())
+  name            String
+  description     String           @db.Text
+  baseHours       Float            @default(0)
+  complexity      String           @default("media")
+  monthlyFee      Float            @default(0)
+  monthlyDuration Int              @default(12)
+  categoryId      String?
+  category        CatalogCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([categoryId])
+  @@map("catalog_items")
+}
+
 model QuoteItem {
   id              String   @id @default(uuid())
   name            String

@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { getCatalogOptions } from '@/lib/catalog'
 import { prisma } from '@/lib/prisma'
 import { QuoteForm } from '../../quote-form'
 
@@ -10,7 +11,7 @@ export default async function EditBudgetPage({
 	params: Promise<{ id: string }>
 }) {
 	const { id } = await params
-	const [quote, clients] = await Promise.all([
+	const [quote, clients, catalogItems] = await Promise.all([
 		prisma.quote.findUnique({
 			where: { id },
 			include: { items: { orderBy: { order: 'asc' } } },
@@ -19,6 +20,7 @@ export default async function EditBudgetPage({
 			select: { id: true, name: true, email: true },
 			orderBy: { name: 'asc' },
 		}),
+		getCatalogOptions(),
 	])
 
 	if (!quote) notFound()
@@ -30,6 +32,7 @@ export default async function EditBudgetPage({
 				name: client.name,
 				email: client.email,
 			}))}
+			catalogItems={catalogItems}
 			quote={{
 				id: quote.id,
 				title: quote.title,

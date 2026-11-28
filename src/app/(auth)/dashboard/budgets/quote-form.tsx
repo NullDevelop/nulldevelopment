@@ -11,7 +11,9 @@ import { Label } from '@/components/ui/label'
 import {
 	Select,
 	SelectContent,
+	SelectGroup,
 	SelectItem,
+	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
@@ -21,6 +23,7 @@ import {
 	calcQuoteTotals,
 	formatCurrency,
 } from '@/lib/billing-format'
+import type { CatalogOption } from '@/lib/catalog'
 import { createQuote, type QuoteInput, updateQuote } from './actions'
 
 export interface ClientOption {
@@ -61,6 +64,7 @@ interface ItemValues {
 	hours: string
 	monthlyFee: string
 	monthlyDuration: string
+	source: string
 }
 
 const newItem = (key: string): ItemValues => ({
@@ -70,16 +74,20 @@ const newItem = (key: string): ItemValues => ({
 	hours: '1',
 	monthlyFee: '0',
 	monthlyDuration: '12',
+	source: '',
 })
 
 export function QuoteForm({
 	clients,
+	catalogItems,
 	quote,
 }: {
 	clients: ClientOption[]
+	catalogItems: CatalogOption[]
 	quote?: QuoteFormData
 }) {
 	const router = useRouter()
+	const [catalogSelection, setCatalogSelection] = useState('')
 	const [isPending, startTransition] = useTransition()
 	const [clientMode, setClientMode] = useState(
 		clients.some((client) => client.id === quote?.clientId)
@@ -107,6 +115,7 @@ export function QuoteForm({
 					hours: String(item.hours),
 					monthlyFee: String(item.monthlyFee),
 					monthlyDuration: String(item.monthlyDuration),
+					source: '',
 				}))
 			: [newItem('novo-0')],
 	)
@@ -134,6 +143,27 @@ export function QuoteForm({
 				itemIndex === index ? { ...item, [key]: value } : item,
 			),
 		)
+	}
+
+	function handleCatalogSelect(value: string) {
+		const selected = catalogItems.find((item) => item.id === value)
+		setCatalogSelection('')
+		if (!selected) return
+
+		itemCounter.current += 1
+		setItems((current) => [
+			...current,
+			{
+				key: `catalogo-${itemCounter.current}`,
+				name: selected.name,
+				description: selected.description,
+				hours: String(selected.baseHours),
+				monthlyFee: String(selected.monthlyFee),
+				monthlyDuration: String(selected.monthlyDuration),
+				source: selected.categoryName ?? 'Catálogo',
+			},
+		])
+		toast.success(`Item "${selected.name}" adicionado à proposta.`)
 	}
 
 	function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -190,6 +220,15 @@ export function QuoteForm({
 			}
 		})
 	}
+
+	const catalogGroups = catalogItems.reduce<Record<string, CatalogOption[]>>(
+		(groups, item) => {
+			const key = item.categoryName ?? 'Sem categoria'
+			groups[key] = [...(groups[key] ?? []), item]
+			return groups
+		},
+		{},
+	)
 
 	const totals = calcQuoteTotals(
 		items.map((item) => ({
@@ -366,21 +405,50 @@ export function QuoteForm({
 						<h2 className="font-mono text-xs uppercase tracking-widest text-primary">
 							Itens
 						</h2>
-						<Button
-							type="button"
-							variant="outline"
-							size="sm"
-							onClick={() => {
-								itemCounter.current += 1
-								setItems((current) => [
-									...current,
-									newItem(`novo-${itemCounter.current}`),
-								])
-							}}
-						>
-							<Plus className="size-4" />
-							Adicionar item
-						</Button>
+						<div className="flex flex-wrap gap-2">
+							{catalogItems.length > 0 ? (
+								<Select
+									value={catalogSelection}
+									onValueChange={handleCatalogSelect}
+								>
+									<SelectTrigger
+										className="w-[260px]"
+										aria-label="Adicionar do catálogo"
+									>
+										<SelectValue placeholder="Adicionar do catálogo" />
+									</SelectTrigger>
+									<SelectContent className="max-h-80">
+										{Object.entries(catalogGroups).map(
+											([category, options]) => (
+												<SelectGroup key={category}>
+													<SelectLabel>{category}</SelectLabel>
+													{options.map((option) => (
+														<SelectItem key={option.id} value={option.id}>
+															{option.name} · {option.baseHours}h
+														</SelectItem>
+													))}
+												</SelectGroup>
+											),
+										)}
+									</SelectContent>
+								</Select>
+							) : null}
+							<Button
+								type="button"
+								variant="outline"
+								size="sm"
+								onClick={() => {
+									itemCounter.current += 1
+									setItems((current) => [
+										...current,
+										newItem(`novo-${itemCounter.current}`),
+									])
+								}}
+							>
+								<Plus className="size-4" />
+								Adicionar item
+							</Button>
+						</div>
 					</div>
 					<div className="flex flex-col gap-4">
 						{items.map((item, index) => (
@@ -388,10 +456,17 @@ export function QuoteForm({
 								key={item.key}
 								className="rounded-[2px] border border-white/10 bg-background/40 p-4 flex flex-col gap-4"
 							>
-								<div className="flex items-center justify-between">
-									<span className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
-										Item {index + 1}
-									</span>
+								<div className="flex items-center justify-between gap-2">
+									<div className="flex flex-wrap items-center gap-2">
+										<span className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
+											Item {index + 1}
+										</span>
+										{item.source ? (
+											<span className="rounded-[2px] border border-primary/30 bg-primary/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-primary">
+												Catálogo · {item.source}
+											</span>
+										) : null}
+									</div>
 									<Button
 										type="button"
 										variant="ghost"

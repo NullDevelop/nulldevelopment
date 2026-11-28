@@ -406,6 +406,8 @@ export const ModelName = {
   Message: 'Message',
   Client: 'Client',
   Quote: 'Quote',
+  CatalogCategory: 'CatalogCategory',
+  CatalogItem: 'CatalogItem',
   QuoteItem: 'QuoteItem',
   Contract: 'Contract'
 } as const
@@ -423,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "project" | "company" | "message" | "client" | "quote" | "quoteItem" | "contract"
+    modelProps: "user" | "session" | "account" | "verification" | "project" | "company" | "message" | "client" | "quote" | "catalogCategory" | "catalogItem" | "quoteItem" | "contract"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1093,6 +1095,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CatalogCategory: {
+      payload: Prisma.$CatalogCategoryPayload<ExtArgs>
+      fields: Prisma.CatalogCategoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CatalogCategoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogCategoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CatalogCategoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogCategoryPayload>
+        }
+        findFirst: {
+          args: Prisma.CatalogCategoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogCategoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CatalogCategoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogCategoryPayload>
+        }
+        findMany: {
+          args: Prisma.CatalogCategoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogCategoryPayload>[]
+        }
+        create: {
+          args: Prisma.CatalogCategoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogCategoryPayload>
+        }
+        createMany: {
+          args: Prisma.CatalogCategoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CatalogCategoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogCategoryPayload>[]
+        }
+        delete: {
+          args: Prisma.CatalogCategoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogCategoryPayload>
+        }
+        update: {
+          args: Prisma.CatalogCategoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogCategoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.CatalogCategoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CatalogCategoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CatalogCategoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogCategoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.CatalogCategoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogCategoryPayload>
+        }
+        aggregate: {
+          args: Prisma.CatalogCategoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCatalogCategory>
+        }
+        groupBy: {
+          args: Prisma.CatalogCategoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CatalogCategoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CatalogCategoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CatalogCategoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    CatalogItem: {
+      payload: Prisma.$CatalogItemPayload<ExtArgs>
+      fields: Prisma.CatalogItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CatalogItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CatalogItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogItemPayload>
+        }
+        findFirst: {
+          args: Prisma.CatalogItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CatalogItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogItemPayload>
+        }
+        findMany: {
+          args: Prisma.CatalogItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogItemPayload>[]
+        }
+        create: {
+          args: Prisma.CatalogItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogItemPayload>
+        }
+        createMany: {
+          args: Prisma.CatalogItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CatalogItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogItemPayload>[]
+        }
+        delete: {
+          args: Prisma.CatalogItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogItemPayload>
+        }
+        update: {
+          args: Prisma.CatalogItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.CatalogItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CatalogItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CatalogItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.CatalogItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogItemPayload>
+        }
+        aggregate: {
+          args: Prisma.CatalogItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCatalogItem>
+        }
+        groupBy: {
+          args: Prisma.CatalogItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CatalogItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CatalogItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CatalogItemCountAggregateOutputType> | number
+        }
+      }
+    }
     QuoteItem: {
       payload: Prisma.$QuoteItemPayload<ExtArgs>
       fields: Prisma.QuoteItemFieldRefs
@@ -1429,6 +1579,34 @@ export const QuoteScalarFieldEnum = {
 export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof QuoteScalarFieldEnum]
 
 
+export const CatalogCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CatalogCategoryScalarFieldEnum = (typeof CatalogCategoryScalarFieldEnum)[keyof typeof CatalogCategoryScalarFieldEnum]
+
+
+export const CatalogItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  baseHours: 'baseHours',
+  complexity: 'complexity',
+  monthlyFee: 'monthlyFee',
+  monthlyDuration: 'monthlyDuration',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CatalogItemScalarFieldEnum = (typeof CatalogItemScalarFieldEnum)[keyof typeof CatalogItemScalarFieldEnum]
+
+
 export const QuoteItemScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1732,6 +1910,8 @@ export type GlobalOmitConfig = {
   message?: Prisma.MessageOmit
   client?: Prisma.ClientOmit
   quote?: Prisma.QuoteOmit
+  catalogCategory?: Prisma.CatalogCategoryOmit
+  catalogItem?: Prisma.CatalogItemOmit
   quoteItem?: Prisma.QuoteItemOmit
   contract?: Prisma.ContractOmit
 }

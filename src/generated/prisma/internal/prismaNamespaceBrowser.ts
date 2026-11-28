@@ -60,6 +60,8 @@ export const ModelName = {
   Message: 'Message',
   Client: 'Client',
   Quote: 'Quote',
+  CatalogCategory: 'CatalogCategory',
+  CatalogItem: 'CatalogItem',
   QuoteItem: 'QuoteItem',
   Contract: 'Contract'
 } as const
@@ -227,6 +229,34 @@ export const QuoteScalarFieldEnum = {
 } as const
 
 export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof QuoteScalarFieldEnum]
+
+
+export const CatalogCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CatalogCategoryScalarFieldEnum = (typeof CatalogCategoryScalarFieldEnum)[keyof typeof CatalogCategoryScalarFieldEnum]
+
+
+export const CatalogItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  baseHours: 'baseHours',
+  complexity: 'complexity',
+  monthlyFee: 'monthlyFee',
+  monthlyDuration: 'monthlyDuration',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CatalogItemScalarFieldEnum = (typeof CatalogItemScalarFieldEnum)[keyof typeof CatalogItemScalarFieldEnum]
 
 
 export const QuoteItemScalarFieldEnum = {

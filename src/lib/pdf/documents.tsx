@@ -1,10 +1,20 @@
-import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
+import {
+	Document,
+	Image,
+	Page,
+	StyleSheet,
+	Text,
+	View,
+} from '@react-pdf/renderer'
 import { formatCurrency, formatDate } from '@/lib/billing-format'
-import { company } from '@/lib/company'
+import { company, companyAddress } from '@/lib/company'
+import { N3_MARK_DATA_URI } from './brand-mark'
 
 const COPPER = '#C97855'
 const CHARCOAL = '#171A1E'
 const IVORY = '#F3F1EB'
+const STEEL = '#AAB0B4'
+const GRAPHITE = '#626B72'
 const MUTED = '#7A8189'
 const LINE = '#DCDCD6'
 const SOFT = '#F6F4EF'
@@ -27,13 +37,33 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 2,
 		borderBottomColor: COPPER,
 	},
-	brand: {
-		fontSize: 15,
-		fontWeight: 700,
-		letterSpacing: -0.4,
+	brandRow: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		gap: 8,
+		marginBottom: 4,
 	},
-	brandDot: { color: COPPER },
-	brandMeta: { fontSize: 8, color: MUTED, marginTop: 2 },
+	brandMark: { width: 34, height: 28 },
+	brandName: {
+		fontSize: 14,
+		fontWeight: 700,
+		letterSpacing: 2.4,
+		lineHeight: 1.1,
+	},
+	brandSub: {
+		fontSize: 7.5,
+		fontWeight: 700,
+		letterSpacing: 2.2,
+		color: GRAPHITE,
+		marginTop: 2,
+	},
+	brandTagline: {
+		fontSize: 6.5,
+		letterSpacing: 1.2,
+		color: STEEL,
+		marginTop: 3,
+	},
+	brandMeta: { fontSize: 7, color: MUTED },
 	docLabel: {
 		fontSize: 8,
 		fontWeight: 700,
@@ -221,11 +251,18 @@ function Header({ label, reference }: { label: string; reference: string }) {
 	return (
 		<View style={styles.header}>
 			<View>
-				<Text style={styles.brand}>
-					null<Text style={styles.brandDot}>.</Text>development
-				</Text>
+				<View style={styles.brandRow}>
+					<Image src={N3_MARK_DATA_URI} style={styles.brandMark} />
+					<View>
+						<Text style={styles.brandName}>NULL</Text>
+						<Text style={styles.brandSub}>DEVELOPMENT</Text>
+						<Text style={styles.brandTagline}>
+							TECNOLOGIA PARA O TRABALHO REAL
+						</Text>
+					</View>
+				</View>
 				<Text style={styles.brandMeta}>
-					{company.ownerName} · {company.email}
+					{company.legalName} · {company.legalStatus}
 				</Text>
 			</View>
 			<View>
@@ -239,7 +276,15 @@ function Header({ label, reference }: { label: string; reference: string }) {
 function Footer({ label }: { label: string }) {
 	return (
 		<View style={styles.footer} fixed>
-			<Text>{label} · Null Development</Text>
+			<View>
+				<Text>{label} · Null Development</Text>
+				<Text>
+					CNPJ {company.cnpj} · {companyAddress}
+				</Text>
+				<Text>
+					{company.email} · {company.phone}
+				</Text>
+			</View>
 			<Text
 				render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
 			/>
@@ -402,8 +447,12 @@ export function ContractPdf({ contract }: { contract: PdfContract }) {
 				<View style={styles.row}>
 					<View style={styles.block}>
 						<Text style={styles.label}>Contratado</Text>
-						<Text style={styles.value}>{company.ownerName}</Text>
-						<Text style={styles.subValue}>{company.email}</Text>
+						<Text style={styles.value}>{company.legalName}</Text>
+						<Text style={styles.subValue}>CNPJ {company.cnpj}</Text>
+						<Text style={styles.subValue}>{companyAddress}</Text>
+						<Text style={styles.subValue}>
+							{company.email} · {company.phone}
+						</Text>
 					</View>
 					<View style={styles.block}>
 						<Text style={styles.label}>Contratante</Text>

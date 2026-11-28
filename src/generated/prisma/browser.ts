@@ -63,6 +63,16 @@ export type Client = Prisma.ClientModel
  */
 export type Quote = Prisma.QuoteModel
 /**
+ * Model CatalogCategory
+ * 
+ */
+export type CatalogCategory = Prisma.CatalogCategoryModel
+/**
+ * Model CatalogItem
+ * 
+ */
+export type CatalogItem = Prisma.CatalogItemModel
+/**
  * Model QuoteItem
  * 
  */

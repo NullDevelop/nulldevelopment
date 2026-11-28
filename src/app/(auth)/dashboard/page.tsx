@@ -2,6 +2,7 @@ import {
 	Briefcase,
 	Building2,
 	FileSignature,
+	Library,
 	MessageSquare,
 	Receipt,
 	TrendingUp,
@@ -15,12 +16,14 @@ export default async function DashboardPage() {
 		messagesCount,
 		quotesCount,
 		contractsCount,
+		catalogItemsCount,
 	] = await Promise.all([
 		prisma.project.count(),
 		prisma.company.count(),
 		prisma.message.count(),
 		prisma.quote.count(),
 		prisma.contract.count(),
+		prisma.catalogItem.count(),
 	])
 
 	const stats = [
@@ -64,6 +67,14 @@ export default async function DashboardPage() {
 			color: 'text-primary',
 			bg: 'bg-primary/10',
 		},
+		{
+			title: 'Catálogo',
+			value: catalogItemsCount,
+			icon: Library,
+			description: 'itens reutilizáveis',
+			color: 'text-primary',
+			bg: 'bg-primary/10',
+		},
 	]
 
 	return (
@@ -85,7 +96,7 @@ export default async function DashboardPage() {
 			</div>
 
 			{/* Stats */}
-			<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+			<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
 				{stats.map((stat) => (
 					<div
 						key={stat.title}
@@ -126,7 +137,9 @@ export default async function DashboardPage() {
 					</p>
 					<p className="font-mono text-xs text-foreground/50 mt-1">
 						{quotesCount} orçamento{quotesCount !== 1 ? 's' : ''} ·{' '}
-						{contractsCount} contrato{contractsCount !== 1 ? 's' : ''}
+						{contractsCount} contrato{contractsCount !== 1 ? 's' : ''} ·{' '}
+						{catalogItemsCount} item{catalogItemsCount !== 1 ? 's' : ''} no
+						catálogo
 					</p>
 					<p className="font-mono text-xs text-foreground/30 mt-0.5">
 						Última atualização: agora
