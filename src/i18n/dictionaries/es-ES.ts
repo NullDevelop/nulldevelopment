@@ -59,6 +59,9 @@ export const esES: Dictionary = {
 		viewCase: 'Ver caso',
 		viewFullCase: 'Ver caso completo',
 		caseBadge: 'Caso',
+		interestLabel: 'Me interesa',
+		interestMessage:
+			'Hola Pedro, me interesa el sistema {title} y me gustaría hablar para saber más.',
 	},
 	badges: {
 		'Ao Vivo': 'En vivo',

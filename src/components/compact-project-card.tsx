@@ -1,4 +1,9 @@
-import { ArrowUpRight, ExternalLink, Landmark } from 'lucide-react'
+import {
+	ArrowUpRight,
+	ExternalLink,
+	Landmark,
+	MessageCircle,
+} from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ProjectData } from '@/lib/projects-data'
@@ -6,11 +11,16 @@ import type { ProjectData } from '@/lib/projects-data'
 interface CompactProjectCardProps {
 	project: ProjectData
 	showCaseLink?: boolean
+	whatsapp?: {
+		href: string
+		label: string
+	}
 }
 
 export function CompactProjectCard({
 	project,
 	showCaseLink = false,
+	whatsapp,
 }: CompactProjectCardProps) {
 	const isLive = !!project.link
 	const caseLabel = isLive
@@ -18,7 +28,9 @@ export function CompactProjectCard({
 		: `Ver case: ${project.title}`
 
 	return (
-		<article className="group relative flex h-full items-start gap-4 overflow-hidden rounded-[2px] border border-white/[0.08] bg-[#16191C] p-5 pr-12 transition-colors duration-300 hover:border-primary/40 sm:gap-5 sm:p-6 sm:pr-14">
+		<article
+			className={`group relative flex h-full items-start gap-4 overflow-hidden rounded-[2px] border border-white/[0.08] bg-[#16191C] p-5 transition-colors duration-300 hover:border-primary/40 sm:gap-5 sm:p-6 ${showCaseLink ? 'pr-12 sm:pr-14' : ''}`}
+		>
 			<div
 				aria-hidden="true"
 				className="absolute inset-x-0 top-0 z-10 h-px bg-linear-to-r from-primary/70 via-primary/25 to-transparent"
@@ -47,6 +59,18 @@ export function CompactProjectCard({
 				<p className="mt-2 line-clamp-2 text-[13px] leading-relaxed text-pretty text-brand-steel">
 					{project.shortDescription}
 				</p>
+				{whatsapp && (
+					<a
+						href={whatsapp.href}
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label={`${whatsapp.label}: ${project.title}`}
+						className="mt-4 inline-flex items-center gap-2 border border-primary/30 bg-primary/[0.07] px-3 py-1.5 text-[11px] font-medium tracking-wide text-primary transition-colors hover:border-primary/60 hover:bg-primary/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+					>
+						<MessageCircle aria-hidden="true" className="h-3.5 w-3.5" />
+						<span>{whatsapp.label}</span>
+					</a>
+				)}
 			</div>
 
 			{showCaseLink &&

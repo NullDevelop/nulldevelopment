@@ -57,6 +57,9 @@ export const pt = {
 		viewCase: 'Ver Case',
 		viewFullCase: 'Ver Case Completo',
 		caseBadge: 'Case',
+		interestLabel: 'Tenho interesse',
+		interestMessage:
+			'Olá Pedro! Tenho interesse no sistema {title} e gostaria de conversar para saber mais.',
 	},
 	badges: {
 		'Ao Vivo': 'Ao Vivo',

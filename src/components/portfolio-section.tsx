@@ -1,8 +1,10 @@
 'use client'
 
 import { Building2, Landmark } from 'lucide-react'
+import { format, whatsappUrl } from '@/i18n/format'
 import { localizeProject } from '@/i18n/projects'
 import { useI18n } from '@/i18n/provider'
+import { company } from '@/lib/company'
 import type { ProjectData } from '@/lib/projects-data'
 import { CompactProjectCard } from './compact-project-card'
 import { BlurFade } from './ui/blur-fade'
@@ -167,6 +169,19 @@ export function PortfolioSection({ dbProjects }: PortfolioSectionProps) {
 													<CompactProjectCard
 														project={project}
 														showCaseLink={!isPublic}
+														whatsapp={
+															isPublic
+																? {
+																		href: whatsappUrl(
+																			company.whatsapp,
+																			format(t.portfolio.interestMessage, {
+																				title: project.title,
+																			}),
+																		),
+																		label: t.portfolio.interestLabel,
+																	}
+																: undefined
+														}
 													/>
 												</BlurFade>
 											),
