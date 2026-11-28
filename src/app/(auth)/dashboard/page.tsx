@@ -1,11 +1,26 @@
+import {
+	Briefcase,
+	Building2,
+	FileSignature,
+	MessageSquare,
+	Receipt,
+	TrendingUp,
+} from 'lucide-react'
 import { prisma } from '@/lib/prisma'
-import { Briefcase, Building2, MessageSquare, TrendingUp } from 'lucide-react'
 
 export default async function DashboardPage() {
-	const [projectsCount, companiesCount, messagesCount] = await Promise.all([
+	const [
+		projectsCount,
+		companiesCount,
+		messagesCount,
+		quotesCount,
+		contractsCount,
+	] = await Promise.all([
 		prisma.project.count(),
 		prisma.company.count(),
 		prisma.message.count(),
+		prisma.quote.count(),
+		prisma.contract.count(),
 	])
 
 	const stats = [
@@ -33,6 +48,22 @@ export default async function DashboardPage() {
 			color: 'text-primary',
 			bg: 'bg-primary/10',
 		},
+		{
+			title: 'Orçamentos',
+			value: quotesCount,
+			icon: Receipt,
+			description: 'propostas comerciais',
+			color: 'text-primary',
+			bg: 'bg-primary/10',
+		},
+		{
+			title: 'Contratos',
+			value: contractsCount,
+			icon: FileSignature,
+			description: 'instrumentos firmados',
+			color: 'text-primary',
+			bg: 'bg-primary/10',
+		},
 	]
 
 	return (
@@ -54,7 +85,7 @@ export default async function DashboardPage() {
 			</div>
 
 			{/* Stats */}
-			<div className="grid gap-4 sm:grid-cols-3">
+			<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
 				{stats.map((stat) => (
 					<div
 						key={stat.title}
@@ -87,9 +118,15 @@ export default async function DashboardPage() {
 				</div>
 				<div>
 					<p className="font-mono text-sm text-foreground/80">
-						{projectsCount} projeto{projectsCount !== 1 ? 's' : ''} publicado{projectsCount !== 1 ? 's' : ''} •{' '}
-						{companiesCount} cliente{companiesCount !== 1 ? 's' : ''} •{' '}
-						{messagesCount} mensagem{messagesCount !== 1 ? 's' : ''} pendente{messagesCount !== 1 ? 's' : ''}
+						{projectsCount} projeto{projectsCount !== 1 ? 's' : ''} publicado
+						{projectsCount !== 1 ? 's' : ''} • {companiesCount} cliente
+						{companiesCount !== 1 ? 's' : ''} • {messagesCount} mensagem
+						{messagesCount !== 1 ? 's' : ''} pendente
+						{messagesCount !== 1 ? 's' : ''}
+					</p>
+					<p className="font-mono text-xs text-foreground/50 mt-1">
+						{quotesCount} orçamento{quotesCount !== 1 ? 's' : ''} ·{' '}
+						{contractsCount} contrato{contractsCount !== 1 ? 's' : ''}
 					</p>
 					<p className="font-mono text-xs text-foreground/30 mt-0.5">
 						Última atualização: agora

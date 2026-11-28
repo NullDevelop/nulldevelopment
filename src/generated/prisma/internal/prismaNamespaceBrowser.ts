@@ -57,7 +57,11 @@ export const ModelName = {
   Verification: 'Verification',
   Project: 'Project',
   Company: 'Company',
-  Message: 'Message'
+  Message: 'Message',
+  Client: 'Client',
+  Quote: 'Quote',
+  QuoteItem: 'QuoteItem',
+  Contract: 'Contract'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -178,6 +182,102 @@ export const MessageScalarFieldEnum = {
 } as const
 
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+export const ClientScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  document: 'document',
+  phone: 'phone',
+  address: 'address',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
+
+
+export const QuoteScalarFieldEnum = {
+  id: 'id',
+  number: 'number',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  clientId: 'clientId',
+  clientName: 'clientName',
+  clientEmail: 'clientEmail',
+  hourlyRate: 'hourlyRate',
+  discount: 'discount',
+  urgencyFee: 'urgencyFee',
+  entryAmount: 'entryAmount',
+  installments: 'installments',
+  totalHours: 'totalHours',
+  totalValue: 'totalValue',
+  monthlyTotal: 'monthlyTotal',
+  expirationDate: 'expirationDate',
+  sentAt: 'sentAt',
+  approvedAt: 'approvedAt',
+  signedAt: 'signedAt',
+  signatureHash: 'signatureHash',
+  signerName: 'signerName',
+  publicToken: 'publicToken',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof QuoteScalarFieldEnum]
+
+
+export const QuoteItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  hours: 'hours',
+  unitValue: 'unitValue',
+  monthlyFee: 'monthlyFee',
+  monthlyDuration: 'monthlyDuration',
+  order: 'order',
+  quoteId: 'quoteId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QuoteItemScalarFieldEnum = (typeof QuoteItemScalarFieldEnum)[keyof typeof QuoteItemScalarFieldEnum]
+
+
+export const ContractScalarFieldEnum = {
+  id: 'id',
+  number: 'number',
+  title: 'title',
+  status: 'status',
+  clientId: 'clientId',
+  clientName: 'clientName',
+  clientEmail: 'clientEmail',
+  quoteId: 'quoteId',
+  objectClause: 'objectClause',
+  timelineClause: 'timelineClause',
+  paymentClause: 'paymentClause',
+  ipClause: 'ipClause',
+  totalValue: 'totalValue',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  providerSigned: 'providerSigned',
+  providerSignedAt: 'providerSignedAt',
+  providerSignerName: 'providerSignerName',
+  providerSignatureHash: 'providerSignatureHash',
+  clientSigned: 'clientSigned',
+  clientSignedAt: 'clientSignedAt',
+  clientSignerName: 'clientSignerName',
+  clientSignatureHash: 'clientSignatureHash',
+  sentAt: 'sentAt',
+  expiresAt: 'expiresAt',
+  publicToken: 'publicToken',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ContractScalarFieldEnum = (typeof ContractScalarFieldEnum)[keyof typeof ContractScalarFieldEnum]
 
 
 export const SortOrder = {

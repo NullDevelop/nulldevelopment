@@ -79,10 +79,10 @@ model Project {
   slug             String   @unique
   shortDescription String
   content          String   @db.Text
-  image            String   // Thumbnail
+  image            String // Thumbnail
   images           String[] // Additional photos
   stack            String[]
-  link             String?  // External link
+  link             String? // External link
   category         String   @default("privado") // governamental | privado | saas | landing
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
@@ -114,4 +114,108 @@ model Message {
   createdAt DateTime @default(now())
 
   @@map("messages")
+}
+
+model Client {
+  id        String     @id @default(uuid())
+  name      String
+  email     String?
+  document  String?
+  phone     String?
+  address   String?
+  quotes    Quote[]
+  contracts Contract[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("clients")
+}
+
+model Quote {
+  id             String      @id @default(uuid())
+  number         String      @unique
+  title          String
+  description    String?     @db.Text
+  status         String      @default("rascunho")
+  clientId       String?
+  client         Client?     @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  clientName     String
+  clientEmail    String?
+  items          QuoteItem[]
+  contracts      Contract[]
+  hourlyRate     Float       @default(0)
+  discount       Float       @default(0)
+  urgencyFee     Float       @default(0)
+  entryAmount    Float       @default(0)
+  installments   Int         @default(1)
+  totalHours     Float       @default(0)
+  totalValue     Float       @default(0)
+  monthlyTotal   Float       @default(0)
+  expirationDate DateTime?
+  sentAt         DateTime?
+  approvedAt     DateTime?
+  signedAt       DateTime?
+  signatureHash  String?
+  signerName     String?
+  publicToken    String      @unique @default(uuid())
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@index([clientId])
+  @@map("quotes")
+}
+
+model QuoteItem {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  hours           Float    @default(0)
+  unitValue       Float    @default(0)
+  monthlyFee      Float    @default(0)
+  monthlyDuration Int      @default(12)
+  order           Int      @default(0)
+  quoteId         String
+  quote           Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([quoteId])
+  @@map("quote_items")
+}
+
+model Contract {
+  id                    String    @id @default(uuid())
+  number                String    @unique
+  title                 String
+  status                String    @default("rascunho")
+  clientId              String?
+  client                Client?   @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  clientName            String
+  clientEmail           String?
+  quoteId               String?
+  quote                 Quote?    @relation(fields: [quoteId], references: [id], onDelete: SetNull)
+  objectClause          String?   @db.Text
+  timelineClause        String?   @db.Text
+  paymentClause         String?   @db.Text
+  ipClause              String?   @db.Text
+  totalValue            Float     @default(0)
+  startDate             DateTime?
+  endDate               DateTime?
+  providerSigned        Boolean   @default(false)
+  providerSignedAt      DateTime?
+  providerSignerName    String?
+  providerSignatureHash String?
+  clientSigned          Boolean   @default(false)
+  clientSignedAt        DateTime?
+  clientSignerName      String?
+  clientSignatureHash   String?
+  sentAt                DateTime?
+  expiresAt             DateTime?
+  publicToken           String    @unique @default(uuid())
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([clientId])
+  @@index([quoteId])
+  @@map("contracts")
 }

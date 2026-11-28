@@ -52,3 +52,23 @@ export type Company = Prisma.CompanyModel
  * 
  */
 export type Message = Prisma.MessageModel
+/**
+ * Model Client
+ * 
+ */
+export type Client = Prisma.ClientModel
+/**
+ * Model Quote
+ * 
+ */
+export type Quote = Prisma.QuoteModel
+/**
+ * Model QuoteItem
+ * 
+ */
+export type QuoteItem = Prisma.QuoteItemModel
+/**
+ * Model Contract
+ * 
+ */
+export type Contract = Prisma.ContractModel
