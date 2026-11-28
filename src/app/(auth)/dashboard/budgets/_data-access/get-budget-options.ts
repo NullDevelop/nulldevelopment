@@ -24,6 +24,7 @@ export async function getBudgetFormOptions() {
 			name: item.name,
 			description: item.description,
 			baseHours: item.baseHours,
+			complexity: item.complexity,
 			monthlyFee: item.monthlyFee,
 			monthlyDuration: item.monthlyDuration,
 			categoryName: item.category?.name ?? null,

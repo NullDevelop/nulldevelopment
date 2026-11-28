@@ -6,9 +6,11 @@ import {
 	Copy,
 	FileText,
 	Info,
+	Library,
 	Loader2,
 	type LucideIcon,
 	Plus,
+	Search,
 	SlidersHorizontal,
 	Trash2,
 	UserRound,
@@ -17,17 +19,23 @@ import {
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import type { ReactNode } from 'react'
-import { type FormEvent, useRef, useState, useTransition } from 'react'
+import { type FormEvent, useMemo, useRef, useState, useTransition } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import {
 	Select,
 	SelectContent,
-	SelectGroup,
 	SelectItem,
-	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
@@ -54,6 +62,12 @@ interface ItemValues {
 	monthlyFee: string
 	monthlyDuration: string
 	source: string
+}
+
+const complexityLabels: Record<string, string> = {
+	baixa: 'Baixa',
+	media: 'Média',
+	alta: 'Alta',
 }
 
 const newItem = (key: string): ItemValues => ({
@@ -126,7 +140,9 @@ export function QuoteForm({
 	quote?: QuoteFormData
 }) {
 	const router = useRouter()
-	const [catalogSelection, setCatalogSelection] = useState('')
+	const [catalogOpen, setCatalogOpen] = useState(false)
+	const [catalogQuery, setCatalogQuery] = useState('')
+	const [catalogCategory, setCatalogCategory] = useState('all')
 	const [isPending, startTransition] = useTransition()
 	const [clientMode, setClientMode] = useState(
 		clients.some((client) => client.id === quote?.clientId)
@@ -229,11 +245,7 @@ export function QuoteForm({
 		setExpandedItems((current) => ({ ...current, [key]: !current[key] }))
 	}
 
-	function handleCatalogSelect(value: string) {
-		const selected = catalogItems.find((item) => item.id === value)
-		setCatalogSelection('')
-		if (!selected) return
-
+	function handleCatalogSelect(selected: CatalogOption) {
 		itemCounter.current += 1
 		const key = `catalogo-${itemCounter.current}`
 		setItems((current) => [
@@ -318,14 +330,31 @@ export function QuoteForm({
 		})
 	}
 
-	const catalogGroups = catalogItems.reduce<Record<string, CatalogOption[]>>(
-		(groups, item) => {
-			const key = item.categoryName ?? 'Sem categoria'
-			groups[key] = [...(groups[key] ?? []), item]
-			return groups
-		},
-		{},
+	const catalogCategories = useMemo(
+		() =>
+			Array.from(
+				new Set(
+					catalogItems.map((item) => item.categoryName ?? 'Sem categoria'),
+				),
+			),
+		[catalogItems],
 	)
+
+	const filteredCatalog = useMemo(() => {
+		const term = catalogQuery.trim().toLocaleLowerCase('pt-BR')
+
+		return catalogItems.filter((item) => {
+			const category = item.categoryName ?? 'Sem categoria'
+			const matchesCategory =
+				catalogCategory === 'all' || category === catalogCategory
+			const matchesTerm =
+				!term ||
+				`${item.name} ${item.description} ${category}`
+					.toLocaleLowerCase('pt-BR')
+					.includes(term)
+			return matchesCategory && matchesTerm
+		})
+	}, [catalogItems, catalogQuery, catalogCategory])
 
 	const totals = calcQuoteTotals(
 		items.map((item) => ({
@@ -593,33 +622,19 @@ export function QuoteForm({
 						<div className="mt-5 flex flex-col gap-4">
 							<div className="flex flex-wrap items-center justify-between gap-3">
 								<div className="flex flex-wrap gap-2">
-									{catalogItems.length > 0 ? (
-										<Select
-											value={catalogSelection}
-											onValueChange={handleCatalogSelect}
-										>
-											<SelectTrigger
-												className="w-[260px]"
-												aria-label="Adicionar do catálogo"
-											>
-												<SelectValue placeholder="Adicionar do catálogo" />
-											</SelectTrigger>
-											<SelectContent className="max-h-80">
-												{Object.entries(catalogGroups).map(
-													([category, options]) => (
-														<SelectGroup key={category}>
-															<SelectLabel>{category}</SelectLabel>
-															{options.map((option) => (
-																<SelectItem key={option.id} value={option.id}>
-																	{option.name} · {option.baseHours}h
-																</SelectItem>
-															))}
-														</SelectGroup>
-													),
-												)}
-											</SelectContent>
-										</Select>
-									) : null}
+									<Button
+										type="button"
+										variant="outline"
+										size="sm"
+										disabled={catalogItems.length === 0}
+										onClick={() => setCatalogOpen(true)}
+									>
+										<Library className="size-4" />
+										Adicionar do catálogo
+										<span className="ml-1 rounded-[2px] bg-primary/10 px-1.5 py-0.5 font-mono text-[10px] text-primary">
+											{catalogItems.length}
+										</span>
+									</Button>
 									<Button
 										type="button"
 										variant="outline"
@@ -917,6 +932,158 @@ export function QuoteForm({
 					</section>
 				</aside>
 			</form>
+
+			<Dialog open={catalogOpen} onOpenChange={setCatalogOpen}>
+				<DialogContent className="flex max-h-[88vh] w-[min(940px,100%)] flex-col gap-0 overflow-hidden rounded-[2px] p-0">
+					<DialogHeader className="border-b border-white/10 px-6 py-5">
+						<DialogTitle className="font-sentient text-xl font-semibold">
+							Adicionar do catálogo
+						</DialogTitle>
+						<DialogDescription className="font-mono text-xs text-foreground/45">
+							Escolha os serviços prontos. Você pode adicionar vários e ajustar
+							as descrições depois.
+						</DialogDescription>
+					</DialogHeader>
+
+					<div className="flex flex-wrap items-center gap-3 border-b border-white/5 px-6 py-4">
+						<div className="relative min-w-[240px] flex-1">
+							<Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-foreground/35" />
+							<Input
+								value={catalogQuery}
+								onChange={(event) => setCatalogQuery(event.target.value)}
+								placeholder="Buscar por nome, descrição ou categoria..."
+								className="pl-9 font-mono text-xs"
+								aria-label="Buscar no catálogo"
+							/>
+						</div>
+						<span className="font-mono text-[10px] uppercase tracking-widest text-foreground/35">
+							{filteredCatalog.length} serviço
+							{filteredCatalog.length !== 1 ? 's' : ''}
+						</span>
+					</div>
+
+					<div className="flex flex-wrap gap-2 border-b border-white/5 px-6 py-3">
+						<button
+							type="button"
+							onClick={() => setCatalogCategory('all')}
+							className={`rounded-[2px] border px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest transition-colors ${
+								catalogCategory === 'all'
+									? 'border-primary/50 bg-primary/10 text-primary'
+									: 'border-white/10 text-foreground/45 hover:border-white/25 hover:text-foreground/80'
+							}`}
+						>
+							Todos
+						</button>
+						{catalogCategories.map((category) => (
+							<button
+								key={category}
+								type="button"
+								onClick={() => setCatalogCategory(category)}
+								className={`rounded-[2px] border px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest transition-colors ${
+									catalogCategory === category
+										? 'border-primary/50 bg-primary/10 text-primary'
+										: 'border-white/10 text-foreground/45 hover:border-white/25 hover:text-foreground/80'
+								}`}
+							>
+								{category}
+							</button>
+						))}
+					</div>
+
+					<div className="min-h-0 flex-1 overflow-y-auto px-6 py-4">
+						{filteredCatalog.length === 0 ? (
+							<div className="py-12 text-center">
+								<p className="font-sentient text-lg text-foreground/70">
+									Nenhum serviço encontrado.
+								</p>
+								<p className="mt-1 font-mono text-xs text-foreground/35">
+									Tente outro termo ou selecione “Todos”.
+								</p>
+								<Button
+									type="button"
+									variant="outline"
+									size="sm"
+									className="mt-4"
+									onClick={() => {
+										setCatalogQuery('')
+										setCatalogCategory('all')
+									}}
+								>
+									Limpar filtros
+								</Button>
+							</div>
+						) : (
+							<div className="flex flex-col gap-3">
+								{filteredCatalog.map((option) => {
+									const category = option.categoryName ?? 'Catálogo'
+									const addedCount = items.filter(
+										(item) =>
+											item.name === option.name && item.source === category,
+									).length
+
+									return (
+										<article
+											key={option.id}
+											className="flex flex-wrap items-start justify-between gap-4 rounded-[2px] border border-white/8 bg-background/40 p-4 transition-colors hover:border-primary/30"
+										>
+											<div className="min-w-0 flex-1">
+												<div className="flex flex-wrap items-center gap-2">
+													<h3 className="font-sentient text-sm font-semibold text-foreground">
+														{option.name}
+													</h3>
+													<span className="rounded-[2px] border border-white/10 bg-white/3 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-foreground/45">
+														{option.categoryName ?? 'Catálogo'}
+													</span>
+													{addedCount > 0 ? (
+														<span className="rounded-[2px] border border-primary/30 bg-primary/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-primary">
+															Adicionado {addedCount}x
+														</span>
+													) : null}
+												</div>
+												<p className="mt-1.5 font-mono text-[11px] leading-relaxed text-foreground/45">
+													{option.description}
+												</p>
+												<div className="mt-3 flex flex-wrap items-center gap-2">
+													<span className="rounded-[2px] border border-white/10 bg-white/3 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-foreground/45">
+														{option.baseHours}h
+													</span>
+													<span className="rounded-[2px] border border-white/10 bg-white/3 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-foreground/45">
+														{complexityLabels[option.complexity] ??
+															option.complexity}
+													</span>
+													{option.monthlyFee > 0 ? (
+														<span className="rounded-[2px] border border-primary/30 bg-primary/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-primary">
+															{formatCurrency(option.monthlyFee)}/mês
+														</span>
+													) : null}
+												</div>
+											</div>
+											<Button
+												type="button"
+												size="sm"
+												variant="outline"
+												onClick={() => handleCatalogSelect(option)}
+											>
+												<Plus className="size-4" />
+												Adicionar
+											</Button>
+										</article>
+									)
+								})}
+							</div>
+						)}
+					</div>
+
+					<DialogFooter className="flex-row items-center justify-between gap-3 border-t border-white/10 px-6 py-4 sm:justify-between">
+						<p className="font-mono text-[10px] text-foreground/35">
+							Os itens adicionados aparecem na seção “Itens da proposta”.
+						</p>
+						<Button type="button" onClick={() => setCatalogOpen(false)}>
+							Concluir
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
 		</div>
 	)
 }
